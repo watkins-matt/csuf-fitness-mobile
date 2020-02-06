@@ -32,11 +32,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'Placeholder text',
+            // Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: <Widget>[
+            TextFormField(initialValue: "Item Here"),
+            // ]),
+            TextFormField(
+              initialValue: "Calories Here",
             ),
+            FlatButton(
+              child: Text("Add"),
+              onPressed: () {},
+            )
           ],
         ),
       ),
@@ -44,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {},
         tooltip: 'Add',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
