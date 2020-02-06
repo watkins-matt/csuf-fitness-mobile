@@ -34,18 +34,26 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            // Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: <Widget>[
-            TextFormField(initialValue: "Item Here"),
-            // ]),
-            TextFormField(
-              initialValue: "Calories Here",
-            ),
-            FlatButton(
-              child: Text("Add"),
-              onPressed: () {},
-            )
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: TextFormField(
+                        decoration: InputDecoration(labelText: "Food:")),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: "Calories:"),
+                      )),
+                  FlatButton(
+                    child: Text("Add"),
+                    onPressed: () {},
+                  )
+                ]),
           ],
         ),
       ),
