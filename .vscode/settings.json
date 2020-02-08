@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    ".dart_tool": true,
+    ".idea": true,
+    "build": true
+  }
+}
