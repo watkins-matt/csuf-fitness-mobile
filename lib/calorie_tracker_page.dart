@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-
-class FoodItem {
-  String name;
-  int calories;
-
-  FoodItem(this.name, this.calories);
-}
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'food_item.dart';
 
 class CalorieTrackerPage extends StatefulWidget {
   CalorieTrackerPage({Key key, this.title}) : super(key: key);
@@ -17,6 +12,7 @@ class CalorieTrackerPage extends StatefulWidget {
 
 class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   List<FoodItem> _foodItems = [];
+  int _dailyCalorieCount = 0;
   TextEditingController _foodNameController = TextEditingController();
   TextEditingController _calorieCountController = TextEditingController();
 
@@ -27,11 +23,54 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
         title: Text(widget.title),
       ),
       body: _buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Add',
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   tooltip: 'Add',
+      //   child: Icon(Icons.add),
+      // ),
+    );
+  }
+
+  Widget _buildCalorieCountHeader() {
+    String calorieModifier(double value) {
+      final roundedValue = value.ceil().toInt().toString();
+      return '$roundedValue kCal';
+    }
+
+    final todaySlider = SleekCircularSlider(
+      appearance: CircularSliderAppearance(
+          customWidths: CustomSliderWidths(progressBarWidth: 5),
+          infoProperties: InfoProperties(
+              bottomLabelText: "Today", modifier: calorieModifier)),
+      min: 0,
+      max: 2000,
+      initialValue: _dailyCalorieCount.toDouble(),
+    );
+
+    final yesterdaySlider = SleekCircularSlider(
+        appearance: CircularSliderAppearance(
+            customWidths: CustomSliderWidths(progressBarWidth: 5),
+            infoProperties: InfoProperties(
+                bottomLabelText: "Yesterday", modifier: calorieModifier)),
+        min: 0,
+        max: 2000,
+        initialValue: 1000);
+
+    return Row(
+      children: <Widget>[
+        Card(
+            child: Padding(
+          padding: EdgeInsets.only(top: 20, bottom: 0, left: 8, right: 8),
+          child: todaySlider,
+        )),
+        Card(
+            child: Padding(
+          padding: EdgeInsets.only(top: 20, bottom: 0, left: 8, right: 8),
+          child: yesterdaySlider,
+        )),
+      ],
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
     );
   }
 
@@ -40,6 +79,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        _buildCalorieCountHeader(),
         _buildAddFoodItemWidget(),
         Expanded(child: _buildListView()),
       ],
@@ -77,9 +117,13 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   }
 
   void _onAddButtonPressed() {
+    String foodName = _foodNameController.text;
+    int calorieCount = int.parse(_calorieCountController.text);
+
     setState(() {
-      _foodItems.add(FoodItem(
-          _foodNameController.text, int.parse(_calorieCountController.text)));
+      _foodItems.add(FoodItem(foodName, calorieCount));
+      _dailyCalorieCount += calorieCount;
+
       _foodNameController.clear();
       _calorieCountController.clear();
     });
