@@ -119,9 +119,9 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
       // We're beyond the maximum of 2000 calories, reduce the overall calorie
       // count but not less that 2000
       if (_dailyCalorieCount == _maxCalories) {
-        _maxCalories = _maxCalories > 2000
-            ? _maxCalories - _foodItems[index].calories
-            : 2000;
+        _maxCalories = (_maxCalories - _foodItems[index].calories) < 2000
+            ? 2000
+            : _maxCalories - _foodItems[index].calories;
       }
 
       _dailyCalorieCount -= _foodItems[index].calories;
