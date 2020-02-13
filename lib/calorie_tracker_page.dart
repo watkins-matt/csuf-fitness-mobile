@@ -14,6 +14,7 @@ class CalorieTrackerPage extends StatefulWidget {
 class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   List<FoodItem> _foodItems = [];
   int _dailyCalorieCount = 0;
+  int _maxCalories = 2000;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
           infoProperties: InfoProperties(
               bottomLabelText: "Today", modifier: calorieModifier)),
       min: 0,
-      max: 2000,
+      max: _maxCalories.toDouble(),
       initialValue: _dailyCalorieCount.toDouble(),
     );
 
@@ -83,6 +84,12 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   void _onAddFoodButtonPressed(FoodItem foodItem) {
     setState(() {
       _foodItems.add(foodItem);
+      int newCalorieCount = _dailyCalorieCount + foodItem.calories;
+
+      if (newCalorieCount > 2000) {
+        _maxCalories = newCalorieCount;
+      }
+
       _dailyCalorieCount += foodItem.calories;
     });
   }
@@ -97,10 +104,26 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
 
   Widget _buildListViewItem(BuildContext context, int index) {
     return Dismissible(
+        onDismissed: (_) {
+          _listViewItemDismissed(index);
+        },
         key: UniqueKey(),
         child: Card(
             child: ListTile(
                 title: Text(_foodItems[index].name),
                 trailing: Text(_foodItems[index].calories.toString()))));
+  }
+
+  void _listViewItemDismissed(int index) {
+    setState(() {
+      if (_dailyCalorieCount == _maxCalories) {
+        _maxCalories = _maxCalories > 2000
+            ? _maxCalories - _foodItems[index].calories
+            : 2000;
+      }
+
+      _dailyCalorieCount -= _foodItems[index].calories;
+      _foodItems.removeAt(index);
+    });
   }
 }
