@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'food_item.dart';
+import 'add_food_item_widget.dart';
 
 class CalorieTrackerPage extends StatefulWidget {
   CalorieTrackerPage({Key key, this.title}) : super(key: key);
@@ -13,8 +14,6 @@ class CalorieTrackerPage extends StatefulWidget {
 class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   List<FoodItem> _foodItems = [];
   int _dailyCalorieCount = 0;
-  TextEditingController _foodNameController = TextEditingController();
-  TextEditingController _calorieCountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +22,6 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
         title: Text(widget.title),
       ),
       body: _buildBody(),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   tooltip: 'Add',
-      //   child: Icon(Icons.add),
-      // ),
     );
   }
 
@@ -80,52 +74,16 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         _buildCalorieCountHeader(),
-        _buildAddFoodItemWidget(),
+        AddFoodItemWidget(_onAddFoodButtonPressed),
         Expanded(child: _buildListView()),
       ],
     ));
   }
 
-  Widget _buildAddFoodItemWidget() {
-    return Card(
-        child: Padding(
-            padding: EdgeInsets.all(8),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Expanded(
-                    flex: 5,
-                    child: TextFormField(
-                        controller: _foodNameController,
-                        decoration: InputDecoration(labelText: "Food:")),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                      flex: 2,
-                      child: TextFormField(
-                        controller: _calorieCountController,
-                        decoration: InputDecoration(labelText: "Calories:"),
-                        keyboardType: TextInputType.numberWithOptions(
-                            signed: false, decimal: false),
-                      )),
-                  FlatButton(
-                    child: Text("Add"),
-                    onPressed: _onAddButtonPressed,
-                  )
-                ])));
-  }
-
-  void _onAddButtonPressed() {
-    String foodName = _foodNameController.text;
-    int calorieCount = int.parse(_calorieCountController.text);
-
+  void _onAddFoodButtonPressed(FoodItem foodItem) {
     setState(() {
-      _foodItems.add(FoodItem(foodName, calorieCount));
-      _dailyCalorieCount += calorieCount;
-
-      _foodNameController.clear();
-      _calorieCountController.clear();
+      _foodItems.add(foodItem);
+      _dailyCalorieCount += foodItem.calories;
     });
   }
 
