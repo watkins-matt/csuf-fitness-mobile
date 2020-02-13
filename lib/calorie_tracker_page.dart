@@ -96,9 +96,11 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   }
 
   Widget _buildListViewItem(BuildContext context, int index) {
-    return Card(
-        child: ListTile(
-            title: Text(_foodItems[index].name),
-            trailing: Text(_foodItems[index].calories.toString())));
+    return Dismissible(
+        key: UniqueKey(),
+        child: Card(
+            child: ListTile(
+                title: Text(_foodItems[index].name),
+                trailing: Text(_foodItems[index].calories.toString()))));
   }
 }

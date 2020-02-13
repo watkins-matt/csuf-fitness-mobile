@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'food_item.dart';
 
 class AddFoodItemWidget extends StatefulWidget {
-  final Function itemAddedCallback; //(FoodItem foodItem);
+  final Function itemAddedCallback;
 
   AddFoodItemWidget(this.itemAddedCallback);
 
