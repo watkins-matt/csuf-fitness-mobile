@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'food_item.dart';
 import 'add_food_item_widget.dart';
-
+import 'settings_page.dart';
+import 'food_history.dart';
 class CalorieTrackerPage extends StatefulWidget {
   CalorieTrackerPage({Key key, this.title}) : super(key: key);
   final String title;
@@ -21,6 +22,22 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.perm_data_setting),
+            tooltip: 'Settings Page',
+            onPressed: () {
+              openPage(context);
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.calendar_today),
+            tooltip: 'Food History',
+            onPressed: () {
+              openFoodHistoryPage(context);
+            },
+          ),
+        ],
       ),
       body: _buildBody(),
     );
