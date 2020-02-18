@@ -27,7 +27,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
             icon: const Icon(Icons.perm_data_setting),
             tooltip: 'Settings Page',
             onPressed: () {
-              openPage(context);
+              settings(context);
             },
           ),
           IconButton(
@@ -63,7 +63,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
         appearance: CircularSliderAppearance(
             customWidths: CustomSliderWidths(progressBarWidth: 5),
             infoProperties: InfoProperties(
-                bottomLabelText: "Yesterday", modifier: calorieModifier)),
+                bottomLabelText: "Todays Goal", modifier: calorieModifier)),
         min: 0,
         max: 2000,
         initialValue: 1000);
