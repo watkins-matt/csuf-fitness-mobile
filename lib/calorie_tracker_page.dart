@@ -4,6 +4,8 @@ import 'food_item.dart';
 import 'add_food_item_widget.dart';
 import 'settings_page.dart';
 import 'food_history.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class CalorieTrackerPage extends StatefulWidget {
   CalorieTrackerPage({Key key, this.title}) : super(key: key);
   final String title;
@@ -15,7 +17,21 @@ class CalorieTrackerPage extends StatefulWidget {
 class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   List<FoodItem> _foodItems = [];
   int _dailyCalorieCount = 0;
-  int _maxCalories = 2000;
+  int _maxCalories = default_max_calories;
+  static const int default_max_calories = 2000;
+
+  _CalorieTrackerPageState() {
+    _init();
+  }
+
+  Future _init() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      _maxCalories =
+          preferences.getInt('dailyMaxCalories') ?? default_max_calories;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +75,15 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
       initialValue: _dailyCalorieCount.toDouble(),
     );
 
-    final yesterdaySlider = SleekCircularSlider(
-        appearance: CircularSliderAppearance(
-            customWidths: CustomSliderWidths(progressBarWidth: 5),
-            infoProperties: InfoProperties(
-                bottomLabelText: "Todays Goal", modifier: calorieModifier)),
-        min: 0,
-        max: 2000,
-        initialValue: 1000);
+    final maxCaloriesSlider = SleekCircularSlider(
+      appearance: CircularSliderAppearance(
+          customWidths: CustomSliderWidths(progressBarWidth: 5),
+          infoProperties: InfoProperties(
+              bottomLabelText: "Today's Goal", modifier: calorieModifier)),
+      min: 0,
+      max: _maxCalories.toDouble(),
+      initialValue: _maxCalories.toDouble(),
+    );
 
     return Row(
       children: <Widget>[
@@ -78,7 +95,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
         Card(
             child: Padding(
           padding: EdgeInsets.only(top: 20, bottom: 0, left: 8, right: 8),
-          child: yesterdaySlider,
+          child: maxCaloriesSlider,
         )),
       ],
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
