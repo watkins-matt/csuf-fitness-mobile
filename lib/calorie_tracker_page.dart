@@ -1,36 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-import 'food_item.dart';
-import 'add_food_item_widget.dart';
-import 'settings_page.dart';
-import 'food_history.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+
+import 'add_food_item_widget.dart';
+import 'food_history.dart';
+import 'food_item.dart';
+import 'settings_page.dart';
 
 class CalorieTrackerPage extends StatefulWidget {
-  CalorieTrackerPage({Key key, this.title}) : super(key: key);
   final String title;
+  CalorieTrackerPage({Key key, this.title}) : super(key: key);
 
   @override
   _CalorieTrackerPageState createState() => _CalorieTrackerPageState();
 }
 
 class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
+  static const int default_max_calories = 2000;
   List<FoodItem> _foodItems = [];
   int _dailyCalorieCount = 0;
   int _maxCalories = default_max_calories;
-  static const int default_max_calories = 2000;
 
   _CalorieTrackerPageState() {
     _init();
-  }
-
-  Future _init() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    setState(() {
-      _maxCalories =
-          preferences.getInt('dailyMaxCalories') ?? default_max_calories;
-    });
   }
 
   @override
@@ -57,6 +49,18 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
       ),
       body: _buildBody(),
     );
+  }
+
+  Widget _buildBody() {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        _buildCalorieCountHeader(),
+        AddFoodItemWidget(_onAddFoodButtonPressed),
+        Expanded(child: _buildListView()),
+      ],
+    ));
   }
 
   Widget _buildCalorieCountHeader() {
@@ -103,31 +107,6 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
     );
   }
 
-  Widget _buildBody() {
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        _buildCalorieCountHeader(),
-        AddFoodItemWidget(_onAddFoodButtonPressed),
-        Expanded(child: _buildListView()),
-      ],
-    ));
-  }
-
-  void _onAddFoodButtonPressed(FoodItem foodItem) {
-    setState(() {
-      _foodItems.add(foodItem);
-      int newCalorieCount = _dailyCalorieCount + foodItem.calories;
-
-      if (newCalorieCount > 2000) {
-        _maxCalories = newCalorieCount;
-      }
-
-      _dailyCalorieCount += foodItem.calories;
-    });
-  }
-
   ListView _buildListView() {
     return ListView.builder(
       itemBuilder: _buildListViewItem,
@@ -148,6 +127,15 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
                 trailing: Text(_foodItems[index].calories.toString()))));
   }
 
+  Future _init() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      _maxCalories =
+          preferences.getInt('dailyMaxCalories') ?? default_max_calories;
+    });
+  }
+
   void _listViewItemDismissed(int index) {
     setState(() {
       // We're beyond the maximum of 2000 calories, reduce the overall calorie
@@ -160,6 +148,19 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
 
       _dailyCalorieCount -= _foodItems[index].calories;
       _foodItems.removeAt(index);
+    });
+  }
+
+  void _onAddFoodButtonPressed(FoodItem foodItem) {
+    setState(() {
+      _foodItems.add(foodItem);
+      int newCalorieCount = _dailyCalorieCount + foodItem.calories;
+
+      if (newCalorieCount > 2000) {
+        _maxCalories = newCalorieCount;
+      }
+
+      _dailyCalorieCount += foodItem.calories;
     });
   }
 }
