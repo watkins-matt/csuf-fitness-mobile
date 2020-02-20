@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import 'add_food_item_widget.dart';
+import 'main.dart';
 import 'food_history.dart';
 import 'food_item.dart';
 import 'settings_page.dart';
@@ -48,6 +49,17 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
         ],
       ),
       body: _buildBody(),
+      drawer: Drawer(
+          child: ListView(
+        children: <Widget>[
+          FitnessApp.debugMode
+              ? ListTile(
+                  title: Text("Debug: Run Initial Setup"),
+                  onTap: () {},
+                )
+              : null,
+        ],
+      )),
     );
   }
 

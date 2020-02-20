@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'calorie_tracker_page.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 void main() => runApp(FitnessApp());
 
 class FitnessApp extends StatelessWidget {
+  static bool debugMode = Foundation.kDebugMode;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
