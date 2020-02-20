@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-import 'add_food_item_widget.dart';
-import 'main.dart';
-import 'food_history.dart';
-import 'food_item.dart';
-import 'settings_page.dart';
+import '../widgets/add_food_item_widget.dart';
+import '../widgets/main_drawer.dart';
+import '../food_history.dart';
+import '../food_item.dart';
+import '../pages/settings_page.dart';
 
 class CalorieTrackerPage extends StatefulWidget {
   final String title;
@@ -49,22 +49,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
           ],
         ),
         body: _buildBody(),
-        drawer: Drawer(
-          child: Container(
-              child: ListView(
-            children: <Widget>[
-              ListTile(
-                  title: Text("Debug: Run Initial Setup"),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return Scaffold(body: SettingsPage());
-                      },
-                    ));
-                  }),
-            ],
-          )),
-        ));
+        drawer: MainDrawer());
   }
 
   Widget _buildBody() {
