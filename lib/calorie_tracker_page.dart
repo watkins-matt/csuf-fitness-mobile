@@ -29,38 +29,42 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.perm_data_setting),
-            tooltip: 'Settings Page',
-            onPressed: () {
-              settings(context);
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.calendar_today),
-            tooltip: 'Food History',
-            onPressed: () {
-              openFoodHistoryPage(context);
-            },
-          ),
-        ],
-      ),
-      body: _buildBody(),
-      drawer: Drawer(
-          child: ListView(
-        children: <Widget>[
-          FitnessApp.debugMode
-              ? ListTile(
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.perm_data_setting),
+              tooltip: 'Settings Page',
+              onPressed: () {
+                settings(context);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.calendar_today),
+              tooltip: 'Food History',
+              onPressed: () {
+                openFoodHistoryPage(context);
+              },
+            ),
+          ],
+        ),
+        body: _buildBody(),
+        drawer: Drawer(
+          child: Container(
+              child: ListView(
+            children: <Widget>[
+              ListTile(
                   title: Text("Debug: Run Initial Setup"),
-                  onTap: () {},
-                )
-              : null,
-        ],
-      )),
-    );
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return Scaffold(body: SettingsPage());
+                      },
+                    ));
+                  }),
+            ],
+          )),
+        ));
   }
 
   Widget _buildBody() {
