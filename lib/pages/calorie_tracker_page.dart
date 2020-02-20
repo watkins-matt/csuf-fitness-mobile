@@ -7,6 +7,7 @@ import '../widgets/main_drawer.dart';
 import '../food_history.dart';
 import '../food_item.dart';
 import '../pages/settings_page.dart';
+// import '../database/food_database.dart';
 
 class CalorieTrackerPage extends StatefulWidget {
   final String title;
@@ -152,7 +153,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
     });
   }
 
-  void _onAddFoodButtonPressed(FoodItem foodItem) {
+  void _onAddFoodButtonPressed(FoodItem foodItem) async {
     setState(() {
       _foodItems.add(foodItem);
       int newCalorieCount = _dailyCalorieCount + foodItem.calories;
@@ -163,5 +164,8 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
 
       _dailyCalorieCount += foodItem.calories;
     });
+
+    // await FoodDatabase.database.addItem(foodItem);
+    // TODO: Add item to the SQLite database here
   }
 }

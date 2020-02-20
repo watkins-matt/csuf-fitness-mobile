@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'calorie_tracker_page.dart';
+import 'pages/calorie_tracker_page.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 
 void main() => runApp(FitnessApp());
