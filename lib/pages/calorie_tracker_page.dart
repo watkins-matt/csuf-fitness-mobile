@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-import 'add_food_item_widget.dart';
-import 'main.dart';
-import 'food_history.dart';
-import 'food_item.dart';
-import 'settings_page.dart';
+import '../widgets/add_food_item_widget.dart';
+import '../widgets/main_drawer.dart';
+import '../food_history.dart';
+import '../food_item.dart';
+import '../pages/settings_page.dart';
+// import '../database/food_database.dart';
 
 class CalorieTrackerPage extends StatefulWidget {
   final String title;
@@ -29,38 +30,27 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.perm_data_setting),
-            tooltip: 'Settings Page',
-            onPressed: () {
-              settings(context);
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.calendar_today),
-            tooltip: 'Food History',
-            onPressed: () {
-              openFoodHistoryPage(context);
-            },
-          ),
-        ],
-      ),
-      body: _buildBody(),
-      drawer: Drawer(
-          child: ListView(
-        children: <Widget>[
-          FitnessApp.debugMode
-              ? ListTile(
-                  title: Text("Debug: Run Initial Setup"),
-                  onTap: () {},
-                )
-              : null,
-        ],
-      )),
-    );
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.perm_data_setting),
+              tooltip: 'Settings Page',
+              onPressed: () {
+                settings(context);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.calendar_today),
+              tooltip: 'Food History',
+              onPressed: () {
+                openFoodHistoryPage(context);
+              },
+            ),
+          ],
+        ),
+        body: _buildBody(),
+        drawer: MainDrawer());
   }
 
   Widget _buildBody() {
@@ -163,7 +153,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
     });
   }
 
-  void _onAddFoodButtonPressed(FoodItem foodItem) {
+  void _onAddFoodButtonPressed(FoodItem foodItem) async {
     setState(() {
       _foodItems.add(foodItem);
       int newCalorieCount = _dailyCalorieCount + foodItem.calories;
@@ -174,5 +164,8 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
 
       _dailyCalorieCount += foodItem.calories;
     });
+
+    // await FoodDatabase.database.addItem(foodItem);
+    // TODO: Add item to the SQLite database here
   }
 }

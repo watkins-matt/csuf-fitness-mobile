@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'food_item.dart';
+import '../food_item.dart';
 
 class AddFoodItemWidget extends StatefulWidget {
   final Function itemAddedCallback;
@@ -48,7 +48,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   void onItemAdded() {
     String foodName = _foodNameController.text;
     int calorieCount = int.parse(_calorieCountController.text);
-    widget.itemAddedCallback(FoodItem(foodName, calorieCount));
+    widget.itemAddedCallback(FoodItem(foodName, calorieCount, DateTime.now()));
 
     setState(() {
       _foodNameController.clear();
