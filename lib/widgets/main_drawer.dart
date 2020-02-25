@@ -53,12 +53,7 @@ class MainDrawer extends StatelessWidget {
         leading: const Icon(Icons.perm_data_setting),
         title: Text("Settings"),
         onTap: () {
-          Navigator.pop(context);
-          Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) {
-              return Scaffold(body: SettingsPage());
-            },
-          ));
+          SettingsPage.push(context);
         });
   }
 }

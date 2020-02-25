@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 
 import '../widgets/add_food_item_widget.dart';
 import '../widgets/main_drawer.dart';
-import '../food_history.dart';
 import '../food_item.dart';
 // import '../pages/settings_page.dart';
 import '../database/food_database.dart';
