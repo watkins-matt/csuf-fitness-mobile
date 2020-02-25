@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/add_food_item_widget.dart';
 import '../widgets/main_drawer.dart';
@@ -18,9 +19,7 @@ class CalorieTrackerPage extends StatefulWidget {
 }
 
 class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
-
   final dbFood = FoodDatabase.instance;
-
 
   static const int default_max_calories = 2000;
   List<FoodItem> _foodItems = [];
@@ -130,6 +129,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
         child: Card(
             child: ListTile(
                 title: Text(_foodItems[index].name),
+                subtitle: Text(DateFormat.Hm().format(_foodItems[index].time)),
                 trailing: Text(_foodItems[index].calories.toString()))));
   }
 
@@ -169,8 +169,5 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
 
       _dailyCalorieCount += foodItem.calories;
     });
-
-    // await FoodDatabase.database.addItem(foodItem);
-    // TODO: Add item to the SQLite database here
   }
 }
