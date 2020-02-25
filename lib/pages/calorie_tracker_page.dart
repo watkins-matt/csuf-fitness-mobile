@@ -34,23 +34,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title, style: TextStyle(fontSize: 12)),
-          actions: <Widget>[
-            // IconButton(
-            //   icon: const Icon(Icons.perm_data_setting),
-            //   tooltip: 'Settings Page',
-            //   onPressed: () {
-            //     settings(context);
-            //   },
-            // ),
-            IconButton(
-              icon: const Icon(Icons.calendar_today),
-              tooltip: 'Food History',
-              onPressed: () {
-                openFoodHistoryPage(context);
-              },
-            ),
-          ],
+          title: Text(widget.title),
         ),
         body: _buildBody(),
         drawer: MainDrawer());
