@@ -7,7 +7,7 @@ import '../widgets/add_food_item_widget.dart';
 import '../widgets/main_drawer.dart';
 import '../food_history.dart';
 import '../food_item.dart';
-import '../pages/settings_page.dart';
+// import '../pages/settings_page.dart';
 import '../database/food_database.dart';
 
 class CalorieTrackerPage extends StatefulWidget {
@@ -34,15 +34,15 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(widget.title, style: TextStyle(fontSize: 12)),
           actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.perm_data_setting),
-              tooltip: 'Settings Page',
-              onPressed: () {
-                settings(context);
-              },
-            ),
+            // IconButton(
+            //   icon: const Icon(Icons.perm_data_setting),
+            //   tooltip: 'Settings Page',
+            //   onPressed: () {
+            //     settings(context);
+            //   },
+            // ),
             IconButton(
               icon: const Icon(Icons.calendar_today),
               tooltip: 'Food History',

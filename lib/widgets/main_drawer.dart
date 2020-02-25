@@ -1,3 +1,4 @@
+import 'package:csuf_fitness/food_history.dart';
 import 'package:flutter/material.dart';
 import '../pages/settings_page.dart';
 
@@ -11,18 +12,51 @@ class MainDrawer extends StatelessWidget {
           UserAccountsDrawerHeader(
               accountName: Text("Example User Name"),
               accountEmail: Text("username@example.com")),
-          ListTile(
-              title: Text("Debug: Run Initial Setup"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return Scaffold(body: SettingsPage());
-                  },
-                ));
-              }),
+          _initialSetupListTile(context),
+          _foodHistoryListTile(context),
+          _settingsListTile(context)
         ],
       )),
     );
+  }
+
+  ListTile _initialSetupListTile(BuildContext context) {
+    return ListTile(
+        title: Text("Debug: Run Initial Setup"),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(
+            builder: (BuildContext context) {
+              return Scaffold(body: SettingsPage());
+            },
+          ));
+        });
+  }
+
+  ListTile _foodHistoryListTile(BuildContext context) {
+    return ListTile(
+        title: Text("Food History"),
+        onTap: () {
+          Navigator.pop(context);
+          // Navigator.push(context, MaterialPageRoute(
+          //   builder: (BuildContext context) {
+          //     return Scaffold(body: SettingsPage());
+          //   },
+          // ));
+          openFoodHistoryPage(context);
+        });
+  }
+
+  ListTile _settingsListTile(BuildContext context) {
+    return ListTile(
+        title: Text("Settings"),
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(
+            builder: (BuildContext context) {
+              return Scaffold(body: SettingsPage());
+            },
+          ));
+        });
   }
 }
