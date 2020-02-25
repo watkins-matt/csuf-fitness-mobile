@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'food_item.dart';
+import '../food_item.dart';
 
 class FoodDatabase {
   // DB info

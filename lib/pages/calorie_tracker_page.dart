@@ -7,7 +7,7 @@ import '../widgets/main_drawer.dart';
 import '../food_history.dart';
 import '../food_item.dart';
 import '../pages/settings_page.dart';
-// import '../database/food_database.dart';
+import '../database/food_database.dart';
 
 class CalorieTrackerPage extends StatefulWidget {
   final String title;
@@ -18,6 +18,10 @@ class CalorieTrackerPage extends StatefulWidget {
 }
 
 class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
+
+  final dbFood = FoodDatabase.instance;
+
+
   static const int default_max_calories = 2000;
   List<FoodItem> _foodItems = [];
   int _dailyCalorieCount = 0;
@@ -155,6 +159,7 @@ class _CalorieTrackerPageState extends State<CalorieTrackerPage> {
 
   void _onAddFoodButtonPressed(FoodItem foodItem) async {
     setState(() {
+      dbFood.insert(foodItem);
       _foodItems.add(foodItem);
       int newCalorieCount = _dailyCalorieCount + foodItem.calories;
 
