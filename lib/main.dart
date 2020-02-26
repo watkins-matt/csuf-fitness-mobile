@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/calorie_tracker_page.dart';
+import 'pages/food_log_page.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 
 void main() => runApp(FitnessApp());
@@ -14,7 +14,7 @@ class FitnessApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CalorieTrackerPage(title: 'My Health & Fitness'),
+      home: FoodLogPage(title: 'My Health & Fitness'),
     );
   }
 }

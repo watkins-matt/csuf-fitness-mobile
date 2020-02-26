@@ -1,10 +1,11 @@
+import 'package:csuf_fitness/food_log.dart';
 import 'package:flutter/material.dart';
-import '../food_item.dart';
+import '../food_log.dart';
+import '../food_log_item.dart';
 
 class AddFoodItemWidget extends StatefulWidget {
-  final Function itemAddedCallback;
-
-  AddFoodItemWidget(this.itemAddedCallback);
+  final FoodLog log;
+  AddFoodItemWidget(this.log);
 
   @override
   _AddFoodItemWidgetState createState() => _AddFoodItemWidgetState();
@@ -48,9 +49,15 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   void onItemAdded() {
     String foodName = _foodNameController.text;
     int calorieCount = int.parse(_calorieCountController.text);
-    widget.itemAddedCallback(FoodItem(foodName, calorieCount, DateTime.now()));
+    FoodLogItem item = FoodLogItem(foodName, calorieCount, DateTime.now());
 
     setState(() {
+      // Add the item to the food log we correspond to, which should
+      // update all other classes listening to calorie changed events
+      // and food item added events
+      widget.log.add(item);
+
+      // Clear the food name and calorie count so the user can enter more items in
       _foodNameController.clear();
       _calorieCountController.clear();
     });

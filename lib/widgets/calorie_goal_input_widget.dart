@@ -45,7 +45,6 @@ class _InputDailyCalorieGoalWidgetState
       _inputDailyCaloriesController.clear();
     });
 
-    // TODO: Use a callback here or preferably the BLOC pattern
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setInt('dailyMaxCalories', dailyGoal);
   }
