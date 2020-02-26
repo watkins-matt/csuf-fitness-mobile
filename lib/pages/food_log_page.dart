@@ -1,11 +1,11 @@
 import 'package:csuf_fitness/food_log.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../widgets/add_food_item_widget.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/food_log_page_header.dart';
 import '../widgets/food_log_list_view.dart';
-import '../database/food_database.dart';
 import '../food_log.dart';
 
 class FoodLogPage extends StatefulWidget {
@@ -43,8 +43,6 @@ class _FoodLogPageState extends State<FoodLogPage> {
             builder: (context, snapshot) {
               return FoodLogPageHeader(widget.log);
             }),
-
-        // FoodLogPageHeader(widget.log),
         AddFoodItemWidget(widget.log),
         StreamBuilder<int>(
             stream: FoodLog().caloriesChanged,
@@ -65,9 +63,9 @@ class _FoodLogPageState extends State<FoodLogPage> {
     const int default_max_calories = 2000;
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    // setState(() {
-    //   widget.log.maxCalories =
-    //       preferences.getInt('dailyMaxCalories') ?? default_max_calories;
-    // });
+    setState(() {
+      widget.log.maxCalories =
+          preferences.getInt('dailyMaxCalories') ?? default_max_calories;
+    });
   }
 }
