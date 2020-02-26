@@ -1,19 +1,20 @@
 import 'food_log_item.dart';
+import 'database/storage_provider.dart';
 import 'dart:async';
 
+/// A log of food items consumed over a certain day.
+///
+/// Maintains state information about items consumed as well as
+/// the total number of calories consumed. Dispatches events as
+/// items are added and removed as well as when the total calorie counts
+/// changes.
+///
+/// This class exists to reduce coupling between components and to
+/// keep data separate from the UI code and database code.
 class FoodLog {
-  static final FoodLog _singleton = FoodLog._internal();
-
-  factory FoodLog() {
-    return _singleton;
-  }
-
-  FoodLog._internal();
-
   // Private fields
   List<FoodLogItem> _items = [];
   int _calories = 0;
-  int _maxCalories = 2000;
 
   StreamController<int> _caloriesChangedController =
       new StreamController.broadcast();
@@ -22,17 +23,25 @@ class FoodLog {
   StreamController<FoodLogItem> _itemRemovedController =
       new StreamController.broadcast();
 
+  StorageProvider _provider = StorageProvider.instance;
+
   // Public properties
-  int get calories => _calories;
-  int get maxCalories => _maxCalories;
-  set maxCalories(int value) => _maxCalories = value;
-  int get length => _items.length;
   FoodLogItem operator [](int index) => _items[index];
+  int get calories => _calories;
+  int get length => _items.length;
+  int maxCalories = 2000;
 
   // Events
   Stream<int> get caloriesChanged => _caloriesChangedController.stream;
   Stream<FoodLogItem> get itemAdded => _itemAddedController.stream;
   Stream<FoodLogItem> get itemRemoved => _itemRemovedController.stream;
+
+  static final FoodLog _singleton = FoodLog._internal();
+  FoodLog._internal();
+
+  factory FoodLog() {
+    return _singleton;
+  }
 
   void dispose() {
     _caloriesChangedController.close();
@@ -48,16 +57,18 @@ class FoodLog {
 
     _caloriesChangedController.add(_calories);
     _itemAddedController.add(item);
+
+    _provider.write(item);
   }
 
   void removeAt(int index) {
     // We're beyond the maximum of 2000 calories, reduce the overall calorie
     // count but not less that 2000
     // TODO: Find a more elegant way to do this?
-    if (_calories == _maxCalories) {
-      _maxCalories = (_maxCalories - _items[index].calories) < 2000
+    if (_calories == maxCalories) {
+      maxCalories = (maxCalories - _items[index].calories) < 2000
           ? 2000
-          : _maxCalories - _items[index].calories;
+          : maxCalories - _items[index].calories;
     }
 
     _calories -= _items[index].calories;
