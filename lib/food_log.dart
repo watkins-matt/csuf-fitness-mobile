@@ -2,6 +2,14 @@ import 'food_log_item.dart';
 import 'dart:async';
 
 class FoodLog {
+  static final FoodLog _singleton = FoodLog._internal();
+
+  factory FoodLog() {
+    return _singleton;
+  }
+
+  FoodLog._internal();
+
   // Private fields
   List<FoodLogItem> _items = [];
   int _calories = 0;
@@ -24,7 +32,7 @@ class FoodLog {
   // Events
   Stream<int> get caloriesChanged => _caloriesChangedController.stream;
   Stream<FoodLogItem> get itemAdded => _itemAddedController.stream;
-  Stream<FoodLogItem> get itemRemove => _itemRemovedController.stream;
+  Stream<FoodLogItem> get itemRemoved => _itemRemovedController.stream;
 
   void dispose() {
     _caloriesChangedController.close();
@@ -34,7 +42,7 @@ class FoodLog {
 
   void add(FoodLogItem item) {
     _calories += item.calories;
-    assert(_calories > 0);
+    assert(_calories >= 0);
 
     _items.add(item);
 
@@ -53,12 +61,12 @@ class FoodLog {
     }
 
     _calories -= _items[index].calories;
-    assert(_calories > 0);
+    assert(_calories >= 0);
 
     FoodLogItem item = _items[index];
-    _itemRemovedController.add(item);
     _items.removeAt(index);
 
+    _itemRemovedController.add(item);
     _caloriesChangedController.add(_calories);
   }
 }

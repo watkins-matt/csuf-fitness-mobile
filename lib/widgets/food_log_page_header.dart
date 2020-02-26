@@ -7,28 +7,11 @@ class FoodLogPageHeader extends StatefulWidget {
   final FoodLog log;
   FoodLogPageHeader(this.log);
 
-  // static Widget builder(BuildContext context, AsyncSnapshot<int> snapshot) {
-  //   return FoodLogPageHeader(widget.log);
-  // }
-
   @override
   _FoodLogPageHeaderState createState() => _FoodLogPageHeaderState();
 }
 
 class _FoodLogPageHeaderState extends State<FoodLogPageHeader> {
-  // Rebuild the header anytime the total calories in the log have changed
-  void onCaloriesChanged(int newCalories) {
-    setState(() {});
-  }
-
-  _FoodLogPageHeaderState() {
-    _init();
-  }
-
-  Future _init() async {
-    widget.log.caloriesChanged.listen(onCaloriesChanged);
-  }
-
   @override
   Widget build(BuildContext context) {
     String calorieModifier(double value) {
