@@ -61,7 +61,7 @@ class MainDrawer extends StatelessWidget {
 
   ListTile _userInfoTile(BuildContext context) {
     return ListTile(
-        leading: const Icon(Icons.perm_data_setting),
+        leading: const Icon(Icons.perm_identity),
         title: Text("User Info"),
         onTap: () {
           UsersPage.push(context);
