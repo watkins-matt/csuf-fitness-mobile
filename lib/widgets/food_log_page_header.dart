@@ -19,14 +19,18 @@ class _FoodLogPageHeaderState extends State<FoodLogPageHeader> {
       return '$roundedValue kCal';
     }
 
+    double initialValue = widget.log.calories.toDouble();
+    double maxCalories = widget.log.maxCalories.toDouble();
+    double maxValue = maxCalories > initialValue ? maxCalories : initialValue;
+
     final todaySlider = SleekCircularSlider(
       appearance: CircularSliderAppearance(
           customWidths: CustomSliderWidths(progressBarWidth: 5),
           infoProperties: InfoProperties(
               bottomLabelText: "Today", modifier: calorieModifier)),
       min: 0,
-      max: widget.log.maxCalories.toDouble(),
-      initialValue: widget.log.calories.toDouble(),
+      max: maxValue,
+      initialValue: initialValue,
     );
 
     final maxCaloriesSlider = SleekCircularSlider(
@@ -35,8 +39,8 @@ class _FoodLogPageHeaderState extends State<FoodLogPageHeader> {
           infoProperties: InfoProperties(
               bottomLabelText: "Today's Goal", modifier: calorieModifier)),
       min: 0,
-      max: widget.log.maxCalories.toDouble(),
-      initialValue: widget.log.maxCalories.toDouble(),
+      max: maxCalories,
+      initialValue: maxCalories,
     );
 
     return Container(

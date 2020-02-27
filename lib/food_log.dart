@@ -62,15 +62,6 @@ class FoodLog {
   }
 
   void removeAt(int index) {
-    // We're beyond the maximum of 2000 calories, reduce the overall calorie
-    // count but not less that 2000
-    // TODO: Find a more elegant way to do this?
-    if (_calories == maxCalories) {
-      maxCalories = (maxCalories - _items[index].calories) < 2000
-          ? 2000
-          : maxCalories - _items[index].calories;
-    }
-
     _calories -= _items[index].calories;
     assert(_calories >= 0);
 
