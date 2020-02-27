@@ -1,6 +1,7 @@
 import 'package:csuf_fitness/food_history.dart';
 import 'package:flutter/material.dart';
 import '../pages/settings_page.dart';
+import '../pages/user_page.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -14,7 +15,8 @@ class MainDrawer extends StatelessWidget {
               accountEmail: Text("username@example.com")),
           _initialSetupListTile(context),
           _foodHistoryListTile(context),
-          _settingsListTile(context)
+          _settingsListTile(context),
+          _userInfoTile(context),
         ],
       )),
     );
@@ -54,6 +56,15 @@ class MainDrawer extends StatelessWidget {
         title: Text("Settings"),
         onTap: () {
           SettingsPage.push(context);
+        });
+  }
+
+  ListTile _userInfoTile(BuildContext context) {
+    return ListTile(
+        leading: const Icon(Icons.perm_data_setting),
+        title: Text("User Info"),
+        onTap: () {
+          UsersPage.push(context);
         });
   }
 }
