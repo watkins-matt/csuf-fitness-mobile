@@ -74,6 +74,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
   @override
   void dispose() {
     widget.log.dispose();
+    widget.provider.dispose();
     super.dispose();
   }
 

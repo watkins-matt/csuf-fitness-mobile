@@ -22,6 +22,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   @override
   void initState() {
     super.initState();
+
     widget.provider.itemScanned.listen((info) {
       setState(() {
         _foodNameController.text = info.upc;

@@ -35,7 +35,6 @@ class _UserPageState extends State<UsersPage> {
       child: Column(
         children: <Widget>[
           EditUserInfo(),
-          //TODO: Start adding more settings
         ],
       ),
     );

@@ -14,7 +14,15 @@ class BarcodeProvider {
   Stream<BarcodeInfo> get itemScanned => _itemScannedController.stream;
 
   void scan() async {
-    String barcode = await BarcodeScanner.scan();
-    _itemScannedController.add(BarcodeInfo(barcode, barcode));
+    try {
+      String barcode = await BarcodeScanner.scan();
+      _itemScannedController.add(BarcodeInfo(barcode, barcode));
+    } catch (ex) {
+      print(ex.toString());
+    }
+  }
+
+  void dispose() {
+    _itemScannedController.close();
   }
 }

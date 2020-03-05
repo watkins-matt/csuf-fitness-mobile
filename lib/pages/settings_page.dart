@@ -35,7 +35,6 @@ class _SettingPageState extends State<SettingsPage> {
       child: Column(
         children: <Widget>[
           InputDailyCalorieGoalWidget(),
-          //TODO: Start adding more settings
         ],
       ),
     );
