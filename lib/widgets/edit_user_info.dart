@@ -1,7 +1,5 @@
-import 'package:csuf_fitness/widgets/edit_user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'user_info.dart';
 
 class EditUserInfo extends StatefulWidget {
   EditUserInfo({Key key}) : super(key: key);

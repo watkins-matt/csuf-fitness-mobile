@@ -34,7 +34,15 @@ class MainDrawerState extends State<MainDrawer> {
           child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-              accountName: Text(userName), accountEmail: Text(email)),
+              accountName: FlatButton(
+                child: Text(
+                  userName,
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.white),
+                ),
+                onPressed: () {},
+              ),
+              accountEmail: Text(email)),
           _initialSetupListTile(context),
           _foodHistoryListTile(context),
           _settingsListTile(context),

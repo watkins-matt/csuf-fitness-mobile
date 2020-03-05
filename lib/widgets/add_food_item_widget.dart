@@ -1,3 +1,4 @@
+import 'package:csuf_fitness/barcode_scanner.dart';
 import 'package:csuf_fitness/food_log.dart';
 import 'package:flutter/material.dart';
 import '../food_log.dart';
@@ -5,15 +6,30 @@ import '../food_log_item.dart';
 
 class AddFoodItemWidget extends StatefulWidget {
   final FoodLog log;
-  AddFoodItemWidget(this.log);
+  final BarcodeProvider provider;
+
+  AddFoodItemWidget(this.log, this.provider);
 
   @override
   _AddFoodItemWidgetState createState() => _AddFoodItemWidgetState();
 }
 
 class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
-  final TextEditingController _foodNameController = TextEditingController();
-  final TextEditingController _calorieCountController = TextEditingController();
+  TextEditingController _foodNameController = TextEditingController();
+  TextEditingController _calorieCountController = TextEditingController();
+  InputDecoration _foodNameDecoration = InputDecoration(labelText: "Food:");
+
+  @override
+  void initState() {
+    super.initState();
+
+    widget.provider.itemScanned.listen((info) {
+      setState(() {
+        _foodNameController.text = info.upc;
+        print(info.productName + " " + info.upc);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +44,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
                     flex: 5,
                     child: TextFormField(
                         controller: _foodNameController,
-                        decoration: InputDecoration(labelText: "Food:")),
+                        decoration: _foodNameDecoration),
                   ),
                   SizedBox(width: 10),
                   Expanded(

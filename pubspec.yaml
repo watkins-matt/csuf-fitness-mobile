@@ -25,6 +25,9 @@ dependencies:
   sqlcool: ^4.3.0
   path_provider: ^1.6.0
   intl: ^0.16.1
+  barcode_scan: ^2.0.1
+  flutter_rounded_progress_bar: ^0.1.2
+  calendar_strip: ^1.0.6
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -70,3 +73,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: IconLibrary
+      fonts:
+        - asset: fonts/IconLibrary.ttf

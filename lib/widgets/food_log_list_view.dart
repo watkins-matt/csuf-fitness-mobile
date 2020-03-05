@@ -23,16 +23,18 @@ class _FoodLogListViewState extends State<FoodLogListView> {
   }
 
   Widget _buildListViewItem(BuildContext context, int index) {
+    Card listViewCard = Card(
+        child: ListTile(
+            title: Text(widget.log[index].name),
+            subtitle: Text(DateFormat.jm().format(widget.log[index].time)),
+            trailing: Text(widget.log[index].calories.toString())));
+
     return Dismissible(
         onDismissed: (_) {
           _listViewItemDismissed(index);
         },
         key: UniqueKey(),
-        child: Card(
-            child: ListTile(
-                title: Text(widget.log[index].name),
-                subtitle: Text(DateFormat.jm().format(widget.log[index].time)),
-                trailing: Text(widget.log[index].calories.toString()))));
+        child: listViewCard);
   }
 
   void _listViewItemDismissed(int index) {
