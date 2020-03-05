@@ -83,10 +83,13 @@ class FoodDatabase {
       var leftEpoch = leftDate.millisecondsSinceEpoch;
       var rightEpoch = rightDate.millisecondsSinceEpoch;
       var rows = await db.rawQuery('SELECT * FROM $table_name WHERE $columnTime BETWEEN $leftEpoch AND $rightEpoch');
+      List<FoodLogItem> items = new List<FoodLogItem>();
       print('PRINTING FROM $leftDate to $rightDate');
       rows.forEach((row) {
+        items.add(FoodLogItem(row[columnName], row[columnCalories], DateTime.fromMillisecondsSinceEpoch(row[columnTime])));
         print('id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
       });
+      return items;
   }
 
   Future<void> queryDate(DateTime date) async {
