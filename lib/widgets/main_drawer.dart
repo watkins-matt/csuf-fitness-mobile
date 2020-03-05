@@ -2,8 +2,31 @@ import 'package:csuf_fitness/food_history.dart';
 import 'package:flutter/material.dart';
 import '../pages/settings_page.dart';
 import '../pages/user_page.dart';
+import "package:shared_preferences/shared_preferences.dart";
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends StatefulWidget {
+  @override
+  MainDrawerState createState() => MainDrawerState();
+}
+
+class MainDrawerState extends State<MainDrawer> {
+  static const String defaultUserName = "Default User";
+  String userName = defaultUserName;
+  String email = "";
+
+  MainDrawerState() {
+    _init();
+  }
+
+  Future _init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      userName = prefs.get("userName") ?? defaultUserName;
+      email = prefs.get("email") ?? "Email Not Provided";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -11,8 +34,7 @@ class MainDrawer extends StatelessWidget {
           child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-              accountName: Text("Example User Name"),
-              accountEmail: Text("username@example.com")),
+              accountName: Text(userName), accountEmail: Text(email)),
           _initialSetupListTile(context),
           _foodHistoryListTile(context),
           _settingsListTile(context),
