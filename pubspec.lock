@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  calendar_strip:
+    dependency: "direct main"
+    description:
+      name: calendar_strip
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   charcode:
     dependency: transitive
     description:
@@ -83,6 +90,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_rounded_progress_bar:
+    dependency: "direct main"
+    description:
+      name: flutter_rounded_progress_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -265,7 +279,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.14"
+    version: "0.2.11"
   typed_data:
     dependency: transitive
     description:
