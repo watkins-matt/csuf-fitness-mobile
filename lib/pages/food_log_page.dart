@@ -1,5 +1,6 @@
 import 'package:csuf_fitness/barcode_scanner.dart';
 import 'package:csuf_fitness/food_log.dart';
+import 'package:csuf_fitness/widgets/food_log_page_header_alt.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,7 +54,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
         StreamBuilder<int>(
             stream: FoodLog().caloriesChanged,
             builder: (context, snapshot) {
-              return FoodLogPageHeader(widget.log);
+              return FoodLogPageHeaderAlt(widget.log);
             }),
         StreamBuilder<BarcodeInfo>(
             stream: widget.provider.itemScanned,
