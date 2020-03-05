@@ -12,7 +12,10 @@ abstract class StorageProvider {
 class DatabaseStorageProvider extends StorageProvider {
   @override
   void write(FoodLogItem item) {
+    //FoodDatabase.instance.deleteAllRows();
     FoodDatabase.instance.insert(item);
+    //FoodDatabase.instance.printAllRows();
+    //FoodDatabase.instance.queryBetweenDates(a.time, f.time);
   }
 
   @override
