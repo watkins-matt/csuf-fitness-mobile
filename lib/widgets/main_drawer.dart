@@ -23,7 +23,7 @@ class MainDrawerState extends State<MainDrawer> {
 
     setState(() {
       userName = prefs.get("userName") ?? defaultUserName;
-      email = prefs.get("email") ?? "Email Not Provided";
+      //email = prefs.get("email") ?? "Email Not Provided";
     });
   }
 

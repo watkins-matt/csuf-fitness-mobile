@@ -10,15 +10,15 @@ class EditUserInfo extends StatefulWidget {
 }
 
 class _EditUserInfo extends State<EditUserInfo> {
-  static String firstname;
-  static String lastname;
+  static String username;
+  //static String lastname;
   static int age;
   static int height;
   static int weight;
-  final TextEditingController _inputFirstNameController =
+  final TextEditingController _inputUserNameController =
       TextEditingController();
-  final TextEditingController _inputLastNameController =
-      TextEditingController();
+  /*final TextEditingController _inputLastNameController =
+      TextEditingController();*/
   final TextEditingController _inputAgeController = TextEditingController();
   final TextEditingController _inputHeightController = TextEditingController();
   final TextEditingController _inputWeightController = TextEditingController();
@@ -35,14 +35,14 @@ class _EditUserInfo extends State<EditUserInfo> {
                 Expanded(
                     flex: 2,
                     child: TextFormField(
-                        controller: _inputFirstNameController,
+                        controller: _inputUserNameController,
                         decoration: InputDecoration(
-                            labelText: "Enter your first name"))),
+                            labelText: "Enter your username"))),
                 Expanded(
                     child: FlatButton(
-                        child: Text("Set First Name"), onPressed: setFirstName))
+                        child: Text("Set Username"), onPressed: setUserName))
               ])),
-      Container(
+      /*Container(
           padding: EdgeInsets.all(8),
           child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -58,7 +58,7 @@ class _EditUserInfo extends State<EditUserInfo> {
                 Expanded(
                     child: FlatButton(
                         child: Text("Set Last Name"), onPressed: setLastName))
-              ])),
+              ])),*/
       Container(
           padding: EdgeInsets.all(8),
           child: Row(
@@ -121,17 +121,17 @@ class _EditUserInfo extends State<EditUserInfo> {
     ]);
   }
 
-  void setFirstName() async {
-    firstname = (_inputFirstNameController.text);
+  void setUserName() async {
+    username = (_inputUserNameController.text);
     setState(() {
-      _inputFirstNameController.clear();
+      _inputUserNameController.clear();
     });
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('userFirstName', firstname);
+    preferences.setString('userName', username);
   }
 
-  void setLastName() async {
+  /*void setLastName() async {
     lastname = (_inputLastNameController.text);
     setState(() {
       _inputLastNameController.clear();
@@ -139,7 +139,7 @@ class _EditUserInfo extends State<EditUserInfo> {
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('userLastName', lastname);
-  }
+  }*/
 
   void setAge() async {
     age = int.parse(_inputAgeController.text);
