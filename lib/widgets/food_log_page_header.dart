@@ -21,6 +21,7 @@ class _FoodLogPageHeaderState extends State<FoodLogPageHeader> {
 
     double initialValue = widget.log.calories.toDouble();
     double maxCalories = widget.log.maxCalories.toDouble();
+    maxCalories = maxCalories == 0 ? 2000 : maxCalories;
     double maxValue = maxCalories > initialValue ? maxCalories : initialValue;
 
     final todaySlider = SleekCircularSlider(

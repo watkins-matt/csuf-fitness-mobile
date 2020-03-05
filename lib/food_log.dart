@@ -55,6 +55,7 @@ class FoodLog {
 
     _items.add(item);
 
+    // Send events to event listeners
     _caloriesChangedController.add(_calories);
     _itemAddedController.add(item);
 
@@ -68,6 +69,7 @@ class FoodLog {
     FoodLogItem item = _items[index];
     _items.removeAt(index);
 
+    // Send events to event listeners
     _itemRemovedController.add(item);
     _caloriesChangedController.add(_calories);
   }

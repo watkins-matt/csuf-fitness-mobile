@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'user_info.dart';
 
-
 class EditUserInfo extends StatefulWidget {
-  
   EditUserInfo({Key key}) : super(key: key);
 
   @override
@@ -12,7 +10,6 @@ class EditUserInfo extends StatefulWidget {
 }
 
 class _EditUserInfo extends State<EditUserInfo> {
-  
   final _formKey = GlobalKey<FormState>();
 
   get firstname => null;
@@ -36,7 +33,6 @@ class _EditUserInfo extends State<EditUserInfo> {
             decoration: const InputDecoration(
               hintText: 'Enter your first name',
             ),
-            
             controller: firstname,
             validator: (firstname) {
               if (firstname.isEmpty) {
@@ -44,10 +40,8 @@ class _EditUserInfo extends State<EditUserInfo> {
               }
               return null;
             },
-            
-            ),
-            
-            TextFormField(
+          ),
+          TextFormField(
             decoration: const InputDecoration(
               hintText: 'Enter your last name',
             ),
@@ -58,9 +52,8 @@ class _EditUserInfo extends State<EditUserInfo> {
               }
               return null;
             },
-            ),
-            
-            TextFormField(
+          ),
+          TextFormField(
             decoration: const InputDecoration(
               hintText: 'Enter your age',
             ),
@@ -71,9 +64,8 @@ class _EditUserInfo extends State<EditUserInfo> {
               }
               return null;
             },
-            ),
-            
-            TextFormField(
+          ),
+          TextFormField(
             decoration: const InputDecoration(
               hintText: 'Enter your height in inches',
             ),
@@ -84,9 +76,8 @@ class _EditUserInfo extends State<EditUserInfo> {
               }
               return null;
             },
-            ),
-             
-             TextFormField(
+          ),
+          TextFormField(
             decoration: const InputDecoration(
               hintText: 'Enter your weight in pounds',
             ),
@@ -97,24 +88,23 @@ class _EditUserInfo extends State<EditUserInfo> {
               }
               return null;
             },
-            ),
-          
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: FlatButton(
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                }
+                if (_formKey.currentState.validate()) {}
                 setUserInfo();
               },
               child: Text('Submit'),
             ),
           ),
-          ],
-        ),
+        ],
+      ),
     );
   }
-  void setUserInfo(){
+
+  void setUserInfo() {
     UserInfo(firstname, lastname, age, height, weight);
   }
 }
