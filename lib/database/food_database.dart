@@ -6,7 +6,7 @@ import '../food_log_item.dart';
 
 class FoodDatabase {
   // DB info
-  static final _databaseName = "food.db";
+  static final _databaseName = "dbfood.db";
   static final _databaseVersion = 1;
   static final table_name = 'food';
 
@@ -14,6 +14,7 @@ class FoodDatabase {
   static final columnId = '_id';
   static final columnName = 'name';
   static final columnCalories = 'calorie';
+  static final columnTime = 'time';
 
   // Singleton ~~ only one instance
   FoodDatabase._privateConstructor();
@@ -42,7 +43,8 @@ class FoodDatabase {
           CREATE TABLE $table_name (
             $columnId INTEGER PRIMARY KEY,
             $columnName TEXT NOT NULL,
-            $columnCalories INTEGER NOT NULL
+            $columnCalories INTEGER NOT NULL,
+            $columnTime INTEGER NOT NULL
           )
           ''');
   }
@@ -55,19 +57,48 @@ class FoodDatabase {
   Future<int> insert(FoodLogItem food) async {
     Database db = await instance.database;
     Map<String, dynamic> row = {
-      columnName: '$food.name',
-      columnCalories: '$food.calories'
+      columnName: '${food.name}',
+      columnCalories: '${food.calories}',
+      columnTime: '${food.time.millisecondsSinceEpoch}'
     };
-    print(
-        'inserted row : id: $columnId , food: $columnName, calories: $columnCalories');
     return await db.insert(table_name, row);
   }
 
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
-  Future<List<Map<String, dynamic>>> queryAllRows() async {
+  Future<void> printAllRows() async {
     Database db = await instance.database;
-    return await db.query(table_name);
+    var table = await db.query(table_name);
+    table.forEach((row) {
+        print('id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
+    });
+  }
+
+  Future<void> printRow(var row) async {
+        print('id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
+  }
+
+  Future<List<FoodLogItem>> queryBetweenDates(DateTime leftDate, DateTime rightDate) async {
+      Database db = await instance.database;
+      var leftEpoch = leftDate.millisecondsSinceEpoch;
+      var rightEpoch = rightDate.millisecondsSinceEpoch;
+      var rows = await db.rawQuery('SELECT * FROM $table_name WHERE $columnTime BETWEEN $leftEpoch AND $rightEpoch');
+      print('PRINTING FROM $leftDate to $rightDate');
+      rows.forEach((row) {
+        print('id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
+      });
+  }
+
+  Future<void> queryDate(DateTime date) async {
+      // TODO
+  }
+
+  Future<void> deleteAllRows() async {
+      Database db = await instance.database;
+      var table = await db.query(table_name);
+      table.forEach((row) {
+          delete(row['_id']);
+      });
   }
 
   // All of the methods (insert, query, update, delete) can also be done using
