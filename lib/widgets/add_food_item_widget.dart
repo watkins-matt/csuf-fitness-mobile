@@ -17,7 +17,7 @@ class AddFoodItemWidget extends StatefulWidget {
 class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   TextEditingController _foodNameController = TextEditingController();
   TextEditingController _calorieCountController = TextEditingController();
-  // TextDecoration _foodNameDecoration = TextDecoration()
+  InputDecoration _foodNameDecoration = InputDecoration(labelText: "Food:");
 
   @override
   void initState() {
@@ -26,6 +26,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
     widget.provider.itemScanned.listen((info) {
       setState(() {
         _foodNameController.text = info.upc;
+        print(info.productName + " " + info.upc);
       });
     });
   }
@@ -43,7 +44,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
                     flex: 5,
                     child: TextFormField(
                         controller: _foodNameController,
-                        decoration: InputDecoration(labelText: "Food:")),
+                        decoration: _foodNameDecoration),
                   ),
                   SizedBox(width: 10),
                   Expanded(
