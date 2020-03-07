@@ -11,9 +11,12 @@ class FitnessApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My Health & Fitness',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme:
+          ThemeData(primarySwatch: Colors.blue, brightness: Brightness.light),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
       ),
+      themeMode: ThemeMode.light,
       home: FoodLogPage(title: 'My Health & Fitness'),
     );
   }

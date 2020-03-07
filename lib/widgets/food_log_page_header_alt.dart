@@ -2,6 +2,7 @@ import 'package:csuf_fitness/food_log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:calendar_strip/calendar_strip.dart';
+import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import '../food_log.dart';
 
 class FoodLogPageHeaderAlt extends StatefulWidget {
@@ -21,7 +22,7 @@ class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
       startDate: DateTime.now().subtract(Duration(days: 3)),
       endDate: DateTime.now().add(Duration(days: 3)),
       onDateSelected: () {},
-      iconColor: Colors.black87,
+      // iconColor: Colors.black87,
       containerDecoration: BoxDecoration(color: Colors.black12),
     ));
 
@@ -35,16 +36,19 @@ class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
 
     double calPercent = (initialValue / maxValue) * 100;
     final calorieProgressBar = RoundedProgressBar(
+      style: RoundedProgressBarStyle(
+          colorBorder: Theme.of(context).scaffoldBackgroundColor),
       percent: calPercent,
       childCenter: Text("$calories kCal / $max kCal",
           style: TextStyle(color: Colors.white)),
     );
 
-    return Container(
-        child: Column(
+    return Card(
+        child: Container(
+            child: Column(
       children: <Widget>[calendarStrip, calorieProgressBar],
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
-    ));
+    )));
   }
 }
