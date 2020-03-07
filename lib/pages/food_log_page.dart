@@ -31,6 +31,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(widget.title),
         ),
