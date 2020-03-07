@@ -65,7 +65,20 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   void onItemAdded() {
     String foodName = _foodNameController.text;
     int calorieCount = int.parse(_calorieCountController.text);
-    FoodLogItem item = FoodLogItem(foodName, calorieCount, DateTime.now());
+    DateTime now = DateTime.now();
+
+    FoodLogItem item = FoodLogItem(
+        foodName,
+        calorieCount,
+        DateTime(
+            widget.log.date.year,
+            widget.log.date.month,
+            widget.log.date.day,
+            now.hour,
+            now.minute,
+            now.second,
+            now.millisecond,
+            now.microsecond));
 
     setState(() {
       // Add the item to the food log we correspond to, which should
