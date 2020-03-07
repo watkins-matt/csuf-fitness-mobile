@@ -19,8 +19,8 @@ class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
     final calendarStrip = Container(
         child: CalendarStrip(
       addSwipeGesture: true,
-      startDate: DateTime.now().subtract(Duration(days: 3)),
-      endDate: DateTime.now().add(Duration(days: 3)),
+      startDate: widget.log.date.subtract(Duration(days: 3)),
+      endDate: widget.log.date.add(Duration(days: 3)),
       selectedDate: widget.log.date,
       onDateSelected: (date) {
         setState(() {

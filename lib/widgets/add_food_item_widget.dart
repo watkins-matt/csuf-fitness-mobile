@@ -17,7 +17,7 @@ class AddFoodItemWidget extends StatefulWidget {
 class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   TextEditingController _foodNameController = TextEditingController();
   TextEditingController _calorieCountController = TextEditingController();
-  InputDecoration _foodNameDecoration = InputDecoration(labelText: "Food:");
+  InputDecoration _foodNameDecoration = InputDecoration(hintText: "Food");
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
                       flex: 2,
                       child: TextFormField(
                         controller: _calorieCountController,
-                        decoration: InputDecoration(labelText: "Calories:"),
+                        decoration: InputDecoration(hintText: "Calories"),
                         keyboardType: TextInputType.numberWithOptions(
                             signed: false, decimal: false),
                       )),
