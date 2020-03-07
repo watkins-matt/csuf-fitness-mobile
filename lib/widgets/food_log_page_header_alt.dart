@@ -14,21 +14,6 @@ class FoodLogPageHeaderAlt extends StatefulWidget {
 }
 
 class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
-  Widget _monthNameBuilder(String monthName) {
-    return Container(
-      child: Text(
-        monthName,
-        style: TextStyle(
-          fontSize: 17,
-          fontWeight: FontWeight.w600,
-          color: Colors.black87,
-          fontStyle: FontStyle.italic,
-        ),
-      ),
-      padding: EdgeInsets.only(top: 8, bottom: 4),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final calendarStrip = Container(
@@ -39,14 +24,11 @@ class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
       startDate: widget.log.date.subtract(Duration(days: 6)),
       endDate: widget.log.date.add(Duration(days: 6)),
       selectedDate: widget.log.date,
-      // monthNameWidget: _monthNameBuilder,
       onDateSelected: (date) {
         setState(() {
           widget.log.date = date;
         });
       },
-      // iconColor: Colors.black87,
-      // containerDecoration: BoxDecoration(color: Colors.black12),
     ));
 
     int calories = widget.log.calories;
