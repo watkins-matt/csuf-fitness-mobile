@@ -15,6 +15,7 @@ class FoodLog {
   // Private fields
   List<FoodLogItem> _items = [];
   int _calories = 0;
+  int _maxCalories = 2000;
   DateTime _date = DateTime.now();
 
   StreamController<int> _caloriesChangedController =
@@ -32,6 +33,11 @@ class FoodLog {
   int get length => _items.length;
   DateTime get date => _date;
   set date(value) => _updateDate(value);
+  int get maxCalories => _maxCalories;
+  set maxCalories(value) {
+    _caloriesChangedController.add(_calories);
+    _maxCalories = value;
+  }
 
   List<FoodLogItem> get breakfast => getItemsBetween(
       DateTime(_date.year, _date.month, _date.day, 0),
@@ -43,7 +49,6 @@ class FoodLog {
       DateTime(_date.year, _date.month, _date.day, 4),
       DateTime(_date.year, _date.month, _date.day + 1)
           .subtract(Duration(microseconds: 1)));
-  int maxCalories = 2000;
 
   // Events
   Stream<int> get caloriesChanged => _caloriesChangedController.stream;
