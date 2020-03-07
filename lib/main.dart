@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'pages/food_log_page.dart';
 import 'package:flutter/foundation.dart' as Foundation;
+import 'api_key.dart';
 
-void main() => runApp(FitnessApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(FitnessApp());
+}
 
 class FitnessApp extends StatelessWidget {
   static bool debugMode = Foundation.kDebugMode;
+
+  FitnessApp() {
+    _init();
+  }
+
+  Future _init() async {
+    await APIKey.init();
+  }
 
   @override
   Widget build(BuildContext context) {
