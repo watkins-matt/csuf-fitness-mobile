@@ -14,21 +14,39 @@ class FoodLogPageHeaderAlt extends StatefulWidget {
 }
 
 class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
+  Widget _monthNameBuilder(String monthName) {
+    return Container(
+      child: Text(
+        monthName,
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w600,
+          color: Colors.black87,
+          fontStyle: FontStyle.italic,
+        ),
+      ),
+      padding: EdgeInsets.only(top: 8, bottom: 4),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final calendarStrip = Container(
         child: CalendarStrip(
+      containerDecoration: BoxDecoration(),
+      iconColor: Theme.of(context).accentColor,
       addSwipeGesture: true,
       startDate: widget.log.date.subtract(Duration(days: 6)),
       endDate: widget.log.date.add(Duration(days: 6)),
       selectedDate: widget.log.date,
+      // monthNameWidget: _monthNameBuilder,
       onDateSelected: (date) {
         setState(() {
           widget.log.date = date;
         });
       },
       // iconColor: Colors.black87,
-      containerDecoration: BoxDecoration(color: Colors.black12),
+      // containerDecoration: BoxDecoration(color: Colors.black12),
     ));
 
     int calories = widget.log.calories;
@@ -42,18 +60,22 @@ class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
     double calPercent = (initialValue / maxValue) * 100;
     final calorieProgressBar = RoundedProgressBar(
       style: RoundedProgressBarStyle(
-          colorBorder: Theme.of(context).scaffoldBackgroundColor),
+          // backgroundProgress: Theme.of(context).scaffoldBackgroundColor,
+          // colorProgressDark: Theme.of(context).scaffoldBackgroundColor,
+          // colorProgress: Theme.of(context).accentColor,
+          colorBorder: Theme.of(context).cardColor),
       percent: calPercent,
       childCenter: Text("$calories kCal / $max kCal",
           style: TextStyle(color: Colors.white)),
     );
 
     return Card(
+        elevation: 5,
         child: Container(
             child: Column(
-      children: <Widget>[calendarStrip, calorieProgressBar],
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-    )));
+          children: <Widget>[calendarStrip, calorieProgressBar],
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+        )));
   }
 }
