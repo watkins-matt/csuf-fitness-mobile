@@ -55,9 +55,11 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
                         keyboardType: TextInputType.numberWithOptions(
                             signed: false, decimal: false),
                       )),
-                  FlatButton(
-                    child: Text("Add"),
+                  IconButton(
+                    icon: Icon(Icons.add_circle,
+                        color: Theme.of(context).accentColor),
                     onPressed: onItemAdded,
+                    iconSize: 32,
                   )
                 ])));
   }
