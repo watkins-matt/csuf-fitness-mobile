@@ -17,6 +17,7 @@ class AddFoodItemWidget extends StatefulWidget {
 class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   TextEditingController _foodNameController = TextEditingController();
   TextEditingController _calorieCountController = TextEditingController();
+  FocusNode _calorieCountFocusNode = new FocusNode();
   InputDecoration _foodNameDecoration = InputDecoration(hintText: "Food");
 
   @override
@@ -25,7 +26,11 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
 
     widget.provider.itemScanned.listen((info) {
       setState(() {
-        _foodNameController.text = info.upc;
+        _foodNameController.text = info.productName;
+        if (info.calories > 0) {
+          _calorieCountController.text = info.calories.toString();
+        }
+
         print(info.productName + " " + info.upc);
       });
     });
@@ -52,6 +57,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
                       child: TextFormField(
                         controller: _calorieCountController,
                         decoration: InputDecoration(hintText: "Calories"),
+                        focusNode: _calorieCountFocusNode,
                         keyboardType: TextInputType.numberWithOptions(
                             signed: false, decimal: false),
                       )),
