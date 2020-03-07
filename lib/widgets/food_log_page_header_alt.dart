@@ -21,7 +21,12 @@ class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
       addSwipeGesture: true,
       startDate: DateTime.now().subtract(Duration(days: 3)),
       endDate: DateTime.now().add(Duration(days: 3)),
-      onDateSelected: () {},
+      selectedDate: widget.log.date,
+      onDateSelected: (date) {
+        setState(() {
+          widget.log.date = date;
+        });
+      },
       // iconColor: Colors.black87,
       containerDecoration: BoxDecoration(color: Colors.black12),
     ));
