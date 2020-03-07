@@ -8,7 +8,7 @@ class FoodDatabase {
   // DB info
   static final _databaseName = "dbfood.db";
   static final _databaseVersion = 1;
-  static final table_name = 'food';
+  static final tableName = 'food';
 
   // DB columns
   static final columnId = '_id';
@@ -40,7 +40,7 @@ class FoodDatabase {
   // SQL code to create the database table_name
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-          CREATE TABLE $table_name (
+          CREATE TABLE $tableName (
             $columnId INTEGER PRIMARY KEY,
             $columnName TEXT NOT NULL,
             $columnCalories INTEGER NOT NULL,
@@ -61,14 +61,14 @@ class FoodDatabase {
       columnCalories: '${food.calories}',
       columnTime: '${food.time.millisecondsSinceEpoch}'
     };
-    return await db.insert(table_name, row);
+    return await db.insert(tableName, row);
   }
 
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
   Future<void> printAllRows() async {
     Database db = await instance.database;
-    var table = await db.query(table_name);
+    var table = await db.query(tableName);
     table.forEach((row) {
       print(
           'id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
@@ -86,7 +86,7 @@ class FoodDatabase {
     var leftEpoch = leftDate.millisecondsSinceEpoch;
     var rightEpoch = rightDate.millisecondsSinceEpoch;
     var rows = await db.rawQuery(
-        'SELECT * FROM $table_name WHERE $columnTime BETWEEN $leftEpoch AND $rightEpoch');
+        'SELECT * FROM $tableName WHERE $columnTime BETWEEN $leftEpoch AND $rightEpoch');
     List<FoodLogItem> items = new List<FoodLogItem>();
     print('PRINTING FROM $leftDate to $rightDate');
     rows.forEach((row) {
@@ -104,7 +104,7 @@ class FoodDatabase {
 
   Future<void> deleteAllRows() async {
     Database db = await instance.database;
-    var table = await db.query(table_name);
+    var table = await db.query(tableName);
     table.forEach((row) {
       delete(row['_id']);
     });
@@ -115,7 +115,7 @@ class FoodDatabase {
   Future<int> queryRowCount() async {
     Database db = await instance.database;
     return Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(*) FROM $table_name'));
+        await db.rawQuery('SELECT COUNT(*) FROM $tableName'));
   }
 
   // We are assuming here that the id column in the map is set. The other
@@ -124,19 +124,19 @@ class FoodDatabase {
     Database db = await instance.database;
     int id = row[columnId];
     return await db
-        .update(table_name, row, where: '$columnId = ?', whereArgs: [id]);
+        .update(tableName, row, where: '$columnId = ?', whereArgs: [id]);
   }
 
   // Deletes the row specified by the id. The number of affected rows is
   // returned. This should be 1 as long as the row exists.
   Future<int> delete(int id) async {
     Database db = await instance.database;
-    return await db.delete(table_name, where: '$columnId = ?', whereArgs: [id]);
+    return await db.delete(tableName, where: '$columnId = ?', whereArgs: [id]);
   }
 
   Future<int> deleteByTimestamp(DateTime dateTime) async {
     Database db = await instance.database;
-    return await db.delete(table_name,
+    return await db.delete(tableName,
         where: '$columnTime = ?', whereArgs: [dateTime.millisecondsSinceEpoch]);
   }
 }
