@@ -23,8 +23,9 @@ class DatabaseStorageProvider extends StorageProvider {
 
   @override
   void writeAll(List<FoodLogItem> items) {
-    // TODO: Implement code
-    throw UnimplementedError();
+    items.forEach((item) {
+      write(item);
+    });
   }
 
   @override
