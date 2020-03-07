@@ -69,11 +69,12 @@ class FoodLog {
 
     _items.add(item);
 
+    // Update the storage provider/database
+    _provider.write(item);
+
     // Send events to event listeners
     _caloriesChangedController.add(_calories);
     _itemAddedController.add(item);
-
-    _provider.write(item);
   }
 
   void removeAt(int index) {
@@ -82,6 +83,9 @@ class FoodLog {
 
     FoodLogItem item = _items[index];
     _items.removeAt(index);
+
+    // Update the storage provider/database
+    _provider.delete(item);
 
     // Send events to event listeners
     _itemRemovedController.add(item);

@@ -70,38 +70,44 @@ class FoodDatabase {
     Database db = await instance.database;
     var table = await db.query(table_name);
     table.forEach((row) {
-        print('id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
+      print(
+          'id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
     });
   }
 
   Future<void> printRow(var row) async {
-        print('id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
+    print(
+        'id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
   }
 
-  Future<List<FoodLogItem>> queryBetweenDates(DateTime leftDate, DateTime rightDate) async {
-      Database db = await instance.database;
-      var leftEpoch = leftDate.millisecondsSinceEpoch;
-      var rightEpoch = rightDate.millisecondsSinceEpoch;
-      var rows = await db.rawQuery('SELECT * FROM $table_name WHERE $columnTime BETWEEN $leftEpoch AND $rightEpoch');
-      List<FoodLogItem> items = new List<FoodLogItem>();
-      print('PRINTING FROM $leftDate to $rightDate');
-      rows.forEach((row) {
-        items.add(FoodLogItem(row[columnName], row[columnCalories], DateTime.fromMillisecondsSinceEpoch(row[columnTime])));
-        print('id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
-      });
-      return items;
+  Future<List<FoodLogItem>> queryBetweenDates(
+      DateTime leftDate, DateTime rightDate) async {
+    Database db = await instance.database;
+    var leftEpoch = leftDate.millisecondsSinceEpoch;
+    var rightEpoch = rightDate.millisecondsSinceEpoch;
+    var rows = await db.rawQuery(
+        'SELECT * FROM $table_name WHERE $columnTime BETWEEN $leftEpoch AND $rightEpoch');
+    List<FoodLogItem> items = new List<FoodLogItem>();
+    print('PRINTING FROM $leftDate to $rightDate');
+    rows.forEach((row) {
+      items.add(FoodLogItem(row[columnName], row[columnCalories],
+          DateTime.fromMillisecondsSinceEpoch(row[columnTime])));
+      print(
+          'id: ${row["$columnId"]}, name: ${row["$columnName"]}, calories: ${row["$columnCalories"]}, time: ${row["$columnTime"]}');
+    });
+    return items;
   }
 
   Future<void> queryDate(DateTime date) async {
-      // TODO
+    // TODO
   }
 
   Future<void> deleteAllRows() async {
-      Database db = await instance.database;
-      var table = await db.query(table_name);
-      table.forEach((row) {
-          delete(row['_id']);
-      });
+    Database db = await instance.database;
+    var table = await db.query(table_name);
+    table.forEach((row) {
+      delete(row['_id']);
+    });
   }
 
   // All of the methods (insert, query, update, delete) can also be done using
@@ -126,5 +132,11 @@ class FoodDatabase {
   Future<int> delete(int id) async {
     Database db = await instance.database;
     return await db.delete(table_name, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  Future<int> deleteByTimestamp(DateTime dateTime) async {
+    Database db = await instance.database;
+    return await db.delete(table_name,
+        where: '$columnTime = ?', whereArgs: [dateTime.millisecondsSinceEpoch]);
   }
 }
