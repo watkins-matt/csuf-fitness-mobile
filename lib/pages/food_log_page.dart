@@ -23,8 +23,21 @@ class FoodLogPage extends StatefulWidget {
 }
 
 class _FoodLogPageState extends State<FoodLogPage> {
-  _FoodLogPageState() {
-    _init();
+  @override
+  void initState() {
+    init().whenComplete(() {});
+    super.initState();
+  }
+
+  Future init() async {
+    const int default_max_calories = 2000;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      widget.log.maxCalories =
+          preferences.getInt('maxCalories') ?? default_max_calories;
+      widget.log.date = DateTime.now(); // Forces reload of the database
+    });
   }
 
   @override
@@ -78,15 +91,5 @@ class _FoodLogPageState extends State<FoodLogPage> {
     widget.log.dispose();
     widget.provider.dispose();
     super.dispose();
-  }
-
-  Future _init() async {
-    const int default_max_calories = 2000;
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    setState(() {
-      widget.log.maxCalories =
-          preferences.getInt('dailyMaxCalories') ?? default_max_calories;
-    });
   }
 }
