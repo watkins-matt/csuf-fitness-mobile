@@ -25,6 +25,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingPageState extends State<SettingsPage> {
   TextEditingController controller = TextEditingController();
   int maxCalories = 0;
+  bool darkMode = false;
 
   @override
   void initState() {
@@ -39,8 +40,12 @@ class _SettingPageState extends State<SettingsPage> {
       if (!prefs.containsKey('maxCalories')) {
         prefs.setInt('maxCalories', 2000);
       }
-
       maxCalories = prefs.getInt('maxCalories');
+
+      if (!prefs.containsKey('darkMode')) {
+        prefs.setBool('darkMode', false);
+      }
+      darkMode = prefs.getBool('darkMode');
     });
   }
 
@@ -67,8 +72,27 @@ class _SettingPageState extends State<SettingsPage> {
             )
           ],
         ),
+        SettingsSection(
+          title: 'User Interface',
+          tiles: [
+            SettingsTile.switchTile(
+                title: 'Dark Mode',
+                subtitle: 'Changes take effect upon restart',
+                onToggle: _onDarkModeToggle,
+                switchValue: darkMode)
+          ],
+        )
       ],
     );
+  }
+
+  void _onDarkModeToggle(bool enabled) async {
+    darkMode = enabled;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setBool('darkMode', darkMode);
+    });
   }
 
   Future<void> _onCalorieEntryOkButtonPressed() async {

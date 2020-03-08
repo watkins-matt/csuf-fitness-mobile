@@ -43,26 +43,12 @@ class MainDrawerState extends State<MainDrawer> {
                 onPressed: () {},
               ),
               accountEmail: Text(email)),
-          _initialSetupListTile(context),
           _foodHistoryListTile(context),
           _settingsListTile(context),
           _userInfoTile(context),
         ],
       )),
     );
-  }
-
-  ListTile _initialSetupListTile(BuildContext context) {
-    return ListTile(
-        title: Text("Debug: Run Initial Setup"),
-        onTap: () {
-          Navigator.pop(context);
-          Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) {
-              return Scaffold(body: SettingsPage());
-            },
-          ));
-        });
   }
 
   ListTile _foodHistoryListTile(BuildContext context) {

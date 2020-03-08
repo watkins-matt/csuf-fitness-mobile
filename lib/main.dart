@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/food_log_page.dart';
 import 'package:flutter/foundation.dart' as Foundation;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'api_key.dart';
 
 void main() {
@@ -10,6 +11,7 @@ void main() {
 
 class FitnessApp extends StatelessWidget {
   static bool debugMode = Foundation.kDebugMode;
+  static bool darkMode = false;
 
   FitnessApp() {
     _init();
@@ -17,6 +19,9 @@ class FitnessApp extends StatelessWidget {
 
   Future _init() async {
     await APIKey.init();
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    darkMode = prefs.getBool('darkMode');
   }
 
   @override
@@ -28,7 +33,7 @@ class FitnessApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      themeMode: ThemeMode.light,
+      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
       home: FoodLogPage(title: 'My Health & Fitness'),
     );
   }
