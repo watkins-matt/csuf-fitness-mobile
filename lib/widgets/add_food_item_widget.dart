@@ -17,7 +17,8 @@ class AddFoodItemWidget extends StatefulWidget {
 class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   TextEditingController _foodNameController = TextEditingController();
   TextEditingController _calorieCountController = TextEditingController();
-  InputDecoration _foodNameDecoration = InputDecoration(labelText: "Food:");
+  FocusNode _calorieCountFocusNode = new FocusNode();
+  InputDecoration _foodNameDecoration = InputDecoration(hintText: "Food");
 
   @override
   void initState() {
@@ -25,9 +26,16 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
 
     widget.provider.itemScanned.listen((info) {
       setState(() {
-        _foodNameController.text = info.upc;
-        print(info.productName + " " + info.upc);
+        _foodNameController.text = info.productName;
+        if (info.calories > 0) {
+          _calorieCountController.text = info.calories.toString();
+        }
       });
+
+      // Add the item to the database if we have all the info
+      if (info.productName != '' && info.calories != -1) {
+        onItemAdded();
+      }
     });
   }
 
@@ -51,13 +59,16 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
                       flex: 2,
                       child: TextFormField(
                         controller: _calorieCountController,
-                        decoration: InputDecoration(labelText: "Calories:"),
+                        decoration: InputDecoration(hintText: "Calories"),
+                        focusNode: _calorieCountFocusNode,
                         keyboardType: TextInputType.numberWithOptions(
                             signed: false, decimal: false),
                       )),
-                  FlatButton(
-                    child: Text("Add"),
+                  IconButton(
+                    icon: Icon(Icons.add_circle,
+                        color: Theme.of(context).accentColor),
                     onPressed: onItemAdded,
+                    iconSize: 32,
                   )
                 ])));
   }
@@ -65,7 +76,20 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   void onItemAdded() {
     String foodName = _foodNameController.text;
     int calorieCount = int.parse(_calorieCountController.text);
-    FoodLogItem item = FoodLogItem(foodName, calorieCount, DateTime.now());
+    DateTime now = DateTime.now();
+
+    FoodLogItem item = FoodLogItem(
+        foodName,
+        calorieCount,
+        DateTime(
+            widget.log.date.year,
+            widget.log.date.month,
+            widget.log.date.day,
+            now.hour,
+            now.minute,
+            now.second,
+            now.millisecond,
+            now.microsecond));
 
     setState(() {
       // Add the item to the food log we correspond to, which should

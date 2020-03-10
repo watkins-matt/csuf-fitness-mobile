@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/add_food_item_widget.dart';
 import '../widgets/main_drawer.dart';
-import '../widgets/food_log_page_header.dart';
 import '../widgets/food_log_list_view.dart';
 import '../food_log.dart';
 import '../icon_library.dart';
@@ -24,14 +23,28 @@ class FoodLogPage extends StatefulWidget {
 }
 
 class _FoodLogPageState extends State<FoodLogPage> {
-  _FoodLogPageState() {
-    _init();
+  @override
+  void initState() {
+    init().whenComplete(() {});
+    super.initState();
+  }
+
+  Future init() async {
+    const int default_max_calories = 2000;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      widget.log.maxCalories =
+          preferences.getInt('maxCalories') ?? default_max_calories;
+      widget.log.date = DateTime.now(); // Forces reload of the database
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(widget.title),
         ),
@@ -78,15 +91,5 @@ class _FoodLogPageState extends State<FoodLogPage> {
     widget.log.dispose();
     widget.provider.dispose();
     super.dispose();
-  }
-
-  Future _init() async {
-    const int default_max_calories = 2000;
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    setState(() {
-      widget.log.maxCalories =
-          preferences.getInt('dailyMaxCalories') ?? default_max_calories;
-    });
   }
 }
