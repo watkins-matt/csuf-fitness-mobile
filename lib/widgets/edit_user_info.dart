@@ -12,7 +12,7 @@ class _EditUserInfo extends State<EditUserInfo> {
   static const String defaultSetUserName = "Enter Username";
   static const String defaultSetAge = "Enter Age";
   static const String defaultSetHeight = "Enter Height";
-  static const String defaultSetWeight = "Enter Height";
+  static const String defaultSetWeight = "Enter Weight";
   static const String defaultBMI = "";
  // static const String defaultHealth = "";
   String username;
