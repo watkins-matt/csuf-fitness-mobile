@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditUserInfo extends StatefulWidget {
@@ -13,12 +14,15 @@ class _EditUserInfo extends State<EditUserInfo> {
   static const String defaultSetHeight = "Enter Height";
   static const String defaultSetWeight = "Enter Height";
   static const String defaultBMI = "";
+ // static const String defaultHealth = "";
   String username;
   //static String lastname;
   String age;
   String height;
   String weight;
   String bmi;
+  String health;
+ // double getBMI;
 
   _EditUserInfo() {
     _init();
@@ -41,7 +45,7 @@ class _EditUserInfo extends State<EditUserInfo> {
       height = prefs.get("userHeight") ?? defaultSetHeight;
       weight = prefs.get("userWeight") ?? defaultSetWeight;
       bmi = prefs.get("userBMI") ?? defaultBMI;
-      //email = prefs.get("email") ?? "Email Not Provided";
+     // health = prefs.get("userHealth") ?? defaultHealth;
     });
   }
 
@@ -191,10 +195,11 @@ class _EditUserInfo extends State<EditUserInfo> {
     } else {
       bmi = ((703 * (double.parse(weight))) /
               (((double.parse(height))) * (double.parse(height))))
-          .toStringAsFixed(2);
+          .toStringAsFixed(1);
     }
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('userBMI', bmi);
+    //bmiHealth();
   }
 
   void setHeight() async {
@@ -203,6 +208,7 @@ class _EditUserInfo extends State<EditUserInfo> {
       _inputHeightController.clear();
     });
     bodyMassIndex();
+    //bmiHealth();
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('userHeight', height);
   }
@@ -213,7 +219,23 @@ class _EditUserInfo extends State<EditUserInfo> {
       _inputWeightController.clear();
     });
     bodyMassIndex();
+    //bmiHealth();
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('userWeight', weight);
   }
+
+  /*void bmiHealth() async {
+    getBMI = 23.5;
+    if (getBMI < 18.5) {
+      health = "Underweight";
+    } else if (getBMI == 18.5 && getBMI < 24.9) {
+      health = "Normal Weight";
+    } else if (getBMI == 25 && getBMI < 29.9) {
+      health = "Overweight";
+    } else if (getBMI > 29.9) {
+      health = "Obese";
+    }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('userHealth', health);
+  }*/
 }
