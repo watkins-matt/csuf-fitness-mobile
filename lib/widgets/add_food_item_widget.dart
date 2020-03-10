@@ -30,9 +30,12 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
         if (info.calories > 0) {
           _calorieCountController.text = info.calories.toString();
         }
-
-        print(info.productName + " " + info.upc);
       });
+
+      // Add the item to the database if we have all the info
+      if (info.productName != '' && info.calories != -1) {
+        onItemAdded();
+      }
     });
   }
 
