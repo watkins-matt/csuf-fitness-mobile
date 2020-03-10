@@ -11,10 +11,10 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.5+1
+version: 0.2.0
 
 environment:
-  sdk: '>=2.1.0 <3.0.0'
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -59,7 +59,7 @@ flutter:
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
   assets:
-    - assets/
+    - assets/api_key.json
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
