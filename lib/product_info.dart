@@ -80,8 +80,8 @@ class FoodDataCentralDataProvider extends ProductInfoProvider {
     }
 
     double gramWeight = result["servingSize"];
-    double caloriesPer100g = result["foodNutrients"][0]["amount"];
-    // double caloriesPer1g = caloriesPer100g / 100;
-    return caloriesPer100g * gramWeight;
+    double caloriesPer100g = result["foodNutrients"][3]["amount"];
+    double caloriesPer1g = caloriesPer100g / 100;
+    return caloriesPer1g * gramWeight;
   }
 }
