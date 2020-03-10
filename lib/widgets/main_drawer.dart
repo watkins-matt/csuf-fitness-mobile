@@ -11,8 +11,9 @@ class MainDrawer extends StatefulWidget {
 
 class MainDrawerState extends State<MainDrawer> {
   static const String defaultUserName = "Default User";
+  static const String defaultBMI = "";
   String userName = defaultUserName;
-  String email = "";
+  String userBMI = defaultBMI;
 
   MainDrawerState() {
     _init();
@@ -23,7 +24,7 @@ class MainDrawerState extends State<MainDrawer> {
 
     setState(() {
       userName = prefs.get("userName") ?? defaultUserName;
-      //email = prefs.get("email") ?? "Email Not Provided";
+      userBMI = prefs.get("userBMI") ?? defaultBMI;
     });
   }
 
@@ -36,13 +37,13 @@ class MainDrawerState extends State<MainDrawer> {
           UserAccountsDrawerHeader(
               accountName: FlatButton(
                 child: Text(
-                  userName,
+                  "$userName\nBMI: $userBMI",
                   style: TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.white),
                 ),
                 onPressed: () {},
               ),
-              accountEmail: Text(email)),
+              accountEmail: Text("")),
           _initialSetupListTile(context),
           _foodHistoryListTile(context),
           _settingsListTile(context),

@@ -8,11 +8,22 @@ class EditUserInfo extends StatefulWidget {
 }
 
 class _EditUserInfo extends State<EditUserInfo> {
-  static String username;
+  static const String defaultSetUserName = "Enter Username";
+  static const String defaultSetAge = "Enter Age";
+  static const String defaultSetHeight = "Enter Height";
+  static const String defaultSetWeight = "Enter Height";
+  static const String defaultBMI = "";
+  String username;
   //static String lastname;
-  static int age;
-  static int height;
-  static int weight;
+  String age;
+  String height;
+  String weight;
+  String bmi;
+
+  _EditUserInfo() {
+    _init();
+  }
+
   final TextEditingController _inputUserNameController =
       TextEditingController();
   /*final TextEditingController _inputLastNameController =
@@ -20,6 +31,20 @@ class _EditUserInfo extends State<EditUserInfo> {
   final TextEditingController _inputAgeController = TextEditingController();
   final TextEditingController _inputHeightController = TextEditingController();
   final TextEditingController _inputWeightController = TextEditingController();
+
+  Future _init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      username = prefs.get("userName") ?? defaultSetUserName;
+      age = prefs.get("userAge") ?? defaultSetAge;
+      height = prefs.get("userHeight") ?? defaultSetHeight;
+      weight = prefs.get("userWeight") ?? defaultSetWeight;
+      bmi = prefs.get("userBMI") ?? defaultBMI;
+      //email = prefs.get("email") ?? "Email Not Provided";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
@@ -34,8 +59,7 @@ class _EditUserInfo extends State<EditUserInfo> {
                     flex: 2,
                     child: TextFormField(
                         controller: _inputUserNameController,
-                        decoration: InputDecoration(
-                            labelText: "Enter your username"))),
+                        decoration: InputDecoration(labelText: username))),
                 Expanded(
                     child: FlatButton(
                         child: Text("Set Username"), onPressed: setUserName))
@@ -68,7 +92,7 @@ class _EditUserInfo extends State<EditUserInfo> {
                     flex: 2,
                     child: TextFormField(
                       controller: _inputAgeController,
-                      decoration: InputDecoration(labelText: "Enter your age"),
+                      decoration: InputDecoration(labelText: age),
                       keyboardType: TextInputType.numberWithOptions(
                           signed: false, decimal: false),
                     )),
@@ -87,14 +111,14 @@ class _EditUserInfo extends State<EditUserInfo> {
                     flex: 2,
                     child: TextFormField(
                       controller: _inputHeightController,
-                      decoration:
-                          InputDecoration(labelText: "Enter your height"),
+                      decoration: InputDecoration(labelText: height),
                       keyboardType: TextInputType.numberWithOptions(
                           signed: false, decimal: false),
                     )),
                 Expanded(
                     child: FlatButton(
-                        child: Text("Set Height"), onPressed: setHeight))
+                        child: Text("Set Height (inches)"),
+                        onPressed: setHeight))
               ])),
       Container(
           padding: EdgeInsets.all(8),
@@ -107,15 +131,27 @@ class _EditUserInfo extends State<EditUserInfo> {
                     flex: 2,
                     child: TextFormField(
                       controller: _inputWeightController,
-                      decoration:
-                          InputDecoration(labelText: "Enter your weight"),
+                      decoration: InputDecoration(labelText: weight),
                       keyboardType: TextInputType.numberWithOptions(
                           signed: false, decimal: false),
                     )),
                 Expanded(
                     child: FlatButton(
-                        child: Text("Set Weight"), onPressed: setWeight))
-              ]))
+                        child: Text("Set Weight (lbs)"), onPressed: setWeight))
+              ])),
+      Container(
+          padding: EdgeInsets.all(8),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: Text("BMI: $bmi"),
+              ),
+            ],
+          ))
     ]);
   }
 
@@ -140,32 +176,44 @@ class _EditUserInfo extends State<EditUserInfo> {
   }*/
 
   void setAge() async {
-    age = int.parse(_inputAgeController.text);
+    age = /*int.parse*/ (_inputAgeController.text);
     setState(() {
       _inputAgeController.clear();
     });
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setInt('userAge', age);
+    preferences.setString('userAge', age);
+  }
+
+  void bodyMassIndex() async {
+    if (height == defaultSetHeight || weight == defaultSetWeight) {
+      bmi = defaultBMI;
+    } else {
+      bmi = ((703 * (double.parse(weight))) /
+              (((double.parse(height))) * (double.parse(height))))
+          .toStringAsFixed(2);
+    }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('userBMI', bmi);
   }
 
   void setHeight() async {
-    height = int.parse(_inputHeightController.text);
+    height = /*int.parse*/ (_inputHeightController.text);
     setState(() {
       _inputHeightController.clear();
     });
-
+    bodyMassIndex();
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setInt('userHeight', height);
+    preferences.setString('userHeight', height);
   }
 
   void setWeight() async {
-    weight = int.parse(_inputWeightController.text);
+    weight = /*int.parse*/ (_inputWeightController.text);
     setState(() {
       _inputWeightController.clear();
     });
-
+    bodyMassIndex();
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setInt('userWeight', weight);
+    preferences.setString('userWeight', weight);
   }
 }
