@@ -28,7 +28,7 @@ class FoodDataCentralDataProvider extends ProductInfoProvider {
       String title = result["foods"][0]["description"];
 
       // Cache the fdcId for fast lookups
-      int fdcId = int.parse(result["foods"][0]["fdcId"]);
+      int fdcId = result["foods"][0]["fdcId"];
       idCache[gtin] = fdcId;
 
       return title.titleCase;
@@ -53,8 +53,8 @@ class FoodDataCentralDataProvider extends ProductInfoProvider {
     Map<String, dynamic> result = json.decode(response.body);
 
     if (result["totalHits"] == 1) {
-      String id = result["foods"][0]["fdcId"];
-      return int.parse(id);
+      int id = result["foods"][0]["fdcId"];
+      return id;
     }
 
     return -1;
@@ -79,10 +79,9 @@ class FoodDataCentralDataProvider extends ProductInfoProvider {
       return -1;
     }
 
-    double gramWeight = double.parse(result["foodPortions"][0]["gramWeight"]);
-    double caloriesPer100g = double.parse(result["foodNutrients"][0]["amount"]);
-    double multiplier = gramWeight / 100;
-
-    return caloriesPer100g * multiplier;
+    double gramWeight = result["servingSize"];
+    double caloriesPer100g = result["foodNutrients"][0]["amount"];
+    // double caloriesPer1g = caloriesPer100g / 100;
+    return caloriesPer100g * gramWeight;
   }
 }
