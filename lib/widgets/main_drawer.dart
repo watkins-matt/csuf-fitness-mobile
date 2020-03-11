@@ -35,38 +35,29 @@ class MainDrawerState extends State<MainDrawer> {
           child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-              accountName: FlatButton(
-                child: Text(
-                  "$userName\nBMI: $userBMI",
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.white),
-                ),
-                onPressed: () {},
-              ),
-              accountEmail: Text("")),
+              currentAccountPicture: CircleAvatar(
+                  backgroundColor: Theme.of(context).cardColor,
+                  child: Text(userName.substring(0, 1))),
+              accountName: Text("$userName"),
+              accountEmail: Text("BMI: $userBMI")),
           //_initialSetupListTile(context),
-          _foodHistoryListTile(context),
-          _settingsListTile(context),
+          // _foodHistoryListTile(context),
           _userInfoTile(context),
+          _settingsListTile(context),
         ],
       )),
     );
   }
 
-  ListTile _foodHistoryListTile(BuildContext context) {
-    return ListTile(
-        leading: const Icon(Icons.calendar_today),
-        title: Text("Food History"),
-        onTap: () {
-          Navigator.pop(context);
-          // Navigator.push(context, MaterialPageRoute(
-          //   builder: (BuildContext context) {
-          //     return Scaffold(body: SettingsPage());
-          //   },
-          // ));
-          openFoodHistoryPage(context);
-        });
-  }
+  // ListTile _foodHistoryListTile(BuildContext context) {
+  //   return ListTile(
+  //       leading: const Icon(Icons.calendar_today),
+  //       title: Text("Food History"),
+  //       onTap: () {
+  //         Navigator.pop(context);
+  //         openFoodHistoryPage(context);
+  //       });
+  // }
 
   ListTile _settingsListTile(BuildContext context) {
     return ListTile(
