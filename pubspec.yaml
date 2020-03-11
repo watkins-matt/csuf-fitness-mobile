@@ -24,13 +24,15 @@ dependencies:
   sqflite: ^1.2.1
   path_provider: ^1.6.0
   intl: ^0.16.1
-  barcode_scan: ^2.0.1
+  # barcode_scan: ^2.0.1
   flutter_rounded_progress_bar: ^0.1.2
   calendar_strip: ^1.0.6
   recase: ^3.0.0
   http: ^0.12.0+4
   settings_ui: ^0.2.0
   openfoodfacts: ^0.1.16
+  flutter_spinkit: ^4.1.2
+  qrscan: ^0.2.17
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
