@@ -105,7 +105,11 @@ class FoodDataCentralDataProvider extends ProductInfoProvider {
       return -1;
     }
 
-    double calories = result['labelNutrients']['calories']['value'];
+    var calories = result['labelNutrients']['calories']['value'];
+    if (calories == null) {
+      calories = -1;
+    }
+
     return calories;
 
     // double gramWeight = result["servingSize"];
