@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditUserInfo extends StatefulWidget {
@@ -14,7 +13,7 @@ class _EditUserInfo extends State<EditUserInfo> {
   static const String defaultSetHeight = "Enter Height";
   static const String defaultSetWeight = "Enter Weight";
   static const String defaultBMI = "";
- // static const String defaultHealth = "";
+  // static const String defaultHealth = "";
   String username;
   //static String lastname;
   String age;
@@ -22,7 +21,7 @@ class _EditUserInfo extends State<EditUserInfo> {
   String weight;
   String bmi;
   String health;
- // double getBMI;
+  // double getBMI;
 
   _EditUserInfo() {
     _init();
@@ -45,7 +44,7 @@ class _EditUserInfo extends State<EditUserInfo> {
       height = prefs.get("userHeight") ?? defaultSetHeight;
       weight = prefs.get("userWeight") ?? defaultSetWeight;
       bmi = prefs.get("userBMI") ?? defaultBMI;
-     // health = prefs.get("userHealth") ?? defaultHealth;
+      // health = prefs.get("userHealth") ?? defaultHealth;
     });
   }
 
