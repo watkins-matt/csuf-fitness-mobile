@@ -1,4 +1,3 @@
-import 'package:csuf_fitness/food_history.dart';
 import 'package:flutter/material.dart';
 import '../pages/settings_page.dart';
 import '../pages/user_page.dart';
