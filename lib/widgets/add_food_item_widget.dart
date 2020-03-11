@@ -17,19 +17,33 @@ class AddFoodItemWidget extends StatefulWidget {
 class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   TextEditingController _foodNameController = TextEditingController();
   TextEditingController _calorieCountController = TextEditingController();
-  FocusNode _calorieCountFocusNode = new FocusNode();
+  FocusNode _calorieCountFocusNode = FocusNode();
+  FocusNode _foodNameFocusNode = FocusNode();
   InputDecoration _foodNameDecoration = InputDecoration(hintText: "Food");
 
   void itemScanned(BarcodeInfo info) {
-    _foodNameController.text = info.productName;
+    setState(() {
+      _foodNameController.text = info.productName;
+      _foodNameController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _foodNameController.text.length));
+    });
+
     if (info.calories > 0) {
       _calorieCountController.text = info.calories.toString();
     }
-    setState(() {});
 
     // Add the item to the database if we have all the info
     if (info.productName != '' && info.calories != -1) {
       onItemAdded();
+    } else if (info.productName != '' && info.calories < 0) {
+      setState(() {
+        // _calorieCountController.selection =
+        //     TextSelection.fromPosition(TextPosition(offset: 0));
+        //_foodNameFocusNode.unfocus();
+        // FocusScope.of(context).requestFocus(_calorieCountFocusNode);
+        // FocusScope.of(context).nextFocus();
+        _calorieCountFocusNode.requestFocus();
+      });
     }
 
     setState(() {});
@@ -54,7 +68,11 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
                     flex: 5,
                     child: TextFormField(
                         controller: _foodNameController,
-                        decoration: _foodNameDecoration),
+                        decoration: _foodNameDecoration,
+                        focusNode: _foodNameFocusNode,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) =>
+                            FocusScope.of(context).nextFocus()),
                   ),
                   SizedBox(width: 10),
                   Expanded(
@@ -63,6 +81,8 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
                         controller: _calorieCountController,
                         decoration: InputDecoration(hintText: "Calories"),
                         focusNode: _calorieCountFocusNode,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (_) => onItemAdded(),
                         keyboardType: TextInputType.numberWithOptions(
                             signed: false, decimal: false),
                       )),
