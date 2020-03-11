@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'package:csuf_fitness/open_food_facts_data_provider.dart';
+
 import 'api_key.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -8,6 +10,31 @@ import 'dart:async';
 abstract class ProductInfoProvider {
   Future<String> getProductTitle(String gtin);
   Future<double> getCalories(String gtin);
+}
+
+class MultiInfoProvider extends ProductInfoProvider {
+  ProductInfoProvider fdc = FoodDataCentralDataProvider();
+  ProductInfoProvider off = OpenFoodFactsDataProvider();
+
+  Future<String> getProductTitle(String gtin) async {
+    String result = await fdc.getProductTitle(gtin);
+
+    if (result.isEmpty) {
+      result = await off.getProductTitle(gtin);
+    }
+
+    return result;
+  }
+
+  Future<double> getCalories(String gtin) async {
+    double calories = await fdc.getCalories(gtin);
+
+    if (calories == -1) {
+      calories = await off.getCalories(gtin);
+    }
+
+    return calories;
+  }
 }
 
 class FoodDataCentralDataProvider extends ProductInfoProvider {
@@ -74,14 +101,16 @@ class FoodDataCentralDataProvider extends ProductInfoProvider {
         await http.get(url, headers: {"Accept": "application/json"});
     Map<String, dynamic> result = json.decode(response.body);
 
-    if (!result.containsKey('foodPortions') ||
-        !result.containsKey('foodNutrients')) {
+    if (!result.containsKey('labelNutrients')) {
       return -1;
     }
 
-    double gramWeight = result["servingSize"];
-    double caloriesPer100g = result["foodNutrients"][3]["amount"];
-    double caloriesPer1g = caloriesPer100g / 100;
-    return caloriesPer1g * gramWeight;
+    double calories = result['labelNutrients']['calories']['value'];
+    return calories;
+
+    // double gramWeight = result["servingSize"];
+    // double caloriesPer100g = result["foodNutrients"][3]["amount"];
+    // double caloriesPer1g = caloriesPer100g / 100;
+    // return caloriesPer1g * gramWeight;
   }
 }

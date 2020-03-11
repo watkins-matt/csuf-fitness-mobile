@@ -1,6 +1,7 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'dart:async';
 import 'product_info.dart';
+import 'open_food_facts_data_provider.dart';
 
 class BarcodeInfo {
   String upc;
@@ -11,25 +12,21 @@ class BarcodeInfo {
 }
 
 class BarcodeProvider {
-  StreamController<BarcodeInfo> _itemScannedController =
-      new StreamController.broadcast();
-  Stream<BarcodeInfo> get itemScanned => _itemScannedController.stream;
+  void Function(BarcodeInfo info) itemScannedCallback;
 
   void scan() async {
     try {
-      ProductInfoProvider info = FoodDataCentralDataProvider();
+      ProductInfoProvider info = MultiInfoProvider();
 
       String gtin = await BarcodeScanner.scan();
       String productName = await info.getProductTitle(gtin);
       int calories = (await info.getCalories(gtin)).round();
 
-      _itemScannedController.add(BarcodeInfo(gtin, productName, calories));
+      if (itemScannedCallback != null) {
+        itemScannedCallback(BarcodeInfo(gtin, productName, calories));
+      }
     } catch (ex) {
       print(ex.toString());
     }
-  }
-
-  void dispose() {
-    //_itemScannedController.close();
   }
 }

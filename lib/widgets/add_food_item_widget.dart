@@ -20,23 +20,25 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
   FocusNode _calorieCountFocusNode = new FocusNode();
   InputDecoration _foodNameDecoration = InputDecoration(hintText: "Food");
 
+  void itemScanned(BarcodeInfo info) {
+    _foodNameController.text = info.productName;
+    if (info.calories > 0) {
+      _calorieCountController.text = info.calories.toString();
+    }
+    setState(() {});
+
+    // Add the item to the database if we have all the info
+    if (info.productName != '' && info.calories != -1) {
+      onItemAdded();
+    }
+
+    setState(() {});
+  }
+
   @override
   void initState() {
+    widget.provider.itemScannedCallback = itemScanned;
     super.initState();
-
-    widget.provider.itemScanned.listen((info) {
-      setState(() {
-        _foodNameController.text = info.productName;
-        if (info.calories > 0) {
-          _calorieCountController.text = info.calories.toString();
-        }
-      });
-
-      // Add the item to the database if we have all the info
-      if (info.productName != '' && info.calories != -1) {
-        onItemAdded();
-      }
-    });
   }
 
   @override
