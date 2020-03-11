@@ -33,7 +33,7 @@ class FitnessApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ThemeMode.light,
       home: FoodLogPage(title: 'My Health & Fitness'),
     );
   }
