@@ -1,6 +1,10 @@
+import 'package:csuf_fitness/pages/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../pages/settings_page.dart';
+import '../pages/home_page.dart';
+import '../pages/sleep_log_page.dart';
+import '../pages/food_log_page.dart';
 
 class MainBottomNavBar extends StatefulWidget {
   MainBottomNavBar();
@@ -26,8 +30,17 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
       index = newIndex;
 
       switch (index) {
+        case 1:
+          HomePage.push(context);
+          break;
+        case 2:
+          FoodLogPage.push(context);
+          break;
+        case 3:
+          SleepLogPage.push(context);
+          break;
         case 4:
-          SettingsPage.push(context);
+          UsersPage.push(context);
           break;
       }
     });

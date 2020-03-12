@@ -20,6 +20,17 @@ class FoodLogPage extends StatefulWidget {
 
   FoodLogPage({Key key, this.title}) : super(key: key);
 
+  static void push(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) {
+        return Scaffold(body: FoodLogPage());
+      },
+    ));
+  }
+
   @override
   _FoodLogPageState createState() => _FoodLogPageState();
 }
