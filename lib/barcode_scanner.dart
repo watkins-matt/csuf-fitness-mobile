@@ -1,8 +1,4 @@
-// import 'package:barcode_scan/barcode_scan.dart';
-import 'package:flutter/rendering.dart';
-import 'dart:async';
 import 'product_info.dart';
-import 'open_food_facts_data_provider.dart';
 import 'package:qrscan/qrscan.dart' as QRScan;
 
 class BarcodeInfo {
