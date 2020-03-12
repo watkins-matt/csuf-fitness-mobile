@@ -3,10 +3,16 @@ import 'pages/food_log_page.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api_key.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(FitnessApp());
+
+  // Default to portrait mode
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(FitnessApp());
+  });
 }
 
 class FitnessApp extends StatelessWidget {
