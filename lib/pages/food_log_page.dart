@@ -72,14 +72,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
             builder: (context, snapshot) {
               return FoodLogPageHeaderAlt(widget.log);
             }),
-        StreamBuilder<BarcodeInfo>(
-            stream: widget.provider.itemScanned,
-            builder: (context, snapshot) {
-              if (snapshot.hasData)
-                return AddFoodItemWidget(widget.log, widget.provider);
-              else
-                return AddFoodItemWidget(widget.log, widget.provider);
-            }),
+        AddFoodItemWidget(widget.log, widget.provider),
         StreamBuilder<int>(
             stream: FoodLog().caloriesChanged,
             builder: (context, snapshot) {
@@ -92,7 +85,6 @@ class _FoodLogPageState extends State<FoodLogPage> {
   @override
   void dispose() {
     widget.log.dispose();
-    widget.provider.dispose();
     super.dispose();
   }
 }

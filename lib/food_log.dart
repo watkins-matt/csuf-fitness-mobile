@@ -19,11 +19,11 @@ class FoodLog {
   DateTime _date = DateTime.now();
 
   StreamController<int> _caloriesChangedController =
-      new StreamController.broadcast();
+      StreamController.broadcast();
   StreamController<FoodLogItem> _itemAddedController =
-      new StreamController.broadcast();
+      StreamController.broadcast();
   StreamController<FoodLogItem> _itemRemovedController =
-      new StreamController.broadcast();
+      StreamController.broadcast();
 
   StorageProvider _provider = StorageProvider.instance;
 
