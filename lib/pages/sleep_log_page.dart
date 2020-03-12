@@ -24,7 +24,7 @@ class _SleepLogPageState extends State<SleepLogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: MainBottomNavBar(),
+        // bottomNavigationBar: MainBottomNavBar(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text("My Health & Fitness"),

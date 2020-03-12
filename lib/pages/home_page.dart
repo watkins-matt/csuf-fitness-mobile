@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: MainBottomNavBar(),
+        // bottomNavigationBar: MainBottomNavBar(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text("My Health & Fitness"),

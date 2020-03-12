@@ -26,7 +26,7 @@ class FoodLogPage extends StatefulWidget {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
       builder: (BuildContext context) {
-        return Scaffold(body: FoodLogPage());
+        return Scaffold(body: FoodLogPage(title: "My Health & Fitness"));
       },
     ));
   }
@@ -57,10 +57,10 @@ class _FoodLogPageState extends State<FoodLogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        bottomNavigationBar: MainBottomNavBar(),
+        // bottomNavigationBar: MainBottomNavBar(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text("My Health & Fitness"),
         ),
         body: _buildBody(),
         drawer: MainDrawer(),
@@ -95,7 +95,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
 
   @override
   void dispose() {
-    widget.log.dispose();
+    // widget.log.dispose();
     super.dispose();
   }
 }

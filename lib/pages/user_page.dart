@@ -1,3 +1,4 @@
+import 'package:csuf_fitness/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import '../widgets/edit_user_info.dart';
 
@@ -27,6 +28,7 @@ class _UserPageState extends State<UsersPage> {
         title: Text("User Info"),
       ),
       body: _buildUserPage(),
+      // bottomNavigationBar: MainBottomNavBar(),
     );
   }
 

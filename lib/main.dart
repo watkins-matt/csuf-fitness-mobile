@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' as Foundation;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api_key.dart';
 import 'package:flutter/services.dart';
+import 'widgets/bottom_nav_bar.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,7 @@ class FitnessApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.light,
-      home: FoodLogPage(title: 'My Health & Fitness'),
+      home: MainBottomNavBarController(),
     );
   }
 }
