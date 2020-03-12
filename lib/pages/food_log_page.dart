@@ -3,6 +3,8 @@ import 'package:csuf_fitness/food_log.dart';
 import 'package:csuf_fitness/widgets/food_log_page_header_alt.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/widgets.dart';
+import '../widgets/bottom_nav_bar.dart';
 
 import '../widgets/add_food_item_widget.dart';
 import '../widgets/main_drawer.dart';
@@ -44,6 +46,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        bottomNavigationBar: MainBottomNavBar(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(widget.title),
