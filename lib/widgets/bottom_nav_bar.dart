@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../pages/settings_page.dart';
 
 class MainBottomNavBar extends StatefulWidget {
   MainBottomNavBar();
@@ -17,8 +18,18 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
   }
 
   void itemSelected(int newIndex) {
+    if (index == newIndex) {
+      return; // Don't reload the current page
+    }
+
     setState(() {
       index = newIndex;
+
+      switch (index) {
+        case 4:
+          SettingsPage.push(context);
+          break;
+      }
     });
   }
 
