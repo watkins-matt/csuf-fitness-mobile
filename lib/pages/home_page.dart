@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/main_drawer.dart';
-import '../widgets/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -24,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // bottomNavigationBar: MainBottomNavBar(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text("My Health & Fitness"),

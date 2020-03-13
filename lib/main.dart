@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'pages/food_log_page.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api_key.dart';

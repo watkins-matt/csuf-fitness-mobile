@@ -48,16 +48,6 @@ class MainDrawerState extends State<MainDrawer> {
     );
   }
 
-  // ListTile _foodHistoryListTile(BuildContext context) {
-  //   return ListTile(
-  //       leading: const Icon(Icons.calendar_today),
-  //       title: Text("Food History"),
-  //       onTap: () {
-  //         Navigator.pop(context);
-  //         openFoodHistoryPage(context);
-  //       });
-  // }
-
   ListTile _settingsListTile(BuildContext context) {
     return ListTile(
         leading: const Icon(Icons.perm_data_setting),
