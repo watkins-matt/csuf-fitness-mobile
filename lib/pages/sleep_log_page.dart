@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/main_drawer.dart';
-import '../widgets/bottom_nav_bar.dart';
 
 class SleepLogPage extends StatefulWidget {
   SleepLogPage({Key key}) : super(key: key);
@@ -24,7 +23,10 @@ class _SleepLogPageState extends State<SleepLogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // bottomNavigationBar: MainBottomNavBar(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.snooze),
+          onPressed: () {},
+        ),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text("My Health & Fitness"),
