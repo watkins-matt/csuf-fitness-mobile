@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'api_key.dart';
 import 'package:flutter/services.dart';
 import 'widgets/bottom_nav_bar.dart';
+import 'sleep_log.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,8 @@ class FitnessApp extends StatelessWidget {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     darkMode = prefs.getBool('darkMode');
+
+    // await SleepStatus().initialized;
   }
 
   @override

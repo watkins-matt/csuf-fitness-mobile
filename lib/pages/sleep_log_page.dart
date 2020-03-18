@@ -1,6 +1,8 @@
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import '../widgets/main_drawer.dart';
+import '../sleep_log.dart';
+import 'dart:async';
 
 class SleepLogPage extends StatefulWidget {
   SleepLogPage({Key key}) : super(key: key);
@@ -21,13 +23,26 @@ class SleepLogPage extends StatefulWidget {
 }
 
 class _SleepLogPageState extends State<SleepLogPage> {
+  Timer timer;
+  String length = "00:00:00";
+
+  void timerTicked(Timer timer) {
+    setState(() {
+      formatDuration(Duration d) =>
+          d.toString().split('.').first.padLeft(8, "0");
+
+      Duration sleepLength = SleepStatus().sleepLength;
+      length = formatDuration(sleepLength);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.snooze),
-          onPressed: () {},
+          onPressed: onButtonPressed,
         ),
         body: _body(),
         resizeToAvoidBottomInset: false,
@@ -37,19 +52,35 @@ class _SleepLogPageState extends State<SleepLogPage> {
         drawer: MainDrawer());
   }
 
+  void onButtonPressed() async {
+    await SleepStatus().initialized; // Ensure SleepStatus is initialized
+    setState(() {
+      SleepStatus().sleeping = !SleepStatus().sleeping;
+
+      if (SleepStatus().sleeping) {
+        timer = Timer.periodic(Duration(seconds: 1), timerTicked);
+      } else {
+        timer?.cancel();
+      }
+    });
+  }
+
   Widget _header() {
+    bool sleeping = SleepStatus().sleeping;
+    String status = sleeping ? "Asleep" : "Awake";
+
     return Container(
         child: Card(
             child: Column(children: <Widget>[
       Row(children: <Widget>[
         Text(
-          "Status: Awake",
+          "Status: $status",
           textAlign: TextAlign.left,
         ),
       ]),
       Row(children: <Widget>[
         Text("Total Sleep: "),
-        CircleAvatar(radius: 30, child: Text('00:00'))
+        CircleAvatar(radius: 45, child: Text("$length"))
       ])
     ])));
   }

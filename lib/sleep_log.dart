@@ -5,7 +5,7 @@ class SleepLog {}
 
 class SleepStatus {
   SharedPreferences _prefs;
-  Future get initalized => _intialized;
+  Future get initialized => _intialized;
   Future _intialized;
 
   bool _sleeping = false;
@@ -16,6 +16,7 @@ class SleepStatus {
     _prefs.setBool("sleeping", value);
 
     if (sleeping) {
+      sleepEnd = null;
       sleepStart = DateTime.now();
       _prefs.setInt("sleepStart", sleepStart.millisecondsSinceEpoch);
     } else {
