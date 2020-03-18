@@ -1,7 +1,7 @@
-import 'package:csuf_fitness/barcode_scanner.dart';
-import 'package:csuf_fitness/food_log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import '../barcode_scanner.dart';
 import '../food_log.dart';
 import '../food_log_item.dart';
 
@@ -36,7 +36,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
           TextPosition(offset: _foodNameController.text.length));
     });
 
-    if (info.calories > 0) {
+    if (info.calories >= 0) {
       _calorieCountController.text = info.calories.toString();
     }
 

@@ -1,7 +1,7 @@
-import 'package:csuf_fitness/food_log.dart';
 import 'package:flutter/material.dart';
-import '../food_log.dart';
 import 'package:intl/intl.dart';
+
+import '../food_log.dart';
 
 class FoodLogDisplayWidget extends StatefulWidget {
   final FoodLog log;

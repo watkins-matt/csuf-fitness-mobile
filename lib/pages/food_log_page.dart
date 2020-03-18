@@ -1,16 +1,14 @@
-import 'package:csuf_fitness/barcode_scanner.dart';
-import 'package:csuf_fitness/food_log.dart';
-import 'package:csuf_fitness/widgets/food_log_page_header_alt.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgets/add_food_item_widget.dart';
-import '../widgets/main_drawer.dart';
-import '../widgets/food_log_list_view.dart';
+import '../barcode_scanner.dart';
 import '../food_log.dart';
 import '../icon_library.dart';
-import '../barcode_scanner.dart';
+import '../widgets/add_food_item_widget.dart';
+import '../widgets/food_log_list_view.dart';
+import '../widgets/food_log_page_header_alt.dart';
+import '../widgets/main_drawer.dart';
 
 class FoodLogPage extends StatefulWidget {
   final String title;

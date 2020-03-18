@@ -1,7 +1,7 @@
 // import 'package:test/test.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:csuf_fitness/product_info.dart';
 import 'package:csuf_fitness/api_key.dart';
+import 'package:csuf_fitness/product_info.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Is Product Title: Toaster Pastries?', () async {

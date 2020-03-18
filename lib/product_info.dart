@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'dart:collection';
-import 'package:csuf_fitness/open_food_facts_data_provider.dart';
-
-import 'api_key.dart';
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:recase/recase.dart';
-import 'dart:async';
+
+import 'api_key.dart';
+import 'open_food_facts_data_provider.dart';
 
 abstract class ProductInfoProvider {
   Future<String> getProductTitle(String gtin);

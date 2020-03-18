@@ -1,4 +1,4 @@
-import 'package:csuf_fitness/food_log_item.dart';
+import '../food_log_item.dart';
 import 'food_database.dart';
 
 abstract class StorageProvider {

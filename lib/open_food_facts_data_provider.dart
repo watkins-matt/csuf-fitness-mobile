@@ -1,7 +1,9 @@
-import 'dart:collection';
 import 'dart:async';
-import 'product_info.dart';
+import 'dart:collection';
+
 import 'package:openfoodfacts/openfoodfacts.dart';
+
+import 'product_info.dart';
 
 class OpenFoodFactsDataProvider extends ProductInfoProvider {
   SplayTreeMap<String, ProductResult> cache =

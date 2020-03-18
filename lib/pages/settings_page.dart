@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import '../widgets/calorie_goal_input_widget.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../food_log.dart';
 
 class SettingsPage extends StatefulWidget {

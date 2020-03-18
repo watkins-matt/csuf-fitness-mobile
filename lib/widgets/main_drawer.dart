@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import "package:shared_preferences/shared_preferences.dart";
+
 import '../pages/settings_page.dart';
 import '../pages/user_page.dart';
-import "package:shared_preferences/shared_preferences.dart";
 
 class MainDrawer extends StatefulWidget {
   @override

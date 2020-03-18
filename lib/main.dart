@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as Foundation;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'api_key.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'api_key.dart';
 import 'widgets/bottom_nav_bar.dart';
-import 'sleep_log.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

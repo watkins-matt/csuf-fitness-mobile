@@ -1,9 +1,10 @@
-import 'package:csuf_fitness/pages/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import '../pages/food_log_page.dart';
 import '../pages/home_page.dart';
 import '../pages/sleep_log_page.dart';
-import '../pages/food_log_page.dart';
+import '../pages/user_page.dart';
 
 class MainBottomNavBarController extends StatefulWidget {
   static int index = 1;

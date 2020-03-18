@@ -1,8 +1,8 @@
-import 'package:csuf_fitness/food_log.dart';
+import 'package:calendar_strip/calendar_strip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
-import 'package:calendar_strip/calendar_strip.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
+
 import '../food_log.dart';
 
 class FoodLogPageHeaderAlt extends StatefulWidget {

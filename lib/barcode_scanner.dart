@@ -1,5 +1,6 @@
-import 'product_info.dart';
 import 'package:qrscan/qrscan.dart' as QRScan;
+
+import 'product_info.dart';
 
 class BarcodeInfo {
   String upc;
