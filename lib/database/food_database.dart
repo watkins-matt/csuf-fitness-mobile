@@ -104,7 +104,7 @@ class FoodDatabase {
   }
 
   Future<void> queryDate(DateTime date) async {
-    // TODO
+	  return queryBetweenDates(date, date);
   }
 
   Future<void> deleteAllRows() async {
