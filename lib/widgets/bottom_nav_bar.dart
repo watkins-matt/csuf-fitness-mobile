@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
+import '../barcode_scanner.dart';
 import '../pages/food_log_page.dart';
 import '../pages/home_page.dart';
 import '../pages/sleep_log_page.dart';
@@ -20,7 +22,9 @@ class _MainBottomNavBarControllerState
   final PageStorageBucket storageBucket = PageStorageBucket();
   List<Widget> pageList = [
     HomePage(key: PageStorageKey("Home")),
-    FoodLogPage(key: PageStorageKey("FoodLog")),
+    ChangeNotifierProvider(
+        create: (context) => BarcodeProvider(),
+        child: FoodLogPage(key: PageStorageKey("FoodLog"))),
     SleepLogPage(key: PageStorageKey("SleepLog")),
     UsersPage(key: PageStorageKey("UsersPage"))
   ];

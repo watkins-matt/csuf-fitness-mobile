@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:qrscan/qrscan.dart' as QRScan;
 
 import 'product_info.dart';
@@ -10,7 +11,7 @@ class BarcodeInfo {
   BarcodeInfo(this.upc, this.productName, this.calories);
 }
 
-class BarcodeProvider {
+class BarcodeProvider extends ChangeNotifier {
   void Function(BarcodeInfo info) itemScannedCallback;
   void Function(bool searching) searchingStatusCallback;
 

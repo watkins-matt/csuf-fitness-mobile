@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../barcode_scanner.dart';
@@ -13,7 +14,6 @@ import '../widgets/main_drawer.dart';
 class FoodLogPage extends StatefulWidget {
   final String title;
   final FoodLog log = FoodLog();
-  final BarcodeProvider provider = BarcodeProvider();
 
   FoodLogPage({Key key, this.title}) : super(key: key);
 
@@ -62,7 +62,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
         drawer: MainDrawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            widget.provider.scan();
+            Provider.of<BarcodeProvider>(context, listen: false).scan();
           },
           tooltip: 'Scan Barcode',
           child: Icon(IconLibrary.barcode),
@@ -79,7 +79,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
             builder: (context, snapshot) {
               return FoodLogPageHeaderAlt(widget.log);
             }),
-        AddFoodItemWidget(widget.log, widget.provider),
+        AddFoodItemWidget(widget.log),
         StreamBuilder<int>(
             stream: FoodLog().caloriesChanged,
             builder: (context, snapshot) {

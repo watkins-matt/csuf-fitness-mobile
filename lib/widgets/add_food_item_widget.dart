@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
 import '../barcode_scanner.dart';
 import '../food_log.dart';
@@ -7,9 +8,7 @@ import '../food_log_item.dart';
 
 class AddFoodItemWidget extends StatefulWidget {
   final FoodLog log;
-  final BarcodeProvider provider;
-
-  AddFoodItemWidget(this.log, this.provider);
+  AddFoodItemWidget(this.log);
 
   @override
   _AddFoodItemWidgetState createState() => _AddFoodItemWidgetState();
@@ -62,8 +61,10 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
 
   @override
   void initState() {
-    widget.provider.itemScannedCallback = itemScanned;
-    widget.provider.searchingStatusCallback = searchingStatus;
+    Provider.of<BarcodeProvider>(context, listen: false).itemScannedCallback =
+        itemScanned;
+    Provider.of<BarcodeProvider>(context, listen: false)
+        .searchingStatusCallback = searchingStatus;
     super.initState();
   }
 
