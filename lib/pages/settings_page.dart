@@ -1,3 +1,4 @@
+import 'package:fit_kit/fit_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +27,7 @@ class _SettingPageState extends State<SettingsPage> {
   TextEditingController controller = TextEditingController();
   int maxCalories = 0;
   bool darkMode = false;
+  bool fitConnected = false;
 
   @override
   void initState() {
@@ -34,6 +36,8 @@ class _SettingPageState extends State<SettingsPage> {
   }
 
   Future<void> updatePreferences() async {
+    fitConnected =
+        await FitKit.hasPermissions([DataType.ENERGY, DataType.STEP_COUNT]);
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
@@ -60,6 +64,8 @@ class _SettingPageState extends State<SettingsPage> {
   }
 
   Widget _buildBody() {
+    String fitStatus = fitConnected ? "Connected" : "Disconnected";
+
     return SettingsList(
       sections: [
         SettingsSection(
@@ -81,9 +87,34 @@ class _SettingPageState extends State<SettingsPage> {
                 onToggle: _onDarkModeToggle,
                 switchValue: darkMode)
           ],
+        ),
+        SettingsSection(
+          title: "Integrations",
+          tiles: [
+            SettingsTile(
+              title: 'Google Fit',
+              subtitle: '$fitStatus',
+              onTap: _onGoogleFitConnectTap,
+            )
+          ],
         )
       ],
     );
+  }
+
+  void _onGoogleFitConnectTap() async {
+    if (!fitConnected) {
+      bool connected = await FitKit.requestPermissions(
+          [DataType.ENERGY, DataType.STEP_COUNT]);
+      setState(() {
+        fitConnected = connected;
+      });
+    } else {
+      setState(() {
+        fitConnected = false;
+      });
+      await FitKit.revokePermissions();
+    }
   }
 
   void _onDarkModeToggle(bool enabled) async {
