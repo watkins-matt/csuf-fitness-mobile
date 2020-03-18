@@ -83,6 +83,11 @@ class FoodDatabase {
   Future<List<FoodLogItem>> queryBetweenDates(
       DateTime leftDate, DateTime rightDate) async {
     Database db = await instance.database;
+	leftDate = leftDate.subtract(Duration(hours:leftDate.hour, minutes:leftDate.minute, seconds:leftDate.second, milliseconds:leftDate.millisecond));
+	rightDate = rightDate.add(Duration(hours:23-rightDate.hour, minutes:59-rightDate.minute, seconds:59-rightDate.second, milliseconds:999-rightDate.millisecond));
+
+	print(leftDate);
+	print(rightDate);
     var leftEpoch = leftDate.millisecondsSinceEpoch;
     var rightEpoch = rightDate.millisecondsSinceEpoch;
     var rows = await db.rawQuery(
