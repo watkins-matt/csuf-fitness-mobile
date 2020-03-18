@@ -43,6 +43,7 @@ class _SleepLogPageState extends State<SleepLogPage> {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
+          heroTag: "SleepButton",
           child: Icon(Icons.snooze),
           onPressed: onButtonPressed,
         ),

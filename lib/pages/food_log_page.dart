@@ -61,6 +61,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
         body: _buildBody(),
         drawer: MainDrawer(),
         floatingActionButton: FloatingActionButton(
+          heroTag: "BarcodeScan",
           onPressed: () {
             Provider.of<BarcodeProvider>(context, listen: false).scan();
           },
