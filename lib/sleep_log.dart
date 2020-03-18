@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import "package:shared_preferences/shared_preferences.dart";
@@ -10,7 +11,9 @@ extension Normalize on DateTime {
   // ···
 }
 
-class SleepDataProvider extends ChangeNotifier {}
+class SleepDataProvider extends ChangeNotifier {
+  SplayTreeMap<String, SleepLog> cache;
+}
 
 /// Represents all sleep events for one specific day
 class SleepLog {
