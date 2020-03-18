@@ -1,8 +1,31 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import "package:shared_preferences/shared_preferences.dart";
 
-class SleepLog {}
+extension Normalize on DateTime {
+  DateTime normalize() {
+    return DateTime(this.year, this.month, this.day);
+  }
+  // ···
+}
+
+class SleepDataProvider extends ChangeNotifier {}
+
+/// Represents all sleep events for one specific day
+class SleepLog {
+  DateTime date;
+  List<SleepEvent> events;
+}
+
+/// Represents one instance of a user sleeping for a specific time period.
+class SleepEvent {
+  DateTime start;
+  DateTime end;
+  Duration get length => end.difference(start);
+
+  SleepEvent(this.start, this.end);
+}
 
 class SleepStatus {
   SharedPreferences _prefs;
@@ -56,11 +79,4 @@ class SleepStatus {
       _prefs.setBool("sleeping", false);
     }
   }
-}
-
-class SleepEvent {
-  DateTime start;
-  DateTime end;
-
-  SleepEvent(this.start, {this.end});
 }

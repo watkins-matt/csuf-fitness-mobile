@@ -61,10 +61,11 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
 
   @override
   void initState() {
-    Provider.of<BarcodeProvider>(context, listen: false).itemScannedCallback =
-        itemScanned;
-    Provider.of<BarcodeProvider>(context, listen: false)
-        .searchingStatusCallback = searchingStatus;
+    final BarcodeProvider barcode =
+        Provider.of<BarcodeProvider>(context, listen: false);
+
+    barcode.itemScannedCallback = itemScanned;
+    barcode.searchingStatusCallback = searchingStatus;
     super.initState();
   }
 
