@@ -64,7 +64,8 @@ class _SettingPageState extends State<SettingsPage> {
   }
 
   Widget _buildBody() {
-    String fitStatus = fitConnected ? "Connected" : "Disconnected";
+    String fitStatus =
+        fitConnected ? "Connected" : "Disconnected. Press here to connect.";
 
     return SettingsList(
       sections: [
