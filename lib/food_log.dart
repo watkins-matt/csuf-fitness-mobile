@@ -55,11 +55,11 @@ class FoodLog {
   Stream<FoodLogItem> get itemAdded => _itemAddedController.stream;
   Stream<FoodLogItem> get itemRemoved => _itemRemovedController.stream;
 
-  static final FoodLog _singleton = FoodLog._internal();
+  static final FoodLog _instance = FoodLog._internal();
   FoodLog._internal();
 
   factory FoodLog() {
-    return _singleton;
+    return _instance;
   }
 
   void dispose() {

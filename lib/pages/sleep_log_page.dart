@@ -40,9 +40,17 @@ class _SleepLogPageState extends State<SleepLogPage> {
   Widget _header() {
     return Container(
         child: Card(
-            child: Row(children: <Widget>[
-      Text("Status: Awake"),
-      CircleAvatar(child: Text('0.0'))
+            child: Column(children: <Widget>[
+      Row(children: <Widget>[
+        Text(
+          "Status: Awake",
+          textAlign: TextAlign.left,
+        ),
+      ]),
+      Row(children: <Widget>[
+        Text("Total Sleep: "),
+        CircleAvatar(radius: 30, child: Text('00:00'))
+      ])
     ])));
   }
 
