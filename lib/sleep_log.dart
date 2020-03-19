@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import "package:shared_preferences/shared_preferences.dart";
 
 extension Normalize on DateTime {
@@ -13,12 +14,34 @@ extension Normalize on DateTime {
 
 class SleepDataProvider extends ChangeNotifier {
   SplayTreeMap<String, SleepLog> cache;
+
+  SleepLog getDate(DateTime date) {
+    String dateString = DateFormat.yMMMMd().format(date);
+
+    if (cache.containsKey(dateString)) {
+      return cache[dateString];
+    } else {
+      SleepLog log = SleepLog(date.normalize());
+      cache[dateString] = log;
+      return log;
+    }
+  }
 }
 
 /// Represents all sleep events for one specific day
 class SleepLog {
-  DateTime date;
+  final DateTime date;
   List<SleepEvent> events;
+  Duration get length {
+    int ms = 0;
+    events.forEach((event) {
+      ms += event.length.inMilliseconds;
+    });
+
+    return Duration(milliseconds: ms);
+  }
+
+  SleepLog(this.date);
 }
 
 /// Represents one instance of a user sleeping for a specific time period.
