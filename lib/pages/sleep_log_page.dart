@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
+import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../sleep_log.dart';
 import '../widgets/main_drawer.dart';
@@ -15,6 +19,7 @@ class SleepLogPage extends StatefulWidget {
 
 class _SleepLogPageState extends State<SleepLogPage> {
   Timer timer;
+  Duration sleepLength = Duration();
   String length = "00:00:00";
 
   void timerTicked(Timer timer) {
@@ -22,7 +27,7 @@ class _SleepLogPageState extends State<SleepLogPage> {
       formatDuration(Duration d) =>
           d.toString().split('.').first.padLeft(8, "0");
 
-      Duration sleepLength = SleepStatus().sleepLength;
+      sleepLength = SleepStatus().sleepLength;
       length = formatDuration(sleepLength);
     });
   }
@@ -53,8 +58,26 @@ class _SleepLogPageState extends State<SleepLogPage> {
         timer = Timer.periodic(Duration(seconds: 1), timerTicked);
       } else {
         timer?.cancel();
+
+        final SleepDataProvider sleepData =
+            Provider.of<SleepDataProvider>(context, listen: false);
+        SleepLog log = sleepData.getDate(DateTime.now());
+        log.events.add(SleepStatus().lastEvent);
       }
     });
+  }
+
+  Widget _progressBar() {
+    int ms = sleepLength.inMilliseconds;
+    int msInEightHours = 1000 * 60 * 60 * 8;
+    double percent = (ms / msInEightHours) * 100;
+
+    final sleepProgressBar = RoundedProgressBar(
+      style: RoundedProgressBarStyle(colorBorder: Theme.of(context).cardColor),
+      percent: percent,
+      childCenter: Text("$length", style: TextStyle(color: Colors.white)),
+    );
+    return sleepProgressBar;
   }
 
   Widget _header() {
@@ -64,16 +87,16 @@ class _SleepLogPageState extends State<SleepLogPage> {
     return Container(
         child: Card(
             child: Column(children: <Widget>[
-      Row(children: <Widget>[
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
         Text(
-          "Status: $status",
-          textAlign: TextAlign.left,
+          "$status",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
         ),
       ]),
-      Row(children: <Widget>[
-        Text("Total Sleep: "),
-        CircleAvatar(radius: 45, child: Text("$length"))
-      ])
+      // Row(
+      //   children: <Widget>[Text("Total Sleep: ")],
+      // ),
+      _progressBar(),
     ])));
   }
 
@@ -103,11 +126,21 @@ class _SleepLogPageState extends State<SleepLogPage> {
       "Saturday"
     ];
 
+    final SleepDataProvider sleepData =
+        Provider.of<SleepDataProvider>(context, listen: false);
+    DateTime date = DateTime.now().subtract(Duration(days: index));
+    SleepLog log = sleepData.getDate(date);
+
+    int hours = log.length.inHours;
+    int minutes = log.length.inMinutes;
+    int seconds = log.length.inSeconds;
+
     Card listViewCard = Card(
         child: ExpansionTileCard(
-            title: Text(titles[index]),
+            title: Text(DateFormat('EEEE').format(date)),
+            subtitle: Text(DateFormat('MMMM, dd, yyyy').format(date)),
             // subtitle: Text(DateFormat.jm().format(widget.log[index].time)),
-            trailing: CircleAvatar(child: Text('0.0'))));
+            trailing: Text("$hours:$minutes:$seconds")));
 
     //return Dismissible(key: UniqueKey(), child: listViewCard);
     return listViewCard;

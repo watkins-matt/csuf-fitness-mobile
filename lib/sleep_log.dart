@@ -13,7 +13,7 @@ extension Normalize on DateTime {
 }
 
 class SleepDataProvider extends ChangeNotifier {
-  SplayTreeMap<String, SleepLog> cache;
+  SplayTreeMap<String, SleepLog> cache = SplayTreeMap<String, SleepLog>();
 
   SleepLog getDate(DateTime date) {
     String dateString = DateFormat.yMMMMd().format(date);
@@ -31,7 +31,7 @@ class SleepDataProvider extends ChangeNotifier {
 /// Represents all sleep events for one specific day
 class SleepLog {
   final DateTime date;
-  List<SleepEvent> events;
+  List<SleepEvent> events = List<SleepEvent>();
   Duration get length {
     int ms = 0;
     events.forEach((event) {
@@ -74,6 +74,8 @@ class SleepStatus {
       _prefs.setInt("sleepEnd", sleepEnd.millisecondsSinceEpoch);
     }
   }
+
+  SleepEvent get lastEvent => SleepEvent(sleepStart, sleepEnd);
 
   Duration get sleepLength => sleepEnd != null
       ? sleepEnd.difference(sleepStart)
