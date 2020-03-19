@@ -1,16 +1,16 @@
 import '../food_log_item.dart';
 import 'food_database.dart';
 
-abstract class StorageProvider {
-  void delete(FoodLogItem item);
-  void write(FoodLogItem item);
-  void writeAll(List<FoodLogItem> items);
-  Future<List<FoodLogItem>> read(DateTime date);
+abstract class StorageProvider<T> {
+  void delete(T item);
+  void write(T item);
+  void writeAll(List<T> items);
+  Future<List<T>> read(DateTime date);
 
-  static StorageProvider get instance => DatabaseStorageProvider();
+  static StorageProvider get instance => FoodLogStorageProvider();
 }
 
-class DatabaseStorageProvider extends StorageProvider {
+class FoodLogStorageProvider extends StorageProvider<FoodLogItem> {
   @override
   void delete(FoodLogItem item) async {
     FoodDatabase.instance.deleteByTimestamp(item.time);

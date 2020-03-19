@@ -98,7 +98,21 @@ class _SettingPageState extends State<SettingsPage> {
               onTap: _onGoogleFitConnectTap,
             )
           ],
-        )
+        ),
+        SettingsSection(title: "Advanced", tiles: [
+          SettingsTile(
+            title: "MQTT Server",
+            subtitle: "Tap to set.",
+          ),
+          SettingsTile(
+            title: "Username",
+            subtitle: "Tap to set.",
+          ),
+          SettingsTile(
+            title: "Password",
+            subtitle: "Tap to set.",
+          )
+        ])
       ],
     );
   }
