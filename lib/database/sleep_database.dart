@@ -16,9 +16,11 @@ class SleepDatabase {
 	static final columnStartTime = 'start_time';
 	static final columnEndTime = 'end_time';
 
-	// Singleton ~~ only one instance
 	// beginning with an '_' means private constructor
-	SleepDatabase._prvateConstructor();
+	SleepDatabase._privateConstructor();
+
+	// Singleton ~~ only one instance
+	static final SleepDatabase instance = SleepDatabase._privateConstructor();
 
 	// Database reference
 	static Database _database;
