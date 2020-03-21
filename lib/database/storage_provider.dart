@@ -1,7 +1,6 @@
 import '../food_log_item.dart';
 import '../sleep_log.dart';
 import 'food_database.dart';
-import 'sleep_database.dart';
 
 abstract class StorageProvider<T> {
   void delete(T item);
@@ -34,9 +33,9 @@ class FoodLogStorageProvider extends StorageProvider<FoodLogItem> {
         DateTime(date.year, date.month, date.day),
         DateTime(date.year, date.month, date.day + 1));
   }
+
   static FoodLogStorageProvider get instance => FoodLogStorageProvider();
 }
-
 
 class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
   @override
@@ -48,16 +47,14 @@ class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
   void write(SleepEvent item) {
     //FoodDatabase.instance.insert(item);
   }
-  
-  @override
-  void writeAll(List<SleepEvent> items) {
 
-  }
-  
+  @override
+  void writeAll(List<SleepEvent> items) {}
+
   @override
   Future<List<SleepEvent>> read(DateTime date) {
-	  Future<List<SleepEvent>> temp;
-	  return temp;
+    Future<List<SleepEvent>> temp;
+    return temp;
   }
 
   static SleepLogStorageProvider get instance => SleepLogStorageProvider();

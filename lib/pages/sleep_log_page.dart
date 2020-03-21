@@ -120,16 +120,6 @@ class _SleepLogPageState extends State<SleepLogPage> {
   }
 
   Widget _buildListViewItem(BuildContext context, int index) {
-    List<String> titles = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ];
-
     final SleepDataProvider sleepData =
         Provider.of<SleepDataProvider>(context, listen: false);
     DateTime date = DateTime.now().subtract(Duration(days: index));
