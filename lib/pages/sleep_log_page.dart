@@ -86,18 +86,22 @@ class _SleepLogPageState extends State<SleepLogPage> {
 
     return Container(
         child: Card(
+            elevation: 10,
             child: Column(children: <Widget>[
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-        Text(
-          "$status",
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
-        ),
-      ]),
-      // Row(
-      //   children: <Widget>[Text("Total Sleep: ")],
-      // ),
-      _progressBar(),
-    ])));
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "$status",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue),
+                    ),
+                  ]),
+              // Row(
+              //   children: <Widget>[Text("Total Sleep: ")],
+              // ),
+              _progressBar(),
+            ])));
   }
 
   Widget _body() {
@@ -136,6 +140,7 @@ class _SleepLogPageState extends State<SleepLogPage> {
     int seconds = log.length.inSeconds;
 
     Card listViewCard = Card(
+        elevation: 5,
         child: ExpansionTileCard(
             title: Text(DateFormat('EEEE').format(date)),
             subtitle: Text(DateFormat('MMMM, dd, yyyy').format(date)),

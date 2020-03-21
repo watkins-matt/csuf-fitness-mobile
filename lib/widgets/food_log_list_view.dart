@@ -24,6 +24,8 @@ class _FoodLogListViewState extends State<FoodLogListView> {
 
   Widget _buildListViewItem(BuildContext context, int index) {
     Card listViewCard = Card(
+        color: Theme.of(context).cardColor,
+        elevation: 5,
         child: ListTile(
             title: Text(widget.log[index].name),
             subtitle: Text(DateFormat.jm().format(widget.log[index].time)),

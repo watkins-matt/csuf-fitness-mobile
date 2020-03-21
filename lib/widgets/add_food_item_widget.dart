@@ -74,6 +74,7 @@ class _AddFoodItemWidgetState extends State<AddFoodItemWidget> {
     bool autoFocusCalories = _foodNameController.text.isNotEmpty;
 
     return Card(
+        elevation: 5,
         child: Padding(
             padding: EdgeInsets.all(8),
             child: Row(
