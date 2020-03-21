@@ -9,7 +9,6 @@ extension Normalize on DateTime {
   DateTime normalize() {
     return DateTime(this.year, this.month, this.day);
   }
-  // ···
 }
 
 class SleepDataProvider extends ChangeNotifier {
