@@ -6,45 +6,45 @@ import 'package:sqflite/sqflite.dart';
 import '../sleep_log.dart';
 
 class SleepDatabase {
-	// DB info
-	static final _databaseName = "dbsleep.db";
-	static final _databaseVersion = 1;
-	static final tableName = "sleep";
-	
-	// DB colums
-	static final columnId = '_id';
-	static final columnStartTime = 'start_time';
-	static final columnEndTime = 'end_time';
+  // DB info
+  static final _databaseName = "dbsleep.db";
+  static final _databaseVersion = 1;
+  static final tableName = "sleep";
 
-	// beginning with an '_' means private constructor
-	SleepDatabase._privateConstructor();
+  // DB colums
+  static final columnId = '_id';
+  static final columnStartTime = 'start_time';
+  static final columnEndTime = 'end_time';
 
-	// Singleton ~~ only one instance
-	static final SleepDatabase instance = SleepDatabase._privateConstructor();
+  // beginning with an '_' means private constructor
+  SleepDatabase._privateConstructor();
 
-	// Database reference
-	static Database _database;
+  // Singleton ~~ only one instance
+  static final SleepDatabase instance = SleepDatabase._privateConstructor();
 
-	// get database function
-	Future<Databse> get database async {
-		if (_database != null) return _database;
-		_database = await _initDatabase();
-		return _database;
-	}
+  // Database reference
+  static Database _database;
 
-	// initialize database helper function for opening and creating database
-	_initDatabase() async {
-		Directory documentsDirectory = await getApplicationDocumentsDirectory();
-		String path = join (documentsDirectory.path, _databaseName);
-		return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
-	}
+  // get database function
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    _database = await _initDatabase();
+    return _database;
+  }
 
-	// helper function to create SQL table
-	Future _onCreate(Database db, int version) async {
-		// TODO
-		
+  // initialize database helper function for opening and creating database
+  _initDatabase() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, _databaseName);
+    return await openDatabase(path,
+        version: _databaseVersion, onCreate: _onCreate);
+  }
 
-		/*
+  // helper function to create SQL table
+  Future _onCreate(Database db, int version) async {
+    // TODO
+
+    /*
 		await db.execute('''
 			CREATE TABLE $tableName (
 				$columnId INTEGER PRIMAY KEY
@@ -53,7 +53,5 @@ class SleepDatabase {
 			)
 		''');
 		*/
-
-
-	}
+  }
 }

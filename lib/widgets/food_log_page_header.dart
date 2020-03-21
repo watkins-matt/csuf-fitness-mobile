@@ -5,15 +5,15 @@ import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 
 import '../food_log.dart';
 
-class FoodLogPageHeaderAlt extends StatefulWidget {
+class FoodLogPageHeader extends StatefulWidget {
   final FoodLog log;
-  FoodLogPageHeaderAlt(this.log);
+  FoodLogPageHeader(this.log);
 
   @override
-  _FoodLogPageHeaderAltState createState() => _FoodLogPageHeaderAltState();
+  _FoodLogPageHeaderState createState() => _FoodLogPageHeaderState();
 }
 
-class _FoodLogPageHeaderAltState extends State<FoodLogPageHeaderAlt> {
+class _FoodLogPageHeaderState extends State<FoodLogPageHeader> {
   @override
   Widget build(BuildContext context) {
     final calendarStrip = Container(
