@@ -98,11 +98,15 @@ class SleepStatus {
 
     if (_prefs.containsKey("sleeping")) {
       _sleeping = _prefs.getBool("sleeping");
+      if (_prefs.containsKey("sleepStart")) {
+        sleepStart =
+            DateTime.fromMillisecondsSinceEpoch(_prefs.getInt("sleepStart"));
+      }
 
-      // TODO: Need error handling
-      sleepStart =
-          DateTime.fromMillisecondsSinceEpoch(_prefs.getInt("sleepStart"));
-      sleepEnd = DateTime.fromMillisecondsSinceEpoch(_prefs.getInt("sleepEnd"));
+      if (_prefs.containsKey("sleepEnd")) {
+        sleepEnd =
+            DateTime.fromMillisecondsSinceEpoch(_prefs.getInt("sleepEnd"));
+      }
     } else {
       _prefs.setBool("sleeping", false);
     }
