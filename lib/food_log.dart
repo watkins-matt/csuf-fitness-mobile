@@ -26,7 +26,7 @@ class FoodLog {
   StreamController<FoodLogItem> _itemRemovedController =
       StreamController.broadcast();
 
-  StorageProvider _storage = StorageProvider.instance;
+  FoodLogStorageProvider _storage = FoodLogStorageProvider.instance;
 
   // Public properties
   FoodLogItem operator [](int index) => _items[index];
