@@ -8,7 +8,7 @@ import '../food_log.dart';
 import '../icon_library.dart';
 import '../widgets/add_food_item_widget.dart';
 import '../widgets/food_log_list_view.dart';
-import '../widgets/food_log_page_header_alt.dart';
+import '../widgets/food_log_page_header.dart';
 import '../widgets/main_drawer.dart';
 
 class FoodLogPage extends StatefulWidget {
@@ -67,7 +67,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
         StreamBuilder<int>(
             stream: FoodLog().caloriesChanged,
             builder: (context, snapshot) {
-              return FoodLogPageHeaderAlt(widget.log);
+              return FoodLogPageHeader(widget.log);
             }),
         AddFoodItemWidget(widget.log),
         StreamBuilder<int>(
