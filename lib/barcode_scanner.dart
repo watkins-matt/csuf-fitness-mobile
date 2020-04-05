@@ -15,7 +15,7 @@ class BarcodeProvider extends ChangeNotifier {
   void Function(BarcodeInfo info) itemScannedCallback;
   void Function(bool searching) searchingStatusCallback;
 
-  void scan() async {
+  Future scan() async {
     try {
       ProductInfoProvider info = MultiInfoProvider();
       String gtin = await QRScan.scan();
