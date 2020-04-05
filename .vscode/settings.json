@@ -14,4 +14,5 @@
     "spinkit",
     "unfocus"
   ],
+  "VSCodeCounter.showInStatusBar": true,
 }
