@@ -92,30 +92,34 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Column(children: <Widget>[
           _topCard(context),
+          Row(children: <Widget>[
+            Visibility(
+                visible: updating,
+                child: Container(
+                  alignment: Alignment.center,
+                  // padding: EdgeInsets.fromLTRB(0, 0, 12, 8),
+                  child: SpinKitWave(
+                    color: Theme.of(context).accentColor,
+                    size: 25.0,
+                  ),
+                )),
+          ]),
+          Row(children: <Widget>[
+            Visibility(
+              visible: !updating,
+              child: IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: updateData,
+              ),
+            ),
+            Expanded(
+              child: Card(
+                child: Text("Calories Burned Today: $roundedCalories"),
+              ),
+            ),
+          ]),
           Row(
             children: <Widget>[
-              Visibility(
-                  visible: updating,
-                  child: Container(
-                    alignment: Alignment.center,
-                    // padding: EdgeInsets.fromLTRB(0, 0, 12, 8),
-                    child: SpinKitWave(
-                      color: Theme.of(context).accentColor,
-                      size: 25.0,
-                    ),
-                  )),
-              Visibility(
-                visible: !updating,
-                child: IconButton(
-                  icon: Icon(Icons.refresh),
-                  onPressed: updateData,
-                ),
-              ),
-              Expanded(
-                child: Card(
-                  child: Text("Calories Burned Today: $roundedCalories"),
-                ),
-              ),
               Expanded(
                 child: Card(
                   child: Text("Steps Today: $roundedSteps"),
