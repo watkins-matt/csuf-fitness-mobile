@@ -30,7 +30,7 @@ class SleepDataProvider extends ChangeNotifier {
 /// Represents all sleep events for one specific day
 class SleepLog {
   final DateTime date;
-  List<SleepEvent> events = List<SleepEvent>();
+  List<SleepEvent> events = <SleepEvent>[];
   Duration get length {
     int ms = 0;
     events.forEach((event) {
