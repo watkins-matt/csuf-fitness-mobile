@@ -3,32 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
 import '../sleep_log.dart';
 import '../widgets/main_drawer.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class FitIntegration extends ChangeNotifier {
   double calories = 0;
   double stepCount = 0;
   bool updating = false;
 
-  @override
-  void initState() {
-    updateData();
-    super.initState();
-  }
-
-  Future updateData() async {
-    setState(() {
-      updating = true;
-    });
+  Future update() async {
+    updating = true;
 
     bool fitConnected =
         await FitKit.hasPermissions([DataType.ENERGY, DataType.STEP_COUNT]);
@@ -55,14 +41,28 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
-    setState(() {
-      updating = false;
-    });
+    updating = false;
+  }
+}
+
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
   }
 
   Widget _topCard(BuildContext context) {
-    int roundedCalories = calories.round();
-    double calPercent = (calories / 2000) * 100;
+    var fit = Provider.of<FitIntegration>(context, listen: false);
+
+    int roundedCalories = fit.calories.round();
+    double calPercent = (fit.calories / 2000) * 100;
     final calorieProgressBar = RoundedProgressBar(
       style: RoundedProgressBarStyle(colorBorder: Theme.of(context).cardColor),
       percent: calPercent,
@@ -82,8 +82,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    int roundedCalories = calories.round();
-    int roundedSteps = stepCount.round();
+    var fit = Provider.of<FitIntegration>(context, listen: false);
+    int roundedCalories = fit.calories.round();
+    int roundedSteps = fit.stepCount.round();
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -94,7 +95,7 @@ class _HomePageState extends State<HomePage> {
           _topCard(context),
           Row(children: <Widget>[
             Visibility(
-                visible: updating,
+                visible: fit.updating,
                 child: Container(
                   alignment: Alignment.center,
                   // padding: EdgeInsets.fromLTRB(0, 0, 12, 8),
@@ -106,10 +107,10 @@ class _HomePageState extends State<HomePage> {
           ]),
           Row(children: <Widget>[
             Visibility(
-              visible: !updating,
+              visible: !fit.updating,
               child: IconButton(
                 icon: Icon(Icons.refresh),
-                onPressed: updateData,
+                onPressed: fit.update,
               ),
             ),
             Expanded(
