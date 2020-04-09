@@ -1,3 +1,4 @@
+import 'package:csuf_fitness/widgets/add_sleep_event_dialog.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -44,7 +45,9 @@ class WeekdayListView extends StatelessWidget {
                 Icons.add,
                 color: Theme.of(context).accentColor,
               ),
-              onPressed: () {},
+              onPressed: () {
+                AddSleepEventDialog.show(context, () {});
+              },
             )
           ],
         ));
