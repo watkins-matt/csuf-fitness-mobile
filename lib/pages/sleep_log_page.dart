@@ -100,6 +100,11 @@ class _SleepLogPageState extends State<SleepLogPage> {
     return Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[_header(), WeekdayListView()]));
+            children: <Widget>[
+          _header(),
+          Consumer<SleepDataProvider>(builder: (context, cart, child) {
+            return WeekdayListView();
+          })
+        ]));
   }
 }

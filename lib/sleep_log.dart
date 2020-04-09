@@ -25,6 +25,12 @@ class SleepDataProvider extends ChangeNotifier {
       return log;
     }
   }
+
+  void addEvent(SleepEvent event) {
+    SleepLog log = getDate(event.start);
+    log.events.add(event);
+    notifyListeners();
+  }
 }
 
 /// Represents all sleep events for one specific day
@@ -40,6 +46,17 @@ class SleepLog {
     return Duration(milliseconds: ms);
   }
 
+  @override
+  String toString() {
+    String string = '';
+
+    for (final event in events) {
+      string += event.toString() + '\n';
+    }
+
+    return string;
+  }
+
   SleepLog(this.date);
 }
 
@@ -50,6 +67,17 @@ class SleepEvent {
   Duration get length => end.difference(start);
 
   SleepEvent(this.start, this.end);
+
+  @override
+  String toString() {
+    DateFormat formatter = DateFormat('h:mm aa');
+    String startString = formatter.format(start);
+    String endString = formatter.format(end);
+    int hours = length.inHours;
+    int minutes = length.inMinutes % 60;
+
+    return "$startString to $endString: $hours hours, $minutes minutes";
+  }
 }
 
 class SleepStatus {
