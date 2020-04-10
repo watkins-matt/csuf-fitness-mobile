@@ -22,7 +22,9 @@ class _MainBottomNavBarControllerState
     extends State<MainBottomNavBarController> {
   final PageStorageBucket storageBucket = PageStorageBucket();
   List<Widget> pageList = [
-    HomePage(key: PageStorageKey("Home")),
+    Consumer<FitIntegration>(builder: (context, cart, child) {
+      return HomePage(key: PageStorageKey("Home"));
+    }),
     ChangeNotifierProvider(
         create: (context) => BarcodeProvider(),
         child: FoodLogPage(key: PageStorageKey("FoodLog"))),
@@ -47,9 +49,15 @@ class _MainBottomNavBarControllerState
         );
   }
 
-  void itemSelected(int newIndex) {
+  Future itemSelected(int newIndex) async {
     if (MainBottomNavBarController.index == newIndex) {
       return; // Don't reload the current page
+    }
+
+    // Update Google Fit before we show the home page
+    if (MainBottomNavBarController.index == 0) {
+      var fit = Provider.of<FitIntegration>(context, listen: false);
+      await fit.update();
     }
 
     setState(() {

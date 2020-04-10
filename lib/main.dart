@@ -1,6 +1,8 @@
+import 'package:csuf_fitness/pages/home_page.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api_key.dart';
@@ -12,7 +14,8 @@ void main() {
   // Default to portrait mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(FitnessApp());
+    runApp(ChangeNotifierProvider(
+        create: (context) => FitIntegration(), child: FitnessApp()));
   });
 }
 
