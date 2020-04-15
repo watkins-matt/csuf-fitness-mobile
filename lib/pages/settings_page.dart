@@ -26,7 +26,10 @@ class SettingsPage extends StatefulWidget {
 class _SettingPageState extends State<SettingsPage> {
   TextEditingController controller = TextEditingController();
   int maxCalories = 0;
+  String username = "";
+  String password = "";
   bool darkMode = false;
+  bool metric = false;
   bool fitConnected = false;
 
   @override
@@ -50,6 +53,15 @@ class _SettingPageState extends State<SettingsPage> {
         prefs.setBool('darkMode', false);
       }
       darkMode = prefs.getBool('darkMode');
+
+      if (!prefs.containsKey('metric')) {
+        prefs.setBool('metric', false);
+      }
+      metric = prefs.getBool('metric');
+
+      username = prefs.get("username");
+
+      password = prefs.get("password");
     });
   }
 
@@ -86,7 +98,12 @@ class _SettingPageState extends State<SettingsPage> {
                 title: 'Dark Mode',
                 subtitle: 'Changes take effect upon restart',
                 onToggle: _onDarkModeToggle,
-                switchValue: darkMode)
+                switchValue: darkMode),
+                SettingsTile.switchTile(
+                title: 'Metric',
+                subtitle: 'Changes take effect upon restart',
+                onToggle: _onMetricToggle,
+                switchValue: metric)
           ],
         ),
         SettingsSection(
@@ -107,10 +124,12 @@ class _SettingPageState extends State<SettingsPage> {
           SettingsTile(
             title: "Username",
             subtitle: "Tap to set.",
+            onTap: _showUsernameEntryDialog,
           ),
           SettingsTile(
             title: "Password",
             subtitle: "Tap to set.",
+            onTap: _showPasswordEntryDialog,
           )
         ])
       ],
@@ -141,6 +160,15 @@ class _SettingPageState extends State<SettingsPage> {
     });
   }
 
+   void _onMetricToggle(bool enabled) async {
+    metric = enabled;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setBool('metric', metric);
+    });
+  }
+
   Future<void> _onCalorieEntryOkButtonPressed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -148,6 +176,28 @@ class _SettingPageState extends State<SettingsPage> {
       maxCalories = int.parse(controller.text);
       prefs.setInt('maxCalories', maxCalories);
       FoodLog().maxCalories = maxCalories;
+    });
+
+    Navigator.pop(context);
+  }
+
+    Future<void> _onUsernameEntryOkButtonPressed() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      username = (controller.text);
+      prefs.setString('username', username);
+    });
+
+    Navigator.pop(context);
+  }
+
+      Future<void> _onPasswordEntryOkButtonPressed() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      username = (controller.text);
+      prefs.setString('password', password);
     });
 
     Navigator.pop(context);
@@ -174,6 +224,54 @@ class _SettingPageState extends State<SettingsPage> {
               }),
           FlatButton(
               child: Text("OK"), onPressed: _onCalorieEntryOkButtonPressed),
+        ],
+      ),
+    );
+  }
+
+void _showUsernameEntryDialog() async {
+    controller = TextEditingController();
+
+    await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: TextField(
+          autofocus: true,
+          controller: controller,
+          decoration: InputDecoration(hintText: "Username"),
+        ),
+        actions: <Widget>[
+          FlatButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          FlatButton(
+              child: Text("OK"), onPressed: _onUsernameEntryOkButtonPressed),
+        ],
+      ),
+    );
+  }
+
+  void _showPasswordEntryDialog() async {
+    controller = TextEditingController();
+
+    await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: TextField(
+          autofocus: true,
+          controller: controller,
+          decoration: InputDecoration(hintText: "Password"),
+        ),
+        actions: <Widget>[
+          FlatButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          FlatButton(
+              child: Text("OK"), onPressed: _onPasswordEntryOkButtonPressed),
         ],
       ),
     );
