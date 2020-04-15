@@ -37,7 +37,8 @@ class MainDrawerState extends State<MainDrawer> {
           UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                   backgroundColor: Theme.of(context).cardColor,
-                  child: Text(userName.substring(0, 1))),
+                  child: Text(
+                      userName.isNotEmpty ? userName.substring(0, 1) : '')),
               accountName: Text("$userName"),
               accountEmail: Text("BMI: $userBMI")),
           //_initialSetupListTile(context),
