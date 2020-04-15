@@ -11,9 +11,9 @@ class MainDrawer extends StatefulWidget {
 
 class MainDrawerState extends State<MainDrawer> {
   static const String defaultUserName = "Default User";
-  static const String defaultBMI = "";
-  String userName = defaultUserName;
-  String userBMI = defaultBMI;
+  static const double defaultBMI = 0;
+  String username = defaultUserName;
+  double bmi = defaultBMI;
 
   MainDrawerState() {
     _init();
@@ -23,8 +23,8 @@ class MainDrawerState extends State<MainDrawer> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      userName = prefs.get("userName") ?? defaultUserName;
-      userBMI = prefs.get("userBMI") ?? defaultBMI;
+      username = prefs.get("username") ?? defaultUserName;
+      bmi = prefs.get("BMI") ?? defaultBMI;
     });
   }
 
@@ -37,12 +37,12 @@ class MainDrawerState extends State<MainDrawer> {
           UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                   backgroundColor: Theme.of(context).cardColor,
-                  child: Text(userName.substring(0, 1))),
-              accountName: Text("$userName"),
-              accountEmail: Text("BMI: $userBMI")),
+                  child: Text(username.substring(0, 1))),
+              accountName: Text("$username"),
+              accountEmail: Text("BMI: $bmi")),
           //_initialSetupListTile(context),
           // _foodHistoryListTile(context),
-          _userInfoTile(context),
+          /*_userInfoTile(context),*/
           _settingsListTile(context),
         ],
       )),
@@ -58,12 +58,12 @@ class MainDrawerState extends State<MainDrawer> {
         });
   }
 
-  ListTile _userInfoTile(BuildContext context) {
+  /*ListTile _userInfoTile(BuildContext context) {
     return ListTile(
         leading: const Icon(Icons.perm_identity),
         title: Text("User Info"),
         onTap: () {
           UsersPage.push(context);
         });
-  }
+  }*/
 }
