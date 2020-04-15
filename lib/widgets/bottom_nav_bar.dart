@@ -55,9 +55,11 @@ class _MainBottomNavBarControllerState
     }
 
     // Update Google Fit before we show the home page
-    if (MainBottomNavBarController.index == 0) {
+    if (newIndex == 0) {
       var fit = Provider.of<FitIntegration>(context, listen: false);
-      await fit.update();
+
+      // Unawaited
+      fit.update();
     }
 
     setState(() {

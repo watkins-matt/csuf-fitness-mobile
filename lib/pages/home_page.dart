@@ -2,7 +2,6 @@ import 'package:fit_kit/fit_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../sleep_log.dart';
@@ -12,6 +11,10 @@ class FitIntegration extends ChangeNotifier {
   double calories = 0;
   double stepCount = 0;
   bool updating = false;
+
+  FitIntegration() {
+    update();
+  }
 
   Future update() async {
     updating = true;
@@ -42,6 +45,7 @@ class FitIntegration extends ChangeNotifier {
     }
 
     updating = false;
+    notifyListeners();
   }
 }
 
@@ -66,7 +70,20 @@ class _HomePageState extends State<HomePage> {
     final calorieProgressBar = RoundedProgressBar(
       style: RoundedProgressBarStyle(colorBorder: Theme.of(context).cardColor),
       percent: calPercent,
-      childCenter: Text("$roundedCalories kCal Burned",
+      childCenter: Text("$roundedCalories kCal Burned / 2000 kCal",
+          style: TextStyle(color: Colors.white)),
+    );
+
+    int roundedSteps = fit.stepCount.round();
+    double stepPercent = roundedSteps / 10000;
+
+    final stepProgressBar = RoundedProgressBar(
+      style: RoundedProgressBarStyle(
+        colorBorder: Theme.of(context).cardColor,
+      ),
+      // theme: RoundedProgressBarTheme.green,
+      percent: stepPercent,
+      childCenter: Text("$roundedSteps Steps / 10000",
           style: TextStyle(color: Colors.white)),
     );
 
@@ -74,7 +91,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 5,
         child: Container(
             child: Column(
-          children: <Widget>[calorieProgressBar],
+          children: <Widget>[calorieProgressBar, stepProgressBar],
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
         )));
@@ -82,10 +99,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var fit = Provider.of<FitIntegration>(context, listen: false);
-    int roundedCalories = fit.calories.round();
-    int roundedSteps = fit.stepCount.round();
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -93,41 +106,6 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Column(children: <Widget>[
           _topCard(context),
-          Row(children: <Widget>[
-            Visibility(
-                visible: fit.updating,
-                child: Container(
-                  alignment: Alignment.center,
-                  // padding: EdgeInsets.fromLTRB(0, 0, 12, 8),
-                  child: SpinKitWave(
-                    color: Theme.of(context).accentColor,
-                    size: 25.0,
-                  ),
-                )),
-          ]),
-          Row(children: <Widget>[
-            Visibility(
-              visible: !fit.updating,
-              child: IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: fit.update,
-              ),
-            ),
-            Expanded(
-              child: Card(
-                child: Text("Calories Burned Today: $roundedCalories"),
-              ),
-            ),
-          ]),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Card(
-                  child: Text("Steps Today: $roundedSteps"),
-                ),
-              )
-            ],
-          ),
         ]),
         drawer: MainDrawer());
   }
