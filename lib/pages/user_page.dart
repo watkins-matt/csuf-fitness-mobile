@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "about_us.dart";
+import "help_center.dart";
 import '../widgets/edit_user_info.dart';
 
 class UsersPage extends StatefulWidget {
@@ -42,6 +43,16 @@ class _UserPageState extends State<UsersPage> {
               Navigator.push(context, MaterialPageRoute(
                 builder: (BuildContext context) {
                   return Scaffold(body: about_us());
+                },
+              ));
+            },
+          ),
+          FlatButton(
+            child: Text("Help Center"),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return Scaffold(body: help_center());
                 },
               ));
             },
