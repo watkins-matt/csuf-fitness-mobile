@@ -28,38 +28,6 @@ class _UserPageState extends State<UsersPage> {
       body: EditProfile(),
     );
   }
-
-  /*Widget _buildUserPage() {
-    return Center(
-      child: Column(
-        children: <Widget>[
-          EditUserInfo(),
-           FlatButton(
-            child: Text("About"),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return Scaffold(body: about_us());
-                },
-              ));
-            },
-          ),
-          FlatButton(
-            child: Text("Help Center"),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return Scaffold(body: help_center());
-                },
-              ));
-            },
-          )
-        ],
-
-        
-      ),
-    );
-  }*/
 }
 
 
