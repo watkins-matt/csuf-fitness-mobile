@@ -10,7 +10,7 @@ class help_center extends StatelessWidget{
         body: Center (
           child: TweenAnimationBuilder(
             tween: _scaleTween,
-            duration: Duration (seconds: 1),
+            duration: Duration (seconds: 2),
             builder: (context, scale, child) {
               return Transform.scale(scale: scale, child: child);
             },
