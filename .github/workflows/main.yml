@@ -21,6 +21,7 @@ jobs:
         channel: 'stable' # or: 'dev' or 'beta'
     - run: flutter pub get
     - run: flutter analyze
+    - run: flutter clean
     - run: flutter build apk --debug --split-per-abi
     - uses: actions/upload-artifact@v1
       with:
