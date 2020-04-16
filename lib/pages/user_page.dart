@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/edit_user_info.dart';
+
+import 'edit_profile.dart';
 
 class UsersPage extends StatefulWidget {
   UsersPage({Key key, this.title}) : super(key: key);
@@ -23,20 +24,7 @@ class _UserPageState extends State<UsersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("User Info"),
-      ),
-      body: _buildUserPage(),
-    );
-  }
-
-  Widget _buildUserPage() {
-    return Center(
-      child: Column(
-        children: <Widget>[
-          EditUserInfo(),
-        ],
-      ),
+      body: EditProfile(),
     );
   }
 }

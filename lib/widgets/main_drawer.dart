@@ -1,8 +1,7 @@
-import 'package:csuf_fitness/food_history.dart';
 import 'package:flutter/material.dart';
-import '../pages/settings_page.dart';
-import '../pages/user_page.dart';
 import "package:shared_preferences/shared_preferences.dart";
+
+import '../pages/settings_page.dart';
 
 class MainDrawer extends StatefulWidget {
   @override
@@ -11,9 +10,9 @@ class MainDrawer extends StatefulWidget {
 
 class MainDrawerState extends State<MainDrawer> {
   static const String defaultUserName = "Default User";
-  static const String defaultBMI = "";
-  String userName = defaultUserName;
-  String userBMI = defaultBMI;
+  static const double defaultBMI = 0;
+  String username = defaultUserName;
+  double bmi = defaultBMI;
 
   MainDrawerState() {
     _init();
@@ -23,8 +22,8 @@ class MainDrawerState extends State<MainDrawer> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      userName = prefs.get("userName") ?? defaultUserName;
-      userBMI = prefs.get("userBMI") ?? defaultBMI;
+      username = prefs.get("username") ?? defaultUserName;
+      bmi = prefs.get("BMI") ?? defaultBMI;
     });
   }
 
@@ -35,37 +34,19 @@ class MainDrawerState extends State<MainDrawer> {
           child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-              accountName: FlatButton(
-                child: Text(
-                  "$userName\nBMI: $userBMI",
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.white),
-                ),
-                onPressed: () {},
-              ),
-              accountEmail: Text("")),
+              currentAccountPicture: CircleAvatar(
+                  backgroundColor: Theme.of(context).cardColor,
+                  child: Text(
+                      username.isNotEmpty ? username.substring(0, 1) : '')),
+              accountName: Text("$username"),
+              accountEmail: Text("BMI: $bmi")),
           //_initialSetupListTile(context),
-          _foodHistoryListTile(context),
+          // _foodHistoryListTile(context),
+          /*_userInfoTile(context),*/
           _settingsListTile(context),
-          _userInfoTile(context),
         ],
       )),
     );
-  }
-
-  ListTile _foodHistoryListTile(BuildContext context) {
-    return ListTile(
-        leading: const Icon(Icons.calendar_today),
-        title: Text("Food History"),
-        onTap: () {
-          Navigator.pop(context);
-          // Navigator.push(context, MaterialPageRoute(
-          //   builder: (BuildContext context) {
-          //     return Scaffold(body: SettingsPage());
-          //   },
-          // ));
-          openFoodHistoryPage(context);
-        });
   }
 
   ListTile _settingsListTile(BuildContext context) {
@@ -77,12 +58,12 @@ class MainDrawerState extends State<MainDrawer> {
         });
   }
 
-  ListTile _userInfoTile(BuildContext context) {
+  /*ListTile _userInfoTile(BuildContext context) {
     return ListTile(
         leading: const Icon(Icons.perm_identity),
         title: Text("User Info"),
         onTap: () {
           UsersPage.push(context);
         });
-  }
+  }*/
 }

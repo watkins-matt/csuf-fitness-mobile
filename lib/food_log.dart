@@ -1,6 +1,7 @@
-import 'food_log_item.dart';
-import 'database/storage_provider.dart';
 import 'dart:async';
+
+import 'database/storage_provider.dart';
+import 'food_log_item.dart';
 
 /// A log of food items consumed over a certain day.
 ///
@@ -19,13 +20,13 @@ class FoodLog {
   DateTime _date = DateTime.now();
 
   StreamController<int> _caloriesChangedController =
-      new StreamController.broadcast();
+      StreamController.broadcast();
   StreamController<FoodLogItem> _itemAddedController =
-      new StreamController.broadcast();
+      StreamController.broadcast();
   StreamController<FoodLogItem> _itemRemovedController =
-      new StreamController.broadcast();
+      StreamController.broadcast();
 
-  StorageProvider _provider = StorageProvider.instance;
+  FoodLogStorageProvider _storage = FoodLogStorageProvider.instance;
 
   // Public properties
   FoodLogItem operator [](int index) => _items[index];
@@ -55,11 +56,11 @@ class FoodLog {
   Stream<FoodLogItem> get itemAdded => _itemAddedController.stream;
   Stream<FoodLogItem> get itemRemoved => _itemRemovedController.stream;
 
-  static final FoodLog _singleton = FoodLog._internal();
+  static final FoodLog _instance = FoodLog._internal();
   FoodLog._internal();
 
   factory FoodLog() {
-    return _singleton;
+    return _instance;
   }
 
   void dispose() {
@@ -75,7 +76,7 @@ class FoodLog {
     _items.add(item);
 
     // Update the storage provider/database
-    _provider.write(item);
+    _storage.write(item);
 
     // Send events to event listeners
     _caloriesChangedController.add(_calories);
@@ -90,7 +91,7 @@ class FoodLog {
     _items.removeAt(index);
 
     // Update the storage provider/database
-    _provider.delete(item);
+    _storage.delete(item);
 
     // Send events to event listeners
     _itemRemovedController.add(item);
@@ -115,7 +116,7 @@ class FoodLog {
 
   void _updateDate(DateTime value) async {
     _date = value;
-    _items = await _provider.read(value);
+    _items = await _storage.read(value);
     _calories = 0;
 
     _items.forEach((item) {

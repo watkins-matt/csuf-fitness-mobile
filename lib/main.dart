@@ -1,12 +1,22 @@
-import 'package:flutter/material.dart';
-import 'pages/food_log_page.dart';
+import 'package:csuf_fitness/pages/home_page.dart';
 import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'api_key.dart';
+import 'widgets/bottom_nav_bar.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(FitnessApp());
+
+  // Default to portrait mode
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(ChangeNotifierProvider(
+        create: (context) => FitIntegration(), child: FitnessApp()));
+  });
 }
 
 class FitnessApp extends StatelessWidget {
@@ -22,6 +32,8 @@ class FitnessApp extends StatelessWidget {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     darkMode = prefs.getBool('darkMode');
+
+    // await SleepStatus().initialized;
   }
 
   @override
@@ -34,7 +46,7 @@ class FitnessApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.light,
-      home: FoodLogPage(title: 'My Health & Fitness'),
+      home: MainBottomNavBarController(),
     );
   }
 }

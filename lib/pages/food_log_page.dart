@@ -1,20 +1,19 @@
-import 'package:csuf_fitness/barcode_scanner.dart';
-import 'package:csuf_fitness/food_log.dart';
-import 'package:csuf_fitness/widgets/food_log_page_header_alt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgets/add_food_item_widget.dart';
-import '../widgets/main_drawer.dart';
-import '../widgets/food_log_list_view.dart';
+import '../barcode_scanner.dart';
 import '../food_log.dart';
 import '../icon_library.dart';
-import '../barcode_scanner.dart';
+import '../widgets/add_food_item_widget.dart';
+import '../widgets/food_log_list_view.dart';
+import '../widgets/food_log_page_header.dart';
+import '../widgets/main_drawer.dart';
 
 class FoodLogPage extends StatefulWidget {
   final String title;
   final FoodLog log = FoodLog();
-  final BarcodeProvider provider = BarcodeProvider();
 
   FoodLogPage({Key key, this.title}) : super(key: key);
 
@@ -46,13 +45,14 @@ class _FoodLogPageState extends State<FoodLogPage> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text("My Health & Fitness"),
         ),
         body: _buildBody(),
         drawer: MainDrawer(),
         floatingActionButton: FloatingActionButton(
+          heroTag: "BarcodeScan",
           onPressed: () {
-            widget.provider.scan();
+            Provider.of<BarcodeProvider>(context, listen: false).scan();
           },
           tooltip: 'Scan Barcode',
           child: Icon(IconLibrary.barcode),
@@ -67,9 +67,9 @@ class _FoodLogPageState extends State<FoodLogPage> {
         StreamBuilder<int>(
             stream: FoodLog().caloriesChanged,
             builder: (context, snapshot) {
-              return FoodLogPageHeaderAlt(widget.log);
+              return FoodLogPageHeader(widget.log);
             }),
-        AddFoodItemWidget(widget.log, widget.provider),
+        AddFoodItemWidget(widget.log),
         StreamBuilder<int>(
             stream: FoodLog().caloriesChanged,
             builder: (context, snapshot) {
@@ -81,7 +81,7 @@ class _FoodLogPageState extends State<FoodLogPage> {
 
   @override
   void dispose() {
-    widget.log.dispose();
+    // widget.log.dispose();
     super.dispose();
   }
 }

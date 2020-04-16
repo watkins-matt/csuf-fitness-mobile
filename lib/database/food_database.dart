@@ -1,8 +1,11 @@
 import 'dart:io';
+
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+
 import '../food_log_item.dart';
+import '../sleep_log.dart';
 
 class FoodDatabase {
   // DB info
@@ -83,6 +86,21 @@ class FoodDatabase {
   Future<List<FoodLogItem>> queryBetweenDates(
       DateTime leftDate, DateTime rightDate) async {
     Database db = await instance.database;
+    leftDate = leftDate.normalize();
+    // leftDate = leftDate.subtract(Duration(
+    //     hours: leftDate.hour,
+    //     minutes: leftDate.minute,
+    //     seconds: leftDate.second,
+    //     milliseconds: leftDate.millisecond));
+    // rightDate = rightDate.add(Duration(
+    //     hours: 23 - rightDate.hour,
+    //     minutes: 59 - rightDate.minute,
+    //     seconds: 59 - rightDate.second,
+    //     milliseconds: 999 - rightDate.millisecond));
+    rightDate = rightDate.normalize();
+
+    print(leftDate);
+    print(rightDate);
     var leftEpoch = leftDate.millisecondsSinceEpoch;
     var rightEpoch = rightDate.millisecondsSinceEpoch;
     var rows = await db.rawQuery(
@@ -99,7 +117,7 @@ class FoodDatabase {
   }
 
   Future<void> queryDate(DateTime date) async {
-    // TODO
+    return queryBetweenDates(date, date);
   }
 
   Future<void> deleteAllRows() async {

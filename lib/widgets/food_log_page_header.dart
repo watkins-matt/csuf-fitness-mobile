@@ -1,6 +1,8 @@
-import 'package:csuf_fitness/food_log.dart';
+import 'package:calendar_strip/calendar_strip.dart';
 import 'package:flutter/material.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
+import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
+
 import '../food_log.dart';
 
 class FoodLogPageHeader extends StatefulWidget {
@@ -14,51 +16,48 @@ class FoodLogPageHeader extends StatefulWidget {
 class _FoodLogPageHeaderState extends State<FoodLogPageHeader> {
   @override
   Widget build(BuildContext context) {
-    String calorieModifier(double value) {
-      final roundedValue = value.ceil().toInt().toString();
-      return '$roundedValue kCal';
-    }
+    final calendarStrip = Container(
+        child: CalendarStrip(
+      containerDecoration: BoxDecoration(),
+      iconColor: Theme.of(context).accentColor,
+      addSwipeGesture: true,
+      startDate: widget.log.date.subtract(Duration(days: 6)),
+      endDate: widget.log.date.add(Duration(days: 6)),
+      selectedDate: widget.log.date,
+      onDateSelected: (date) {
+        setState(() {
+          widget.log.date = date;
+        });
+      },
+    ));
+
+    int calories = widget.log.calories;
+    int max = widget.log.maxCalories;
 
     double initialValue = widget.log.calories.toDouble();
     double maxCalories = widget.log.maxCalories.toDouble();
     maxCalories = maxCalories == 0 ? 2000 : maxCalories;
     double maxValue = maxCalories > initialValue ? maxCalories : initialValue;
 
-    final todaySlider = SleekCircularSlider(
-      appearance: CircularSliderAppearance(
-          customWidths: CustomSliderWidths(progressBarWidth: 5),
-          infoProperties: InfoProperties(
-              bottomLabelText: "Today", modifier: calorieModifier)),
-      min: 0,
-      max: maxValue,
-      initialValue: initialValue,
+    double calPercent = (initialValue / maxValue) * 100;
+    final calorieProgressBar = RoundedProgressBar(
+      style: RoundedProgressBarStyle(
+          // backgroundProgress: Theme.of(context).scaffoldBackgroundColor,
+          // colorProgressDark: Theme.of(context).scaffoldBackgroundColor,
+          // colorProgress: Theme.of(context).accentColor,
+          colorBorder: Theme.of(context).cardColor),
+      percent: calPercent,
+      childCenter: Text("$calories kCal / $max kCal",
+          style: TextStyle(color: Colors.white)),
     );
 
-    final maxCaloriesSlider = SleekCircularSlider(
-      appearance: CircularSliderAppearance(
-          customWidths: CustomSliderWidths(progressBarWidth: 5),
-          infoProperties: InfoProperties(
-              bottomLabelText: "Today's Goal", modifier: calorieModifier)),
-      min: 0,
-      max: maxCalories,
-      initialValue: maxCalories,
-    );
-
-    return Container(
-        child: Row(
-      children: <Widget>[
-        Card(
-            child: Padding(
-          padding: EdgeInsets.only(top: 20, bottom: 0, left: 8, right: 8),
-          child: todaySlider,
-        )),
-        Card(
-            child: Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 0, left: 8, right: 8),
-                child: maxCaloriesSlider)),
-      ],
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-    ));
+    return Card(
+        elevation: 5,
+        child: Container(
+            child: Column(
+          children: <Widget>[calendarStrip, calorieProgressBar],
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+        )));
   }
 }

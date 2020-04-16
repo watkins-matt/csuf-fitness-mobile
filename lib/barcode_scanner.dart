@@ -1,7 +1,7 @@
-import 'package:barcode_scan/barcode_scan.dart';
-import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:qrscan/qrscan.dart' as QRScan;
+
 import 'product_info.dart';
-import 'open_food_facts_data_provider.dart';
 
 class BarcodeInfo {
   String upc;
@@ -11,14 +11,19 @@ class BarcodeInfo {
   BarcodeInfo(this.upc, this.productName, this.calories);
 }
 
-class BarcodeProvider {
+class BarcodeProvider extends ChangeNotifier {
   void Function(BarcodeInfo info) itemScannedCallback;
+  void Function(bool searching) searchingStatusCallback;
 
-  void scan() async {
+  Future scan() async {
     try {
       ProductInfoProvider info = MultiInfoProvider();
+      String gtin = await QRScan.scan();
 
-      String gtin = await BarcodeScanner.scan();
+      if (searchingStatusCallback != null) {
+        searchingStatusCallback(true);
+      }
+
       String productName = await info.getProductTitle(gtin);
       int calories = (await info.getCalories(gtin)).round();
 
@@ -27,6 +32,10 @@ class BarcodeProvider {
       }
     } catch (ex) {
       print(ex.toString());
+    } finally {
+      if (searchingStatusCallback != null) {
+        searchingStatusCallback(false);
+      }
     }
   }
 }

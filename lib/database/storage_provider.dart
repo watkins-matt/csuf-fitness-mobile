@@ -1,16 +1,15 @@
-import 'package:csuf_fitness/food_log_item.dart';
+import '../food_log_item.dart';
+import '../sleep_log.dart';
 import 'food_database.dart';
 
-abstract class StorageProvider {
-  void delete(FoodLogItem item);
-  void write(FoodLogItem item);
-  void writeAll(List<FoodLogItem> items);
-  Future<List<FoodLogItem>> read(DateTime date);
-
-  static StorageProvider get instance => DatabaseStorageProvider();
+abstract class StorageProvider<T> {
+  void delete(T item);
+  void write(T item);
+  void writeAll(List<T> items);
+  Future<List<T>> read(DateTime date);
 }
 
-class DatabaseStorageProvider extends StorageProvider {
+class FoodLogStorageProvider extends StorageProvider<FoodLogItem> {
   @override
   void delete(FoodLogItem item) async {
     FoodDatabase.instance.deleteByTimestamp(item.time);
@@ -34,4 +33,29 @@ class DatabaseStorageProvider extends StorageProvider {
         DateTime(date.year, date.month, date.day),
         DateTime(date.year, date.month, date.day + 1));
   }
+
+  static FoodLogStorageProvider get instance => FoodLogStorageProvider();
+}
+
+class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
+  @override
+  void delete(SleepEvent item) async {
+    //FoodDatabase.instance.deleteByTimestamp(item.time);
+  }
+
+  @override
+  void write(SleepEvent item) {
+    //FoodDatabase.instance.insert(item);
+  }
+
+  @override
+  void writeAll(List<SleepEvent> items) {}
+
+  @override
+  Future<List<SleepEvent>> read(DateTime date) {
+    Future<List<SleepEvent>> temp;
+    return temp;
+  }
+
+  static SleepLogStorageProvider get instance => SleepLogStorageProvider();
 }

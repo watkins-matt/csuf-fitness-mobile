@@ -1,8 +1,18 @@
 {
-    "files.exclude": {
-        ".dart_tool": true,
-        ".idea": true,
-        "build": true
-    },
-    "editor.tabSize": 2,
+  "files.exclude": {
+    ".dart_tool": true,
+    ".idea": true,
+    "build": true
+  },
+  "editor.tabSize": 2,
+  "cSpell.words": [
+    "flutter",
+    "intialized",
+    "ltrb",
+    "mqtt",
+    "openfoodfacts",
+    "spinkit",
+    "unfocus"
+  ],
+  "VSCodeCounter.showInStatusBar": true,
 }

@@ -1,5 +1,5 @@
 name: csuf_fitness
-description: A new Flutter project.
+description: Allows users to track their health and fitness.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -11,26 +11,30 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.2.1
+version: 0.3.0
 
 environment:
-  sdk: '>=2.1.0 <3.0.0'
+  sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  sleek_circular_slider: ^1.0.7
   shared_preferences: ^0.5.6+1
   sqflite: ^1.2.1
   path_provider: ^1.6.0
   intl: ^0.16.1
-  barcode_scan: ^2.0.1
   flutter_rounded_progress_bar: ^0.1.2
   calendar_strip: ^1.0.6
   recase: ^3.0.0
   http: ^0.12.0+4
   settings_ui: ^0.2.0
   openfoodfacts: ^0.1.16
+  flutter_spinkit: ^4.1.2
+  qrscan: ^0.2.17
+  expansion_tile_card: ^1.0.2+2
+  provider: ^4.0.4
+  fit_kit: ^1.1.1
+  datetime_picker_formfield: ^1.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -39,6 +43,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: '^0.7.3'
+
+flutter_icons:
+  android: 'launcher_icon'
+  ios: true
+  image_path: 'assets/icon/diet.png'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
