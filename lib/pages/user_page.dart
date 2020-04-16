@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import "about_us.dart";
+
 import 'edit_profile.dart';
-import "help_center.dart";
 
 class UsersPage extends StatefulWidget {
   UsersPage({Key key, this.title}) : super(key: key);
@@ -29,6 +28,3 @@ class _UserPageState extends State<UsersPage> {
     );
   }
 }
-
-
-         

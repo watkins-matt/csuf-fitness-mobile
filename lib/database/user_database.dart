@@ -45,8 +45,6 @@ class UserDatabase {
 
   // helper function to create SQL table
   Future _onCreate(Database db, int version) async {
-    // TODO
-
     /*
 		await db.execute('''
 			CREATE TABLE $tableName (

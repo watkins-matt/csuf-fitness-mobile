@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
 
-class about_us extends StatelessWidget {
+class AboutUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: Colors.white,
       appBar: AppBar(
         brightness: Brightness.light,
         backgroundColor: Colors.blue,
         elevation: 0,
-        title: Text("About", style: TextStyle(color: Colors.white, fontSize: 20),),
+        title: Text(
+          "About",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
       ),
-     body: SafeArea(
-       child: SingleChildScrollView(
-       child: Padding(
-         padding: EdgeInsets.all(20.0),
-         
-         child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: <Widget> [
-          SizedBox(height: 10,),
-          Text("Licenses, Agreements, and Attributes", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.black),),
-           SizedBox(height: 20,),
-           Text("""name: csuf_fitness
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Licenses, Agreements, and Attributes",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  """name: csuf_fitness
 description: Allows users to track their health and fitness.
 
 dependencies:
@@ -45,7 +57,7 @@ dependencies:
   provider: ^4.0.4
   fit_kit: ^1.1.1
   datetime_picker_formfield: ^1.0.0
-  
+
 
   sqflite:
 Copyright (c) 2017, Alexandre Roux Tekartik.
@@ -68,22 +80,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-""", 
-                 
-                 
-                 
-                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.grey,fontStyle: FontStyle.italic),),
-           ],
-           
-         ),
-         
-       ),
-       
-     ),
-
-    ),
-     
+""",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                      fontStyle: FontStyle.italic),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
-   
   }
 }

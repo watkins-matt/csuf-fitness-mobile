@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import '../sleep_log.dart';
 
 class SleepDatabase {
   // DB info
@@ -42,8 +41,6 @@ class SleepDatabase {
 
   // helper function to create SQL table
   Future _onCreate(Database db, int version) async {
-    // TODO
-
     /*
 		await db.execute('''
 			CREATE TABLE $tableName (
