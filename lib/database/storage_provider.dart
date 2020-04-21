@@ -46,21 +46,19 @@ class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
 
   @override
   void write(SleepEvent item) {
-	  SleepDatabase.instance.printAllRows();
+    SleepDatabase.instance.printAllRows();
     //SleepDatabase.instance.insert(item);
   }
 
   void printer() {
-	  print('test');
-	  var tester = SleepEvent(DateTime.now(), DateTime.now());
-	  SleepDatabase.instance.printAllRows();
-	  SleepDatabase.instance.insert(sl);
+    print('test');
+    var testEvent = SleepEvent(DateTime.now(), DateTime.now());
+    SleepDatabase.instance.printAllRows();
+    SleepDatabase.instance.insert(testEvent);
   }
 
   @override
-  void writeAll(List<SleepEvent> items) {
-
-  }
+  void writeAll(List<SleepEvent> items) {}
 
   @override
   Future<List<SleepEvent>> read(DateTime date) {
