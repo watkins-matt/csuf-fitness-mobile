@@ -5,13 +5,10 @@ on:
     branches: [dev]
     paths:
     - "**/*.dart"
-  watch:
-    types: [started]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.actor == github.event.repository.owner.login
     
     steps:
     - uses: actions/checkout@v1
