@@ -18,21 +18,23 @@ class SleepLogPage extends StatefulWidget {
 
 class _SleepLogPageState extends State<SleepLogPage> {
   Timer timer;
-  Duration sleepLength = Duration();
   String length = "";
 
   void timerTicked(Timer timer) {
+    final status = Provider.of<SleepStatus>(context, listen: false);
+
     setState(() {
       formatDuration(Duration d) =>
           d.toString().split('.').first.padLeft(8, "0");
-
-      sleepLength = SleepStatus().sleepLength;
-      length = formatDuration(sleepLength);
+      length = formatDuration(status.sleepLength);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) async => await updateTimerState());
+
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
@@ -48,12 +50,25 @@ class _SleepLogPageState extends State<SleepLogPage> {
         drawer: MainDrawer());
   }
 
-  void onButtonPressed() async {
-    await SleepStatus().initialized; // Ensure SleepStatus is initialized
-    setState(() {
-      SleepStatus().sleeping = !SleepStatus().sleeping;
+  Future<void> updateTimerState() async {
+    final status = Provider.of<SleepStatus>(context, listen: false);
 
-      if (SleepStatus().sleeping) {
+    setState(() {
+      if (status.sleeping) {
+        timer = Timer.periodic(Duration(seconds: 1), timerTicked);
+      } else {
+        timer?.cancel();
+      }
+    });
+  }
+
+  void onButtonPressed() async {
+    final status = Provider.of<SleepStatus>(context, listen: false);
+
+    setState(() {
+      status.sleeping = !status.sleeping;
+
+      if (status.sleeping) {
         timer = Timer.periodic(Duration(seconds: 1), timerTicked);
       } else {
         timer?.cancel();
@@ -61,13 +76,14 @@ class _SleepLogPageState extends State<SleepLogPage> {
         final SleepDataProvider sleepData =
             Provider.of<SleepDataProvider>(context, listen: false);
         SleepLog log = sleepData.getDate(DateTime.now());
-        log.events.add(SleepStatus().lastEvent);
+        log.events.add(status.lastEvent);
       }
     });
   }
 
   Widget _progressBar(String status) {
-    int ms = sleepLength.inMilliseconds;
+    final statusProvider = Provider.of<SleepStatus>(context, listen: false);
+    int ms = statusProvider.sleepLength.inMilliseconds;
     int msInEightHours = 1000 * 60 * 60 * 8;
     double percent = (ms / msInEightHours) * 100;
 
@@ -85,7 +101,8 @@ class _SleepLogPageState extends State<SleepLogPage> {
   }
 
   Widget _header() {
-    bool sleeping = SleepStatus().sleeping;
+    final statusProvider = Provider.of<SleepStatus>(context, listen: false);
+    bool sleeping = statusProvider.sleeping;
     String status = sleeping ? "Asleep" : "Awake";
 
     return Container(

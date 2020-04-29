@@ -28,9 +28,11 @@ class _MainBottomNavBarControllerState
     ChangeNotifierProvider(
         create: (context) => BarcodeProvider(),
         child: FoodLogPage(key: PageStorageKey("FoodLog"))),
-    ChangeNotifierProvider(
-        create: (context) => SleepDataProvider(),
-        child: SleepLogPage(key: PageStorageKey("SleepLog"))),
+    MultiProvider(providers: [
+      ChangeNotifierProvider<SleepDataProvider>(
+          create: (_) => SleepDataProvider()),
+      ChangeNotifierProvider<SleepStatus>(create: (_) => SleepStatus()),
+    ], child: SleepLogPage(key: PageStorageKey("SleepLog"))),
     UsersPage(key: PageStorageKey("UsersPage"))
   ];
 
