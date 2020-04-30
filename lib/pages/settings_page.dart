@@ -99,7 +99,7 @@ class _SettingPageState extends State<SettingsPage> {
                 subtitle: 'Changes take effect upon restart',
                 onToggle: _onDarkModeToggle,
                 switchValue: darkMode),
-                SettingsTile.switchTile(
+            SettingsTile.switchTile(
                 title: 'Metric',
                 subtitle: 'Changes take effect upon restart',
                 onToggle: _onMetricToggle,
@@ -116,22 +116,6 @@ class _SettingPageState extends State<SettingsPage> {
             )
           ],
         ),
-        SettingsSection(title: "Advanced", tiles: [
-          SettingsTile(
-            title: "MQTT Server",
-            subtitle: "Tap to set.",
-          ),
-          SettingsTile(
-            title: "Username",
-            subtitle: "Tap to set.",
-            onTap: _showUsernameEntryDialog,
-          ),
-          SettingsTile(
-            title: "Password",
-            subtitle: "Tap to set.",
-            onTap: _showPasswordEntryDialog,
-          )
-        ])
       ],
     );
   }
@@ -160,7 +144,7 @@ class _SettingPageState extends State<SettingsPage> {
     });
   }
 
-   void _onMetricToggle(bool enabled) async {
+  void _onMetricToggle(bool enabled) async {
     metric = enabled;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -176,28 +160,6 @@ class _SettingPageState extends State<SettingsPage> {
       maxCalories = int.parse(controller.text);
       prefs.setInt('maxCalories', maxCalories);
       FoodLog().maxCalories = maxCalories;
-    });
-
-    Navigator.pop(context);
-  }
-
-    Future<void> _onUsernameEntryOkButtonPressed() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    setState(() {
-      username = (controller.text);
-      prefs.setString('username', username);
-    });
-
-    Navigator.pop(context);
-  }
-
-      Future<void> _onPasswordEntryOkButtonPressed() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    setState(() {
-      username = (controller.text);
-      prefs.setString('password', password);
     });
 
     Navigator.pop(context);
@@ -224,54 +186,6 @@ class _SettingPageState extends State<SettingsPage> {
               }),
           FlatButton(
               child: Text("OK"), onPressed: _onCalorieEntryOkButtonPressed),
-        ],
-      ),
-    );
-  }
-
-void _showUsernameEntryDialog() async {
-    controller = TextEditingController();
-
-    await showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: TextField(
-          autofocus: true,
-          controller: controller,
-          decoration: InputDecoration(hintText: "Username"),
-        ),
-        actions: <Widget>[
-          FlatButton(
-              child: Text("Cancel"),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          FlatButton(
-              child: Text("OK"), onPressed: _onUsernameEntryOkButtonPressed),
-        ],
-      ),
-    );
-  }
-
-  void _showPasswordEntryDialog() async {
-    controller = TextEditingController();
-
-    await showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: TextField(
-          autofocus: true,
-          controller: controller,
-          decoration: InputDecoration(hintText: "Password"),
-        ),
-        actions: <Widget>[
-          FlatButton(
-              child: Text("Cancel"),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          FlatButton(
-              child: Text("OK"), onPressed: _onPasswordEntryOkButtonPressed),
         ],
       ),
     );
