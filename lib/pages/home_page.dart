@@ -119,6 +119,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Column(children: <Widget>[
           _topCard(context),
+          // _altChart(context),
           _bottomCard(context),
         ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -135,8 +136,53 @@ class _HomePageState extends State<HomePage> {
         drawer: MainDrawer());
   }
 
+  // List<FlSpot> buildWeightData(List<WeightDataPoint> data) {
+  //   List<FlSpot> list = <FlSpot>[];
+
+  //   for (final datum in data) {
+  //     list.add(FlSpot(datum.date.millisecondsSinceEpoch.toDouble(),
+  //         datum.weight.toDouble()));
+  //   }
+
+  //   return list;
+  // }
+
+  // Widget _altChart(BuildContext context) {
+  //   final weightLog = Provider.of<WeightTrackingLog>(context, listen: false);
+  //   List<FlSpot> list = buildWeightData(weightLog.data);
+
+  //   return Expanded(
+  //       child: Padding(
+  //           padding: EdgeInsets.all(8),
+  //           child: LineChart(LineChartData(
+  //               maxX: DateTime.now().millisecondsSinceEpoch.toDouble(),
+  //               minX: DateTime.now()
+  //                   .subtract(Duration(days: 10))
+  //                   .millisecondsSinceEpoch
+  //                   .toDouble(),
+  //               lineBarsData: <LineChartBarData>[LineChartBarData(spots: list)],
+  //               titlesData: FlTitlesData(
+  //                   bottomTitles: SideTitles(
+  //                       showTitles: true,
+  //                       reservedSize: 30,
+  //                       margin: 8,
+  //                       textStyle: const TextStyle(
+  //                         color: Color(0xff75729e),
+  //                         fontWeight: FontWeight.bold,
+  //                         fontSize: 14,
+  //                       ),
+  //                       interval: 5000,
+  //                       getTitles: getXAxisTitle))))));
+  // }
+
+  // String getXAxisTitle(double value) {
+  //   int timestamp = value.toInt();
+  //   DateTime time = DateTime.fromMillisecondsSinceEpoch(timestamp);
+  //   return "Test";
+  // }
+
   Widget _chart(BuildContext context) {
-    final weightLog = Provider.of<WeightTrackingLog>(context, listen: true);
+    final weightLog = Provider.of<WeightTrackingLog>(context, listen: false);
 
     return Expanded(
         child: Padding(
@@ -154,7 +200,7 @@ class _HomePageState extends State<HomePage> {
   List<charts.Series<WeightDataPoint, DateTime>> buildSeries(
       List<WeightDataPoint> data) {
     return [
-      new charts.Series<WeightDataPoint, DateTime>(
+      charts.Series<WeightDataPoint, DateTime>(
         id: 'Weight',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (WeightDataPoint data, _) => data.date,
