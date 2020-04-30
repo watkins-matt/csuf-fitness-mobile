@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fit_kit/fit_kit.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _topCard(BuildContext context) {
-    var fit = Provider.of<FitIntegration>(context, listen: false);
+    final fit = Provider.of<FitIntegration>(context, listen: false);
 
     int roundedCalories = fit.calories.round();
     double calPercent = (fit.calories / 2000) * 100;
@@ -76,7 +78,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     int roundedSteps = fit.stepCount.round();
-    double stepPercent = roundedSteps / 10000;
+    double stepPercent = (roundedSteps / 10000) * 100;
 
     final stepProgressBar = RoundedProgressBar(
       style: RoundedProgressBarStyle(
@@ -124,25 +126,70 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.only(bottom: 30, right: 30),
             child: FloatingActionButton(
               child: Icon(Icons.add),
-              onPressed: () {},
+              onPressed: () {
+                final weightLog =
+                    Provider.of<WeightTrackingLog>(context, listen: false);
+                weightLog.addWeight(DateTime.now(), Random().nextInt(25) + 150);
+              },
             )),
         drawer: MainDrawer());
   }
 
   Widget _chart(BuildContext context) {
+    final weightLog = Provider.of<WeightTrackingLog>(context, listen: true);
+
     return Expanded(
         child: Padding(
       padding: EdgeInsets.all(8),
-      child: charts.TimeSeriesChart(_exampleData(),
-          behaviors: [charts.ChartTitle('Weight', innerPadding: 18)],
+      child: charts.TimeSeriesChart(buildSeries(weightLog.data),
+          behaviors: [
+            charts.ChartTitle('Weight: ${weightLog.current}', innerPadding: 18)
+          ],
           primaryMeasureAxis: charts.NumericAxisSpec(
               tickProviderSpec: charts.BasicNumericTickProviderSpec(
                   desiredTickCount: 10, zeroBound: false))),
     ));
   }
 
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<WeightDataPoint, DateTime>> _exampleData() {
+  List<charts.Series<WeightDataPoint, DateTime>> buildSeries(
+      List<WeightDataPoint> data) {
+    return [
+      new charts.Series<WeightDataPoint, DateTime>(
+        id: 'Weight',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (WeightDataPoint data, _) => data.date,
+        measureFn: (WeightDataPoint data, _) => data.weight,
+        data: data,
+      )
+    ];
+  }
+}
+
+class WeightDataPoint {
+  int weight;
+  DateTime date;
+
+  WeightDataPoint({@required this.date, @required this.weight});
+}
+
+class WeightTrackingLog extends ChangeNotifier {
+  List<WeightDataPoint> data = <WeightDataPoint>[];
+
+  WeightTrackingLog() {
+    populateTestData();
+  }
+
+  int get current {
+    return data.last.weight;
+  }
+
+  void addWeight(DateTime date, int weight) {
+    data.add(WeightDataPoint(date: date, weight: weight));
+    notifyListeners();
+  }
+
+  void populateTestData() {
+    data.clear();
     final list = [
       WeightDataPoint(
           date: DateTime.now().subtract(Duration(days: 30)), weight: 188),
@@ -157,22 +204,7 @@ class _HomePageState extends State<HomePage> {
       WeightDataPoint(
           date: DateTime.now().subtract(Duration(days: 5)), weight: 180),
     ];
-
-    return [
-      new charts.Series<WeightDataPoint, DateTime>(
-        id: 'Weight',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (WeightDataPoint data, _) => data.date,
-        measureFn: (WeightDataPoint data, _) => data.weight,
-        data: list,
-      )
-    ];
+    data.addAll(list);
+    notifyListeners();
   }
-}
-
-class WeightDataPoint {
-  int weight;
-  DateTime date;
-
-  WeightDataPoint({@required this.date, @required this.weight});
 }

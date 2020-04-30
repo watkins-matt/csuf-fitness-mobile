@@ -22,9 +22,16 @@ class _MainBottomNavBarControllerState
     extends State<MainBottomNavBarController> {
   final PageStorageBucket storageBucket = PageStorageBucket();
   List<Widget> pageList = [
-    Consumer<FitIntegration>(builder: (context, cart, child) {
-      return HomePage(key: PageStorageKey("Home"));
-    }),
+    MultiProvider(
+        providers: [
+          ChangeNotifierProvider<FitIntegration>(
+              create: (_) => FitIntegration()),
+          ChangeNotifierProvider<WeightTrackingLog>(
+              create: (_) => WeightTrackingLog()),
+        ],
+        child: Consumer<FitIntegration>(builder: (context, cart, child) {
+          return HomePage(key: PageStorageKey("Home"));
+        })),
     ChangeNotifierProvider(
         create: (context) => BarcodeProvider(),
         child: FoodLogPage(key: PageStorageKey("FoodLog"))),
