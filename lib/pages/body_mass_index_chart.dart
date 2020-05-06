@@ -1,4 +1,4 @@
-
+//import 'package:photo_view/photo_view.dart';
 import 'package:flutter/material.dart';
 
 class BMIChartPage extends StatefulWidget {
@@ -58,6 +58,22 @@ Widget _wrap(){
       ),
     );
   }
+
+// IMPLEMENT ZOOM IN FUNCTION
+  /*Widget _chart() {
+  return Container(
+    child: PhotoView(
+      imageProvider: AssetImage('graphics/BMIChart.png'),
+    )
+  );
+}*/
+
+// USE ASSET IMAGE INSTEAD OF ONLINE IMAGE
+/*Widget _chart() {
+    return Center(
+      child: Image(image: AssetImage('graphics/BMIChart.png')),
+    );
+  }*/
 
   Widget _chart() {
     return Center(
