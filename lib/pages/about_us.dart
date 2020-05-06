@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class AboutUsPage extends StatefulWidget {
@@ -20,7 +19,6 @@ class AboutUsPage extends StatefulWidget {
 }
 
 class _AboutUsPageState extends State<AboutUsPage> {
-
   @override
   void initState() {
     super.initState();

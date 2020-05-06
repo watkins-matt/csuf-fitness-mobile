@@ -64,7 +64,7 @@ class MainDrawerState extends State<MainDrawer> {
         });
   }
 
- ListTile _bmiChartTile(BuildContext context) {
+  ListTile _bmiChartTile(BuildContext context) {
     return ListTile(
         leading: const Icon(Icons.perm_data_setting),
         title: Text("BMI Chart"),
@@ -72,6 +72,7 @@ class MainDrawerState extends State<MainDrawer> {
           BMIChartPage.push(context);
         });
   }
+
   ListTile _aboutUsTile(BuildContext context) {
     return ListTile(
         leading: const Icon(Icons.perm_data_setting),

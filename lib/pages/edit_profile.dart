@@ -1,10 +1,6 @@
-/*import 'dart:html';*/
-
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-/*import "about_us.dart";
-import "help_center.dart";*/
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key key}) : super(key: key);
@@ -30,7 +26,6 @@ class _EditProfileState extends State<EditProfile> {
   static const double defaultSetHeight = 0;
   static const double defaultSetWeight = 0;
   static const double defaultBMI = 0;
-
 
   bool metric;
   int age;
@@ -62,15 +57,14 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("User Profile"),
-      ),
-      body: _buildBody()
-    );
+        appBar: AppBar(
+          title: Text("User Profile"),
+        ),
+        body: _buildBody());
   }
 
   Widget _buildBody() {
-    if(metric == false){
+    if (metric == false) {
       heightMeasure = "(in)";
       weightMeasure = "(lbs)";
     } else {
@@ -117,7 +111,7 @@ class _EditProfileState extends State<EditProfile> {
     Navigator.pop(context);
   }
 
-    Future<void> _onHeightEntryOkButtonPressed() async {
+  Future<void> _onHeightEntryOkButtonPressed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
@@ -129,7 +123,7 @@ class _EditProfileState extends State<EditProfile> {
     bodyMassIndex();
   }
 
-      Future<void> _onWeightEntryOkButtonPressed() async {
+  Future<void> _onWeightEntryOkButtonPressed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
@@ -160,8 +154,7 @@ class _EditProfileState extends State<EditProfile> {
               onPressed: () {
                 Navigator.pop(context);
               }),
-          FlatButton(
-              child: Text("OK"), onPressed: _onAgeEntryOkButtonPressed),
+          FlatButton(child: Text("OK"), onPressed: _onAgeEntryOkButtonPressed),
         ],
       ),
     );
@@ -219,11 +212,11 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-    void bodyMassIndex() async {
-    if (height== defaultSetHeight || weight == defaultSetWeight) {
+  void bodyMassIndex() async {
+    if (height == defaultSetHeight || weight == defaultSetWeight) {
       bmi = defaultBMI;
     } else {
-      bmi = (703 * weight) /(height * height);
+      bmi = (703 * weight) / (height * height);
       bmi = num.parse(bmi.toStringAsFixed(1));
     }
     SharedPreferences preferences = await SharedPreferences.getInstance();

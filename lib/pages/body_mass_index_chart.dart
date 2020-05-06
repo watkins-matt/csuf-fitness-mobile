@@ -1,5 +1,6 @@
 //import 'package:photo_view/photo_view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BMIChartPage extends StatefulWidget {
   BMIChartPage({Key key}) : super(key: key);
@@ -20,41 +21,54 @@ class BMIChartPage extends StatefulWidget {
 }
 
 class _BMIChartPageState extends State<BMIChartPage> {
-
+  static const double defaultBMI = 0;
+  double bmi;
   @override
   void initState() {
     super.initState();
   }
 
+  _BMIChartPageState() {
+    _init();
+  }
+
+  Future<void> _init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      bmi = prefs.get("BMI") ?? defaultBMI;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Body Mass Index Chart"),
-        ),
-        body: _wrap(),
-        );
+      appBar: AppBar(
+        title: Text("Body Mass Index Chart"),
+      ),
+      body: _wrap(),
+    );
   }
 
-Widget _wrap(){
-  return Wrap(
-    //alignment: WrapAlignment.end,
-    direction: Axis.horizontal,
-    spacing: 10.0,
-    runSpacing: 30.0,
-    children: <Widget>[
-      _bmiDefinition(),
-      _chart(),
-    ],
-  );
-}
-
+  Widget _wrap() {
+    return Wrap(
+      //alignment: WrapAlignment.end,
+      direction: Axis.horizontal,
+      spacing: 10.0,
+      runSpacing: 30.0,
+      children: <Widget>[
+        _bmiDefinition(),
+        _chart(),
+      ],
+    );
+  }
 
   Widget _bmiDefinition() {
     return Card(
       child: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Text("Weight that is higher than what is considered as a healthy weight for a given height is described as overweight or obese. Body Mass Index, or BMI, is used as a screening tool for overweight or obesity."),
+        child: Text(
+            "Weight that is higher than what is considered as a healthy weight for a given height is described as overweight or obese. Body Mass Index, or BMI, is used as a screening tool for overweight or obesity.\n\nBMI: $bmi"),
       ),
     );
   }
@@ -78,8 +92,8 @@ Widget _wrap(){
   Widget _chart() {
     return Center(
       child: Image.network(
-          'https://i.imgur.com/SEUBXHS.png',
-    ),
+        'https://i.imgur.com/SEUBXHS.png',
+      ),
     );
   }
 }
