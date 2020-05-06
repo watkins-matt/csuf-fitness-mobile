@@ -1,9 +1,8 @@
+import '../bmi_log.dart';
 import '../food_log_item.dart';
 import '../sleep_log.dart';
-import '../bmi_log.dart';
 import 'food_database.dart';
 import 'sleep_database.dart';
-import 'user_database.dart';
 
 abstract class StorageProvider<T> {
   void delete(T item);
@@ -51,7 +50,6 @@ class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
     SleepDatabase.instance.insert(item);
   }
 
-
   @override
   void writeAll(List<SleepEvent> items) {}
 
@@ -66,12 +64,10 @@ class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
 
 class BMILogStorageProvider extends StorageProvider<BMILog> {
   @override
-  void delete(BMILog item) async {
-  }
+  void delete(BMILog item) async {}
 
   @override
-  void write(BMILog item) {
-  }
+  void write(BMILog item) {}
 
   @override
   void writeAll(List<BMILog> items) {}
