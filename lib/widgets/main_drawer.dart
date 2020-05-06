@@ -1,5 +1,6 @@
 import 'package:csuf_fitness/pages/about_us.dart';
 import 'package:csuf_fitness/pages/body_mass_index_chart.dart';
+import 'package:csuf_fitness/pages/diet_chart.dart';
 import 'package:csuf_fitness/pages/help_center.dart';
 import 'package:flutter/material.dart';
 import "package:shared_preferences/shared_preferences.dart";
@@ -46,22 +47,14 @@ class MainDrawerState extends State<MainDrawer> {
           //_initialSetupListTile(context),
           // _foodHistoryListTile(context),
           /*_userInfoTile(context),*/
-          _settingsListTile(context),
           _bmiChartTile(context),
+          _dietChartTile(context),
+          _settingsListTile(context),
           _aboutUsTile(context),
           _helpCenterTile(context),
         ],
       )),
     );
-  }
-
-  ListTile _settingsListTile(BuildContext context) {
-    return ListTile(
-        leading: const Icon(Icons.perm_data_setting),
-        title: Text("Settings"),
-        onTap: () {
-          SettingsPage.push(context);
-        });
   }
 
   ListTile _bmiChartTile(BuildContext context) {
@@ -70,6 +63,24 @@ class MainDrawerState extends State<MainDrawer> {
         title: Text("BMI Chart"),
         onTap: () {
           BMIChartPage.push(context);
+        });
+  }
+
+  ListTile _dietChartTile(BuildContext context) {
+    return ListTile(
+        leading: const Icon(Icons.perm_data_setting),
+        title: Text("Diet Chart"),
+        onTap: () {
+          DietChartPage.push(context);
+        });
+  }
+
+  ListTile _settingsListTile(BuildContext context) {
+    return ListTile(
+        leading: const Icon(Icons.perm_data_setting),
+        title: Text("Settings"),
+        onTap: () {
+          SettingsPage.push(context);
         });
   }
 
@@ -90,13 +101,4 @@ class MainDrawerState extends State<MainDrawer> {
           HelpCenterPage.push(context);
         });
   }
-
-  /*ListTile _userInfoTile(BuildContext context) {
-    return ListTile(
-        leading: const Icon(Icons.perm_identity),
-        title: Text("User Info"),
-        onTap: () {
-          UsersPage.push(context);
-        });
-  }*/
 }
