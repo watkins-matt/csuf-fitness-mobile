@@ -1,7 +1,9 @@
 import '../food_log_item.dart';
 import '../sleep_log.dart';
+import '../bmi_log.dart';
 import 'food_database.dart';
 import 'sleep_database.dart';
+import 'user_database.dart';
 
 abstract class StorageProvider<T> {
   void delete(T item);
@@ -46,16 +48,9 @@ class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
 
   @override
   void write(SleepEvent item) {
-    SleepDatabase.instance.printAllRows();
-    //SleepDatabase.instance.insert(item);
+    SleepDatabase.instance.insert(item);
   }
 
-  void printer() {
-    print('test');
-    var testEvent = SleepEvent(DateTime.now(), DateTime.now());
-    SleepDatabase.instance.printAllRows();
-    SleepDatabase.instance.insert(testEvent);
-  }
 
   @override
   void writeAll(List<SleepEvent> items) {}
@@ -67,4 +62,25 @@ class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
   }
 
   static SleepLogStorageProvider get instance => SleepLogStorageProvider();
+}
+
+class BMILogStorageProvider extends StorageProvider<BMILog> {
+  @override
+  void delete(BMILog item) async {
+  }
+
+  @override
+  void write(BMILog item) {
+  }
+
+  @override
+  void writeAll(List<BMILog> items) {}
+
+  @override
+  Future<List<BMILog>> read(DateTime date) {
+    Future<List<BMILog>> temp;
+    return temp;
+  }
+
+  static BMILogStorageProvider get instance => BMILogStorageProvider();
 }

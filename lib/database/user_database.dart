@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import '../bmi_log.dart';
 
 class UserDatabase {
   // DB info
@@ -45,11 +46,9 @@ class UserDatabase {
 
   // helper function to create SQL table
   Future _onCreate(Database db, int version) async {
-    /*
 		await db.execute('''
 			CREATE TABLE $tableName (
 				$columnId INTEGER PRIMAY KEY
-				$columnUsername TEXT NOT NULL,
 				$columnAge INTEGER NOT NULL,
 				$columnHeight REAL NOT NULL,
 				$columnWeight REAL NOT NULL,
@@ -57,6 +56,17 @@ class UserDatabase {
 				$columnTimestamp INTEGER NOT NULL,
 			)
 		''');
-		*/
   }
+  Future<int> insert(BMILog bmilog) async {
+    Database db = await instance.database;
+    Map<String, dynamic> row = {
+      columnAge: '${bmilog.age}',
+      columnHeight: '${bmilog.height}',
+      columnWeight: '${bmilog.weight}',
+      columnBMI: '${bmilog.bmi}',
+      columnTimestamp: '${bmilog.time}'
+    };
+    return await db.insert(tableName, row);
+  }
+
 }
