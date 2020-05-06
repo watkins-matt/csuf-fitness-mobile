@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class HelpCenterPage extends StatefulWidget {
   @override
   _HelpCenterPageState createState() => _HelpCenterPageState();
+
+  static void push(BuildContext context) {}
 }
 
 class _HelpCenterPageState extends State<HelpCenterPage> {
@@ -11,7 +13,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome To The Help Center ',
+      title: 'Welcome To The Help Center',
       home: Scaffold(
         body: Center(
           child: TweenAnimationBuilder(

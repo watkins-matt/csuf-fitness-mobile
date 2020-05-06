@@ -1,4 +1,5 @@
 import 'package:csuf_fitness/pages/about_us.dart';
+import 'package:csuf_fitness/pages/help_center.dart';
 import 'package:flutter/material.dart';
 import "package:shared_preferences/shared_preferences.dart";
 
@@ -45,7 +46,8 @@ class MainDrawerState extends State<MainDrawer> {
           // _foodHistoryListTile(context),
           /*_userInfoTile(context),*/
           _settingsListTile(context),
-          _aboutUsTile(context,)
+          _aboutUsTile(context),
+          _helpCenterTile(context),
         ],
       )),
     );
@@ -66,6 +68,15 @@ class MainDrawerState extends State<MainDrawer> {
         title: Text("About Us"),
         onTap: () {
           AboutUsPage.push(context);
+        });
+  }
+
+  ListTile _helpCenterTile(BuildContext context) {
+    return ListTile(
+        leading: const Icon(Icons.perm_data_setting),
+        title: Text("Help Center"),
+        onTap: () {
+          HelpCenterPage.push(context);
         });
   }
 
