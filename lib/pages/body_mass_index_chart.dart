@@ -32,16 +32,16 @@ class _BMIChartPageState extends State<BMIChartPage> {
         appBar: AppBar(
           title: Text("Body Mass Index Chart"),
         ),
-        body: _chart(),
+        body: _wrap(),
         );
   }
 
-/*Widget _wrap(){
+Widget _wrap(){
   return Wrap(
-    alignment: WrapAlignment.end,
-    direction: Axis.vertical,
+    //alignment: WrapAlignment.end,
+    direction: Axis.horizontal,
     spacing: 10.0,
-    runSpacing: 20.0,
+    runSpacing: 30.0,
     children: <Widget>[
       _bmiDefinition(),
       _chart(),
@@ -51,8 +51,13 @@ class _BMIChartPageState extends State<BMIChartPage> {
 
 
   Widget _bmiDefinition() {
-    return Text("Weight that is higher than what is considered as a healthy weight for a given height is described as overweight or obese. Body Mass Index, or BMI, is used as a screening tool for overweight or obesity.");
-  }*/
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text("Weight that is higher than what is considered as a healthy weight for a given height is described as overweight or obese. Body Mass Index, or BMI, is used as a screening tool for overweight or obesity."),
+      ),
+    );
+  }
 
   Widget _chart() {
     return Center(
