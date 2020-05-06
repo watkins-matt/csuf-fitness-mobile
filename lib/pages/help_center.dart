@@ -4,7 +4,14 @@ class HelpCenterPage extends StatefulWidget {
   @override
   _HelpCenterPageState createState() => _HelpCenterPageState();
 
-  static void push(BuildContext context) {}
+  static void push(BuildContext context) {
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) {
+        return Scaffold(body: HelpCenterPage());
+      },
+    ));
+  }
 }
 
 class _HelpCenterPageState extends State<HelpCenterPage> {
