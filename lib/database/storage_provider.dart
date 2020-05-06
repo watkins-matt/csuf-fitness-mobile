@@ -1,6 +1,7 @@
 import '../food_log_item.dart';
 import '../sleep_log.dart';
 import 'food_database.dart';
+import 'sleep_database.dart';
 
 abstract class StorageProvider<T> {
   void delete(T item);
@@ -40,12 +41,20 @@ class FoodLogStorageProvider extends StorageProvider<FoodLogItem> {
 class SleepLogStorageProvider extends StorageProvider<SleepEvent> {
   @override
   void delete(SleepEvent item) async {
-    //FoodDatabase.instance.deleteByTimestamp(item.time);
+    //SleepDatabase.instance.deleteByTimestamp(item.time);
   }
 
   @override
   void write(SleepEvent item) {
-    //FoodDatabase.instance.insert(item);
+    SleepDatabase.instance.printAllRows();
+    //SleepDatabase.instance.insert(item);
+  }
+
+  void printer() {
+    print('test');
+    var testEvent = SleepEvent(DateTime.now(), DateTime.now());
+    SleepDatabase.instance.printAllRows();
+    SleepDatabase.instance.insert(testEvent);
   }
 
   @override

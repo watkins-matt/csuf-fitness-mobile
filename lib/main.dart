@@ -32,8 +32,6 @@ class FitnessApp extends StatelessWidget {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     darkMode = prefs.getBool('darkMode');
-
-    // await SleepStatus().initialized;
   }
 
   @override

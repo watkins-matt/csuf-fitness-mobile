@@ -26,7 +26,10 @@ class SettingsPage extends StatefulWidget {
 class _SettingPageState extends State<SettingsPage> {
   TextEditingController controller = TextEditingController();
   int maxCalories = 0;
+  String username = "";
+  String password = "";
   bool darkMode = false;
+  bool metric = false;
   bool fitConnected = false;
 
   @override
@@ -50,6 +53,15 @@ class _SettingPageState extends State<SettingsPage> {
         prefs.setBool('darkMode', false);
       }
       darkMode = prefs.getBool('darkMode');
+
+      if (!prefs.containsKey('metric')) {
+        prefs.setBool('metric', false);
+      }
+      metric = prefs.getBool('metric');
+
+      username = prefs.get("username");
+
+      password = prefs.get("password");
     });
   }
 
@@ -86,7 +98,12 @@ class _SettingPageState extends State<SettingsPage> {
                 title: 'Dark Mode',
                 subtitle: 'Changes take effect upon restart',
                 onToggle: _onDarkModeToggle,
-                switchValue: darkMode)
+                switchValue: darkMode),
+            SettingsTile.switchTile(
+                title: 'Metric',
+                subtitle: 'Changes take effect upon restart',
+                onToggle: _onMetricToggle,
+                switchValue: metric)
           ],
         ),
         SettingsSection(
@@ -99,20 +116,6 @@ class _SettingPageState extends State<SettingsPage> {
             )
           ],
         ),
-        SettingsSection(title: "Advanced", tiles: [
-          SettingsTile(
-            title: "MQTT Server",
-            subtitle: "Tap to set.",
-          ),
-          SettingsTile(
-            title: "Username",
-            subtitle: "Tap to set.",
-          ),
-          SettingsTile(
-            title: "Password",
-            subtitle: "Tap to set.",
-          )
-        ])
       ],
     );
   }
@@ -138,6 +141,15 @@ class _SettingPageState extends State<SettingsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.setBool('darkMode', darkMode);
+    });
+  }
+
+  void _onMetricToggle(bool enabled) async {
+    metric = enabled;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setBool('metric', metric);
     });
   }
 

@@ -80,7 +80,7 @@ class SleepEvent {
   }
 }
 
-class SleepStatus {
+class SleepStatus extends ChangeNotifier {
   SharedPreferences _prefs;
   Future get initialized => _intialized;
   Future _intialized;
@@ -100,27 +100,24 @@ class SleepStatus {
       sleepEnd = DateTime.now();
       _prefs.setInt("sleepEnd", sleepEnd.millisecondsSinceEpoch);
     }
+
+    notifyListeners();
   }
 
   SleepEvent get lastEvent => SleepEvent(sleepStart, sleepEnd);
 
-  Duration get sleepLength => sleepEnd != null
+  Duration get sleepLength => sleepEnd != null && sleepEnd.isAfter(sleepStart)
       ? sleepEnd.difference(sleepStart)
       : sleepStart != null ? DateTime.now().difference(sleepStart) : Duration();
 
   DateTime sleepStart;
   DateTime sleepEnd;
 
-  static final SleepStatus _instance = SleepStatus._internal();
-  SleepStatus._internal() {
-    _intialized = _init();
+  SleepStatus() {
+    _init();
   }
 
-  factory SleepStatus() {
-    return _instance;
-  }
-
-  Future _init() async {
+  Future<void> _init() async {
     _prefs = await SharedPreferences.getInstance();
 
     if (_prefs.containsKey("sleeping")) {
@@ -137,5 +134,7 @@ class SleepStatus {
     } else {
       _prefs.setBool("sleeping", false);
     }
+
+    notifyListeners();
   }
 }
