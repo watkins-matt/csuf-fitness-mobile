@@ -1,4 +1,5 @@
 import 'package:csuf_fitness/pages/about_us.dart';
+import 'package:csuf_fitness/pages/body_mass_index_chart.dart';
 import 'package:csuf_fitness/pages/help_center.dart';
 import 'package:flutter/material.dart';
 import "package:shared_preferences/shared_preferences.dart";
@@ -46,6 +47,7 @@ class MainDrawerState extends State<MainDrawer> {
           // _foodHistoryListTile(context),
           /*_userInfoTile(context),*/
           _settingsListTile(context),
+          _bmiChartTile(context),
           _aboutUsTile(context),
           _helpCenterTile(context),
         ],
@@ -62,6 +64,14 @@ class MainDrawerState extends State<MainDrawer> {
         });
   }
 
+ ListTile _bmiChartTile(BuildContext context) {
+    return ListTile(
+        leading: const Icon(Icons.perm_data_setting),
+        title: Text("BMI Chart"),
+        onTap: () {
+          BMIChartPage.push(context);
+        });
+  }
   ListTile _aboutUsTile(BuildContext context) {
     return ListTile(
         leading: const Icon(Icons.perm_data_setting),

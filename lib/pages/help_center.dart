@@ -12,10 +12,17 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome To The Help Center',
-      home: Scaffold(
-        body: Center(
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Welcome To The Help Center"),
+        ),
+
+        body: _buildBody(),
+      );
+  }
+
+      Widget _buildBody(){
+      return Center(
           child: TweenAnimationBuilder(
               tween: _scaleTween,
               duration: Duration(seconds: 2),
@@ -30,8 +37,6 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                     color: Colors.black,
                     height: 0),
               )),
-        ),
-      ),
-    );
+        );
   }
 }
