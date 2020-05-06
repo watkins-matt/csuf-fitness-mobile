@@ -35,6 +35,8 @@ class _SleepLogPageState extends State<SleepLogPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) async => await updateTimerState());
 
+    final dataProvider = Provider.of<SleepDataProvider>(context, listen: false);
+
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
@@ -46,6 +48,9 @@ class _SleepLogPageState extends State<SleepLogPage> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text("My Health & Fitness"),
+          actions: <Widget>[
+            AddSleepEventButton(date: DateTime.now(), sleepData: dataProvider)
+          ],
         ),
         drawer: MainDrawer());
   }

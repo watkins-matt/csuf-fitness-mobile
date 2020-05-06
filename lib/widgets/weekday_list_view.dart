@@ -36,7 +36,7 @@ class WeekdayListView extends StatelessWidget {
     int hours = log.length.inHours;
     int minutes = log.length.inMinutes % 60;
     // int seconds = log.length.inSeconds;
-    Color textColor = hours > 6 ? Colors.green : Colors.red;
+    Color textColor = hours > 6 ? Colors.green : Colors.black;
 
     Card listViewCard = Card(
         elevation: 2,
@@ -80,10 +80,7 @@ class AddSleepEventButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(
-        Icons.add,
-        color: Theme.of(context).accentColor,
-      ),
+      icon: Icon(Icons.add),
       onPressed: () {
         AddSleepEventDialog.show(context, date, (event) {
           sleepData.addEvent(event);
