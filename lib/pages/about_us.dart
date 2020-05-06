@@ -1,6 +1,31 @@
+
 import 'package:flutter/material.dart';
 
-class AboutUsPage extends StatelessWidget {
+class AboutUsPage extends StatefulWidget {
+  AboutUsPage({Key key}) : super(key: key);
+
+  @override
+  _AboutUsPageState createState() => _AboutUsPageState();
+
+  static void push(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(
+      builder: (BuildContext context) {
+        return Scaffold(body: AboutUsPage());
+      },
+    ));
+  }
+}
+
+class _AboutUsPageState extends State<AboutUsPage> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

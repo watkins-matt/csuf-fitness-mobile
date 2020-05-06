@@ -1,3 +1,4 @@
+import 'package:csuf_fitness/pages/about_us.dart';
 import 'package:flutter/material.dart';
 import "package:shared_preferences/shared_preferences.dart";
 
@@ -44,6 +45,7 @@ class MainDrawerState extends State<MainDrawer> {
           // _foodHistoryListTile(context),
           /*_userInfoTile(context),*/
           _settingsListTile(context),
+          _aboutUsTile(context,)
         ],
       )),
     );
@@ -55,6 +57,15 @@ class MainDrawerState extends State<MainDrawer> {
         title: Text("Settings"),
         onTap: () {
           SettingsPage.push(context);
+        });
+  }
+
+  ListTile _aboutUsTile(BuildContext context) {
+    return ListTile(
+        leading: const Icon(Icons.perm_data_setting),
+        title: Text("About Us"),
+        onTap: () {
+          AboutUsPage.push(context);
         });
   }
 
