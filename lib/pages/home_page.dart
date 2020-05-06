@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:csuf_fitness/widgets/add_weight_dialog.dart';
 import 'package:fit_kit/fit_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
@@ -130,7 +129,8 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 final weightLog =
                     Provider.of<WeightTrackingLog>(context, listen: false);
-                weightLog.addWeight(DateTime.now(), Random().nextInt(25) + 150);
+                //weightLog.addWeight(DateTime.now(), Random().nextInt(25) + 150);
+                AddWeightDialog.show(context, weightLog);
               },
             )),
         drawer: MainDrawer());
@@ -184,17 +184,20 @@ class _HomePageState extends State<HomePage> {
   Widget _chart(BuildContext context) {
     final weightLog = Provider.of<WeightTrackingLog>(context, listen: false);
 
-    return Expanded(
-        child: Padding(
-      padding: EdgeInsets.all(8),
-      child: charts.TimeSeriesChart(buildSeries(weightLog.data),
-          behaviors: [
-            charts.ChartTitle('Weight: ${weightLog.current}', innerPadding: 18)
-          ],
-          primaryMeasureAxis: charts.NumericAxisSpec(
-              tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                  desiredTickCount: 10, zeroBound: false))),
-    ));
+    return Consumer<WeightTrackingLog>(builder: (context, cart, child) {
+      return Expanded(
+          child: Padding(
+        padding: EdgeInsets.all(8),
+        child: charts.TimeSeriesChart(buildSeries(weightLog.data),
+            behaviors: [
+              charts.ChartTitle('Weight: ${weightLog.current}',
+                  innerPadding: 18)
+            ],
+            primaryMeasureAxis: charts.NumericAxisSpec(
+                tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                    desiredTickCount: 10, zeroBound: false))),
+      ));
+    });
   }
 
   List<charts.Series<WeightDataPoint, DateTime>> buildSeries(
@@ -211,11 +214,16 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class WeightDataPoint {
+class WeightDataPoint implements Comparable<WeightDataPoint> {
   int weight;
   DateTime date;
 
   WeightDataPoint({@required this.date, @required this.weight});
+
+  @override
+  int compareTo(WeightDataPoint other) {
+    return date.compareTo(other.date);
+  }
 }
 
 class WeightTrackingLog extends ChangeNotifier {
@@ -231,6 +239,7 @@ class WeightTrackingLog extends ChangeNotifier {
 
   void addWeight(DateTime date, int weight) {
     data.add(WeightDataPoint(date: date, weight: weight));
+    data.sort();
     notifyListeners();
   }
 
@@ -238,17 +247,17 @@ class WeightTrackingLog extends ChangeNotifier {
     data.clear();
     final list = [
       WeightDataPoint(
-          date: DateTime.now().subtract(Duration(days: 30)), weight: 188),
+          date: DateTime.now().subtract(Duration(days: 5)), weight: 188),
       WeightDataPoint(
-          date: DateTime.now().subtract(Duration(days: 25)), weight: 185),
+          date: DateTime.now().subtract(Duration(days: 4)), weight: 185),
       WeightDataPoint(
-          date: DateTime.now().subtract(Duration(days: 20)), weight: 184),
-      WeightDataPoint(
-          date: DateTime.now().subtract(Duration(days: 15)), weight: 185),
-      WeightDataPoint(
-          date: DateTime.now().subtract(Duration(days: 10)), weight: 183),
-      WeightDataPoint(
-          date: DateTime.now().subtract(Duration(days: 5)), weight: 180),
+          date: DateTime.now().subtract(Duration(days: 3)), weight: 184),
+      // WeightDataPoint(
+      //     date: DateTime.now().subtract(Duration(days: 15)), weight: 185),
+      // WeightDataPoint(
+      //     date: DateTime.now().subtract(Duration(days: 10)), weight: 183),
+      // WeightDataPoint(
+      //     date: DateTime.now().subtract(Duration(days: 5)), weight: 180),
     ];
     data.addAll(list);
     notifyListeners();
